@@ -1,4 +1,9 @@
 $(() => {
+  const setMessage = (msg, alertType) => {
+    $("p#message").get(
+      0
+    ).innerHTML = `<span class='text-${alertType}'>${msg}</span>`;
+  };
   $(".login-form").on("submit", function (e) {
     e.preventDefault();
     const element = $($(".login-form")[0]);
@@ -8,23 +13,21 @@ $(() => {
     const password = $($(".login-form input")[1]).val();
 
     if (uid === "" || password === "") {
-      $("p#message").get(0).innerHTML =
-        "<span class='text-danger'>Please fill in all fields!</span>";
-    
+      setMessage("Please fill in all fields", "danger");
       setTimeout(() => {
-        $("p#message").get(0).innerHTML = "";
+        setMessage("");
       }, 3000);
     } else {
-        if (loginType === "Lecturer") {
-            const email = uid;
-
-        } else if (loginType === "Student") {
-            const matricNo = uid;
-
-        } else if (loginType === "Admin") {
-            const email = uid;
-            
-        }
+      if (loginType === "Lecturer") {
+        const email = uid;
+        window.location.href = "dashboard.php";
+      } else if (loginType === "Student") {
+        const matricNo = uid;
+        window.location.href = "dashboard.php";
+      } else if (loginType === "Admin") {
+        const email = uid;
+        window.location.href = "dashboard.php";
+      }
     }
   });
 });

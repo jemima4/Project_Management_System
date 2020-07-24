@@ -1,7 +1,7 @@
 <?php include "./includes/header.php" ?>
 
 <div class="welcome">
-    <h2 class="text-light font-weight-normal title">Welcome to CU PMS</h2>
+    <h2 class="text-light font-weight-normal title">Welcome to <span id="brand">CU PMS</span></h2>
     <p class="text-light">Login to manage your project</p>
 
     <div class="login-btn-group">

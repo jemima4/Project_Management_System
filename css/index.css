@@ -49,9 +49,22 @@ body {
   padding-top: -50rem;
 }
 
-.login-title {
-}
-
 .login-form {
   width: 17rem;
 }
+
+#brand {
+  font-family: cursive !important;
+  font-weight: bold;
+}
+
+.dashboard-view {
+  min-height: calc(100vh - 7.7rem);
+  position: relative;
+}
+
+.jumbotron {
+  border-radius: 0;
+}
+
+

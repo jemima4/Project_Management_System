@@ -5,7 +5,7 @@
 
 <div class="login bg-secondary">
 <div class="p-5 bg-dark">
-    <h1 class="login-title mb-4 text-light">CU PMS <?= $type; ?></h1>
+    <h1 class="login-title mb-4 text-light"><span id="brand">CU PMS</span> <?= $type; ?></h1>
 
     <?php if ($type === "Student"): ?>
         <form action="#" type=<?= $type; ?> class="login-form m-auto">
@@ -17,12 +17,11 @@
             <label class="text-light" for="password">Password</label>
             <input type="password" class="form-control" placeholder="* * * * * * * *" id="password">
         </div>
-        <p id="message">oooo</p>
+        <p id="message"></p>
         <div class="form-group">
             <input type="submit" class="form-control btn btn-secondary" value="Login" id="login">
         </div>
         </form>
-        
 
     <?php elseif ($type === "Lecturer"): ?>
         <form action="#" type=<?= $type; ?> class="login-form m-auto">
@@ -44,5 +43,7 @@
 
 </div>
 <div>
+<p class="bg-secondary text-center text-light p-3 mt-4">CU PMS &copy; 2020</p>
+
 
 <?php include "./includes/footer.php" ?>
