@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="https://img.icons8.com/color/48/000000/task.png"/>
-    <title>Project Management System</title>
-</head>
-<body>
-    <h1>Project Management System</h1>
-</body>
-</html>
+<?php include "./includes/header.php" ?>
+
+<div class="welcome">
+    <h2 class="text-light font-weight-normal title">Welcome to CU PMS</h2>
+    <p class="text-light">Login to manage your project</p>
+
+    <div class="login-btn-group">
+        <a href="login.php?type=Student" class="btn btn-secondary">Login as a student</a>
+        <a href="login.php?type=Lecturer" class="btn btn-secondary">Login as a lecturer</a>
+    </div>
+<div>
+
+<?php include "./includes/footer.php" ?>
