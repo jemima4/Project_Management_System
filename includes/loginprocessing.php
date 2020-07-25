@@ -1,13 +1,12 @@
 <?php
 session_start();
 if(isset($_POST['ltlogin'])){loginLecturer();}
-if(isset($_POST['stlogin'])){studentLecturer();}
-if(isset($_POST['adlogin'])){adminLecturer();}
+if(isset($_POST['stlogin'])){loginStudent();}
+if(isset($_POST['adlogin'])){loginAdmin();}
 
 //Student login is the only function being worked on
 function loginStudent()
 {
-    echo "<script>console.log('Login Student is being called')</script>";
     $matricno = $_REQUEST['matricNo']; $password = $_REQUEST['stpassword'];
     global $db;
     $query = "SELECT * FROM student_tb ";
@@ -16,8 +15,7 @@ function loginStudent()
     $result = mysqli_query($db, $query);
     if(!$result)
     {
-        die("Database query failed"); 
-        echo "<script> document.getElementById('message').innerHTML = 'Details entered are incorrect'</script>"; 
+        die("Invalid credentials entered!"); 
     }
     else
     {
@@ -27,13 +25,11 @@ function loginStudent()
             $stdetails = mysqli_fetch_assoc($result);
             $holder = $row['matricno'];
             $ltid = $row['lecturerid'];
-            echo "<script>console.log($holder)</script>";
             $query = "SELECT * FROM lecturer_tb WHERE id = '$ltid'";
             $result = mysqli_query($db, $query);
             if(!$result)
             {
-                die("Database query failed"); 
-                echo "<script> window.alert('Something went wrong in retrieving your Supervisor's Details')</script>";
+                die("Error while fetching Supervisor's details"); 
             }
             else
             {
@@ -50,7 +46,7 @@ function loginStudent()
         }
         else
         {
-            echo "<script> document.getElementById('message').innerHTML = 'Details entered are incorrect'</script>"; 
+            die("Invalid credentials entered!"); 
         }
         mysqli_free_result($result);
     }

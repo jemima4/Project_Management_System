@@ -4,6 +4,10 @@ $(() => {
       0
     ).innerHTML = `<span class='text-${alertType}'>${msg}</span>`;
   };
+  const clearMessage = () =>
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
   $(".login-form").on("submit", function (e) {
     e.preventDefault();
     const element = $($(".login-form")[0]);
@@ -14,19 +18,26 @@ $(() => {
 
     if (uid === "" || password === "") {
       setMessage("Please fill in all fields", "danger");
-      setTimeout(() => {
-        setMessage("");
-      }, 3000);
+      clearMessage();
     } else {
       if (loginType === "Lecturer") {
         const email = uid;
-        // window.location.href = "dashboard.php";
+        // Process info to backend
       } else if (loginType === "Student") {
         const matricNo = uid;
-        window.location.href = "dashboard.php";
+        // Making request to php file with data passed.
+        $.post(
+          "./includes/loginprocessing.php",
+          { stlogin: true, matricNo, stpassword: password },
+          function (data, status) {
+            // Setting error message if there's one
+            setMessage(data, "danger");
+            clearMessage();
+          }
+        );
       } else if (loginType === "Admin") {
         const email = uid;
-        // window.location.href = "dashboard.php";
+        // Process info to backend
       }
     }
   });

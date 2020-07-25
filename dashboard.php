@@ -1,4 +1,7 @@
-<?php include "./includes/header.php" ?>
+<?php 
+    include "./includes/header.php";
+    isset($_SESSION['name']) ? "" : header("Location: index.php");
+?>
 <div class="dashboard">
     <?php include "./includes/navbar.php" ?>
 
@@ -20,9 +23,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Your Details</h5>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Olga Simpson</li>
-                        <li class="list-group-item">Level 400</li>
-                        <li class="list-group-item">Department of Pharmacy</li>
+                        <li class="list-group-item"><?= $_SESSION['name']; ?></li>
+                        <li class="list-group-item">Level <?= $_SESSION['level']; ?></li>
+                        <li class="list-group-item">Department of <?= $_SESSION['departmentname']; ?></li>
                     </ul>
                 </div>
                 </div>
@@ -32,8 +35,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Your Supervisor</h5>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Dr. Fred Jackson</li>
-                        <li class="list-group-item">Department of Pharmacy</li>
+                        <li class="list-group-item"><?= $_SESSION["lecturername"]; ?></li>
+                        <li class="list-group-item">Department of <?= $_SESSION["departmentname"]; ?></li>
                     </ul>
                 </div>
                 </div>
