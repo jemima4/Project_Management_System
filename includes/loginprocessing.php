@@ -1,7 +1,8 @@
 <?php
+require "connection.php";
 session_start();
 if(isset($_POST['ltlogin'])){loginLecturer();}
-if(isset($_POST['stlogin'])){studentLecturer();}
+if(isset($_POST['stlogin'])){loginStudent();}
 if(isset($_POST['adlogin'])){adminLecturer();}
 
 //Student login is the only function being worked on

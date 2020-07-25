@@ -23,7 +23,7 @@ $(() => {
         // window.location.href = "dashboard.php";
       } else if (loginType === "Student") {
         const matricNo = uid;
-        window.location.href = "dashboard.php";
+        // window.location.href = "dashboard.php";
       } else if (loginType === "Admin") {
         const email = uid;
         // window.location.href = "dashboard.php";
