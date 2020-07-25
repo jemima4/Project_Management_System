@@ -1,5 +1,7 @@
 
-
+<?php     
+    $fullName = isset($_SESSION['name']) ? $_SESSION['name'] : "Sample Student";
+ ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a id="brand" class="navbar-brand" href="#">CU PMS</a>
@@ -19,7 +21,7 @@
                     <img src="assets/profile.png" width="30" height="30" loading="lazy" alt="Profile icon">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <h6 class="dropdown-header" disabled>Full Name</h6>
+                    <h6 class="dropdown-header" disabled><?= $fullName ?></h6>
                     <div class="dropdown-divider"></div>        
                     <a class="dropdown-item" href="#">Log out</a>
                 </div>
