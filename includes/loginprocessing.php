@@ -1,4 +1,5 @@
 <?php
+require "connection.php";
 session_start();
 if(isset($_POST['ltlogin'])){loginLecturer();}
 if(isset($_POST['stlogin'])){loginStudent();}
