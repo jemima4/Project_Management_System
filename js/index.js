@@ -30,9 +30,14 @@ $(() => {
           "./includes/loginprocessing.php",
           { stlogin: true, matricNo, stpassword: password },
           function (data, status) {
-            // Setting error message if there's one
-            setMessage(data, "danger");
-            clearMessage();
+            if (data.includes("loginSuccessful")) {
+              // Move to dashboard.
+              window.location.href = "./dashboard.php";
+            } else {
+              // Setting error message if there's one
+              setMessage(data, "danger");
+              clearMessage();
+            }
           }
         );
       } else if (loginType === "Admin") {

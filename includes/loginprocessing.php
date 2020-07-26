@@ -46,7 +46,7 @@ function loginStudent()
                 $_SESSION["level"] = $stdetails['level'];
                 $_SESSION["departmentname"] = $stdetails['departmentname'];
                 $_SESSION["lecturerid"] = $stdetails['lecturerid'];
-                header("Location: ../dashboard.php");
+                echo "loginSuccessful";
             }
         }
         else
