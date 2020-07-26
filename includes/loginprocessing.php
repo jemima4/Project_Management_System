@@ -4,6 +4,7 @@ session_start();
 if(isset($_POST['ltlogin'])){loginLecturer();}
 if(isset($_POST['stlogin'])){loginStudent();}
 if(isset($_POST['adlogin'])){loginAdmin();}
+if(isset($_POST['logoutUser'])){logOut();}
 //The clear session is the last function i don't know how you will call it 
 //Sessions have been created in lecturer login
 function loginStudent()
@@ -140,8 +141,9 @@ function loginAdmin()
     }    
 }
 
-function clearSession()
+function logOut()
 {
+    echo "logoutSuccessful";
     session_unset();
     session_destroy();
 }

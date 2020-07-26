@@ -1,4 +1,5 @@
 $(() => {
+  // Error message controllers
   const setMessage = (msg, alertType) => {
     $("p#message").get(
       0
@@ -8,6 +9,8 @@ $(() => {
     setTimeout(() => {
       setMessage("");
     }, 3000);
+
+  // Login forms processing
   $(".login-form").on("submit", function (e) {
     e.preventDefault();
     const element = $($(".login-form")[0]);
@@ -20,12 +23,13 @@ $(() => {
       setMessage("Please fill in all fields", "danger");
       clearMessage();
     } else {
+      // Lecturer login handler
       if (loginType === "Lecturer") {
         const email = uid;
         // Making request to php file with data passed.
         $.post(
           "./includes/loginprocessing.php",
-          { ltlogin: true, ltemail :email, ltpassword: password },
+          { ltlogin: true, ltemail: email, ltpassword: password },
           function (data, status) {
             if (data.includes("loginSuccessful")) {
               // Move to dashboard.
@@ -37,6 +41,7 @@ $(() => {
             }
           }
         );
+        // Student login handler
       } else if (loginType === "Student") {
         const matricNo = uid;
         // Making request to php file with data passed.
@@ -54,10 +59,28 @@ $(() => {
             }
           }
         );
+        // Admin login handler
       } else if (loginType === "Admin") {
         const email = uid;
         // Process info to backend
       }
     }
+  });
+
+  // Logout handler
+  $("#logoutUser").on("click", function (e) {
+    e.preventDefault();
+    $.post("./includes/loginprocessing.php", { logoutUser: true }, function (
+      data,
+      status
+    ) {
+      if (data.includes("logoutSuccessful")) {
+        // Move to home page.
+        window.location.href = "./index.php";
+      } else {
+        alert("An error occurred while logging out");
+        alert(data);
+      }
+    });
   });
 });

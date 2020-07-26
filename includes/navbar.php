@@ -23,7 +23,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                     <h6 class="dropdown-header" disabled><?= $fullName ?></h6>
                     <div class="dropdown-divider"></div>        
-                    <a class="dropdown-item" href="#">Log out</a>
+                    <a class="dropdown-item" id="logoutUser" href="#">Log out</a>
                 </div>
             </div>
         </div>
