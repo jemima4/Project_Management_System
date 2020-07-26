@@ -24,11 +24,15 @@ function loginStudent()
         if($count == 1)
         {
             $stdetails = mysqli_fetch_assoc($result);
-            $holder = $row['matricno'];
-            $ltid = $row['lecturerid'];
+            $ltid = $stdetails['lecturerid'];
             $query = "SELECT * FROM lecturer_tb WHERE id = '$ltid'";
             $result = mysqli_query($db, $query);
+            $count = mysqli_num_rows($result);
             if(!$result)
+            {
+                die("Error while fetching Supervisor's details"); 
+            }
+            elseif($count == 1)
             {
                 die("Error while fetching Supervisor's details"); 
             }
