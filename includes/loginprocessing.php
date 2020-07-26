@@ -32,21 +32,31 @@ function loginStudent()
             {
                 die("Error while fetching Supervisor's details"); 
             }
-            // elseif($count == 1)
-            // {
-            //     die("Error while fetching Supervisor's details"); 
-            // }
             else
             {
                 $ltdetails = mysqli_fetch_assoc($result);
-                $_SESSION["lecturername"] = $ltdetails['name'];
-                $_SESSION["ltdepartmentname"] = $ltdetails['departmentname']; 
-                $_SESSION["matricno"] = $stdetails['matricno'];
-                $_SESSION["name"] = $stdetails['name'];
-                $_SESSION["level"] = $stdetails['level'];
-                $_SESSION["departmentname"] = $stdetails['departmentname'];
-                $_SESSION["lecturerid"] = $stdetails['lecturerid'];
-                echo "loginSuccessful";
+                $ownerid = $stdetails['matricno'];
+                $query = "SELECT * FROM project_tb WHERE matricno = '$ownerid'";
+                $result = mysqli_query($db, $query);
+                $count = mysqli_num_rows($result);
+                if(!$result)
+                {
+                    die("Error while fetching Project's details"); 
+                }
+                else
+                {
+                    $ptdetails = mysqli_fetch_assoc($result);
+                    //If there's no project session will have null stored in it
+                    $_SESSION["projectid"] = $ptdetails['id'];
+                    $_SESSION["lecturername"] = $ltdetails['name'];
+                    $_SESSION["ltdepartmentname"] = $ltdetails['departmentname']; 
+                    $_SESSION["matricno"] = $stdetails['matricno'];
+                    $_SESSION["name"] = $stdetails['name'];
+                    $_SESSION["level"] = $stdetails['level'];
+                    $_SESSION["departmentname"] = $stdetails['departmentname'];
+                    $_SESSION["lecturerid"] = $stdetails['lecturerid'];
+                    echo "loginSuccessful";
+                }
             }
         }
         else
