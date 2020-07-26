@@ -1,6 +1,8 @@
 <?php 
     include "./includes/header.php";
-    isset($_SESSION['name']) ? "" : header("Location: index.php");
+    if (empty($_SESSION['name'])) {
+        header("Location: index.php");
+    }
 ?>
 <div class="dashboard">
     <?php include "./includes/navbar.php" ?>
