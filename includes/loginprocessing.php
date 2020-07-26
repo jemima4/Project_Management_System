@@ -4,8 +4,8 @@ session_start();
 if(isset($_POST['ltlogin'])){loginLecturer();}
 if(isset($_POST['stlogin'])){loginStudent();}
 if(isset($_POST['adlogin'])){loginAdmin();}
-
-//Student login is the only function being worked on
+//The clear session is the last function i don't know how you will call it 
+//Sessions have been created in lecturer login
 function loginStudent()
 {
     $matricno = $_REQUEST['matricNo']; $password = $_REQUEST['stpassword'];
@@ -32,10 +32,10 @@ function loginStudent()
             {
                 die("Error while fetching Supervisor's details"); 
             }
-            elseif($count == 1)
-            {
-                die("Error while fetching Supervisor's details"); 
-            }
+            // elseif($count == 1)
+            // {
+            //     die("Error while fetching Supervisor's details"); 
+            // }
             else
             {
                 $ltdetails = mysqli_fetch_assoc($result);
@@ -75,23 +75,26 @@ function loginLecturer()
         if(!$result)
         {
             die("Database query failed"); 
-            echo "<script> window.alert('Details entered are incorrect')</script>"; 
+            echo "Details entered are incorrect"; 
         }
         else
         {
             $count = mysqli_num_rows($result);
             if($count == 1)
             {
-                echo "<script> window.alert('Welcome User')</script>";
+                $ltdetails = mysqli_fetch_assoc($result);
+                $_SESSION["name"] = $ltdetails['name'];
+                $_SESSION["departmentname"] = $ltdetails['departmentname']; 
+                $_SESSION["email"] = $ltdetails['email'];
+                echo "loginSuccessful";
             }
             else
             {
-                echo "<script> window.alert('Details entered are incorrect')</script>"; 
+                echo "Details entered are incorrect"; 
             }
         }
     }    
 }
-
 
 function loginAdmin()
 {
@@ -125,5 +128,11 @@ function loginAdmin()
             }
         }
     }    
+}
+
+function clearSession()
+{
+    session_unset();
+    session_destroy();
 }
 ?>

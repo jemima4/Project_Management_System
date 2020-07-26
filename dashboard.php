@@ -38,7 +38,7 @@
                     <h5 class="card-title">Your Supervisor</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><?= $_SESSION["lecturername"]; ?></li>
-                        <li class="list-group-item">Department of <?= $_SESSION["departmentname"]; ?></li>
+                        <li class="list-group-item">Department of <?= $_SESSION["ltdepartmentname"]; ?></li>
                     </ul>
                 </div>
                 </div>
