@@ -77,8 +77,9 @@ function loginLecturer()
         {
             $count = mysqli_num_rows($result);
             if($count == 1)
-            {
-                echo "<script> window.alert('Welcome User')</script>";
+            {   
+                // Oga set some sessions so we move 
+                echo "loginSuccessful";
             }
             else
             {

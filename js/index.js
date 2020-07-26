@@ -22,7 +22,21 @@ $(() => {
     } else {
       if (loginType === "Lecturer") {
         const email = uid;
-        // Process info to backend
+        // Making request to php file with data passed.
+        $.post(
+          "./includes/loginprocessing.php",
+          { ltlogin: true, ltemail :email, ltpassword: password },
+          function (data, status) {
+            if (data.includes("loginSuccessful")) {
+              // Move to dashboard.
+              window.location.href = "./dashboard.php?u=lecturer";
+            } else {
+              // Setting error message if there's one
+              setMessage(data, "danger");
+              clearMessage();
+            }
+          }
+        );
       } else if (loginType === "Student") {
         const matricNo = uid;
         // Making request to php file with data passed.
