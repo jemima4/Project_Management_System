@@ -21,10 +21,6 @@ include "./includes/header.php";
             <input type="text" class="form-control" placeholder="e.g. 12345678" id="matricNo">
         </div>
         <div class="form-group">
-            <label class="text-light" for="password">Password</label>
-            <input type="password" class="form-control" placeholder="* * * * * * * *" id="password">
-        </div>
-        <div class="form-group">
             <label class="text-light" for="password">Upload Document</label>
             <input type="file" class="form-control" placeholder="" id="projectFile">
         </div>
