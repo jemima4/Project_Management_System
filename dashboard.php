@@ -10,7 +10,7 @@
     <div class="dashboard-view">
         <div class="jumbotron border-radius-0">
             <div class="container">
-                <h1 class="display-4">Hello, Student</h1>
+                <h1 class="display-4">Hello, <?= $_SESSION['name']; ?></h1>
                 <p class="lead">Welcome to CU Project Management System</p>
                 <hr class="my-4">
                 <p>What do you want to do?</p>
