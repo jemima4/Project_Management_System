@@ -56,6 +56,7 @@ function loginStudent()
                     $_SESSION["level"] = $stdetails['level'];
                     $_SESSION["departmentname"] = $stdetails['departmentname'];
                     $_SESSION["lecturerid"] = $stdetails['lecturerid'];
+                    $_SESSION["currentUser"] = "student";
                     echo "loginSuccessful";
                 }
             }
@@ -110,6 +111,7 @@ function loginLecturer()
                     $_SESSION["name"] = $ltdetails['name'];
                     $_SESSION["departmentname"] = $ltdetails['departmentname']; 
                     $_SESSION["email"] = $ltdetails['email'];
+                    $_SESSION["currentUser"] = "lecturer";
                     echo "loginSuccessful";
                 }
             }

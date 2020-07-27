@@ -12,11 +12,12 @@
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link active" href="dashboard.php">Home <span class="sr-only">(current)</span></a>
                 <?php if(!isset($_SESSION["projectid"])): ?>
                     <a class="nav-item nav-link" href="./create.php">Create Project</a>
+                <?php else: ?>
+                    <a class="nav-item nav-link" href="./view.php">View Project</a>
                 <?php endif; ?>
-                <a class="nav-item nav-link" href="./../view.php">View Project</a>
             </div>
             <div class="dropdown ml-auto">
                 <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

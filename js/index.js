@@ -33,7 +33,7 @@ $(() => {
           function (data, status) {
             if (data.includes("loginSuccessful")) {
               // Move to dashboard.
-              window.location.href = "./dashboard.php?u=lecturer";
+              window.location.href = "./dashboard.php";
             } else {
               // Setting error message if there's one
               setMessage(data, "danger");

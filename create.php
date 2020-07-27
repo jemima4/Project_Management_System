@@ -14,14 +14,13 @@ include "./includes/header.php";
                 <hr class="my-4">
 
 <div class="p-5 bg-dark">
-
     <form action="#" class="login-form m-auto">
         <div class="form-group">
             <label class="text-light" for="matricNo">Project Name</label>
             <input type="text" class="form-control" placeholder="e.g. Study of why pigs fly" id="projectName" name="projectName">
         </div>
         <div class="form-group">
-            <label class="text-light" for="password">Upload Document</label>
+            <label class="text-light" for="projectFile">Upload Document</label>
             <input type="file" class="form-control" placeholder="" id="projectFile" name="projectFile">
         </div>
         <p id="message"></p>
