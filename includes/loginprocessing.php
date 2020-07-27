@@ -106,7 +106,7 @@ function loginLecturer()
                 {
                     $count = mysqli_num_rows($result);
                     $_SESSION["id"] = $ltdetails['id'];
-                    $_SESSION["amtofstudent"] = $count;
+                    $_SESSION["numofstudents"] = $count;
                     $_SESSION["name"] = $ltdetails['name'];
                     $_SESSION["departmentname"] = $ltdetails['departmentname']; 
                     $_SESSION["email"] = $ltdetails['email'];

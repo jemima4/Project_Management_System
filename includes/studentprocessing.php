@@ -66,7 +66,7 @@ function uploadFile($target_dir)
     } 
     else 
     {
-    echo "Sorry, there was an error uploading your file.";
+        echo "Sorry, there was an error uploading your file.";
     }
     }
 }
