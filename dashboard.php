@@ -38,7 +38,7 @@
                 <div class="card-body">
                     <h5 class="card-title">No. of assigned students</h5>
                     <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-dark rounded-circle text-light"><?= "13" ?></li>
+                        <li class="list-group-item bg-dark rounded-circle text-light"><?= $_SESSION['amtofstudent']; ?></li>
                     </ul>
                 </div>
                 </div>
