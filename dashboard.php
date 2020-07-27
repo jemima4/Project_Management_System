@@ -56,7 +56,7 @@
                 <?php if(!isset($_SESSION["projectid"])): ?>
                     <a class="btn btn-dark btn-lg mb-1" href="create.php" role="button">Create New Project</a>
                 <?php endif; ?>
-                <a class="btn btn-secondary btn-lg mb-1" href="#" role="button">View and Manage Existing Projects</a>
+                <a class="btn btn-secondary btn-lg mb-1" href="#" role="button">View and Manage Existing Project</a>
             </div>
         </div>
         <div class="container">

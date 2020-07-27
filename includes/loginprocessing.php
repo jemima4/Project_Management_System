@@ -94,10 +94,24 @@ function loginLecturer()
             if($count == 1)
             {
                 $ltdetails = mysqli_fetch_assoc($result);
-                $_SESSION["name"] = $ltdetails['name'];
-                $_SESSION["departmentname"] = $ltdetails['departmentname']; 
-                $_SESSION["email"] = $ltdetails['email'];
-                echo "loginSuccessful";
+                $ltid = $ltdetails['id'];
+                $query = "SELECT * FROM student_tb WHERE lecturerid = '$ltid'";
+                $result = mysqli_query($db, $query);
+                if(!$result)
+                {
+                    die("Database query failed"); 
+                    echo "Error fetching student details"; 
+                }
+                else
+                {
+                    $count = mysqli_num_rows($result);
+                    $_SESSION["id"] = $ltdetails['id'];
+                    $_SESSION["amtofstudent"] = $count;
+                    $_SESSION["name"] = $ltdetails['name'];
+                    $_SESSION["departmentname"] = $ltdetails['departmentname']; 
+                    $_SESSION["email"] = $ltdetails['email'];
+                    echo "loginSuccessful";
+                }
             }
             else
             {
