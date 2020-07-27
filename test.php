@@ -4,13 +4,11 @@
         <title>Admin</title>        
     </head>
     <body>
-    <form action="./includes/loginprocessing.php" method="post">
-        <input type="text" name="id" placeholder="Test 1" />
-        <input type="submit" name="stlogin" />
-    </form> 
-    <form action="admin.php" method="post">
-        <input type="text" name="id" placeholder="Test 2" />
-        <input type="submit" name="submit" />
+    <form action="./includes/studentprocessing.php" method="post" enctype="multipart/form-data">
+        <input type="text" name="projectName" placeholder="Name" />
+        <br>
+        <input type="file" name="projectFile" id="projectFile" placeholder="Upload file" />
+        <input type="submit" name="ctproject" />
     </form>
     </body>
 </html>

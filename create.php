@@ -18,11 +18,11 @@ include "./includes/header.php";
     <form action="#" class="login-form m-auto">
         <div class="form-group">
             <label class="text-light" for="matricNo">Project Name</label>
-            <input type="text" class="form-control" placeholder="e.g. 12345678" id="matricNo">
+            <input type="text" class="form-control" placeholder="e.g. Study of why pigs fly" id="projectName" name="projectName">
         </div>
         <div class="form-group">
             <label class="text-light" for="password">Upload Document</label>
-            <input type="file" class="form-control" placeholder="" id="projectFile">
+            <input type="file" class="form-control" placeholder="" id="projectFile" name="projectFile">
         </div>
         <p id="message"></p>
         <div class="form-group">
