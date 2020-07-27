@@ -49,7 +49,7 @@ body {
   padding-top: -50rem;
 }
 
-.login-form {
+.login-form, .create-form {
   width: 17rem;
 }
 
