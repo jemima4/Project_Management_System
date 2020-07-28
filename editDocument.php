@@ -2,6 +2,8 @@
 include "./includes/header.php";
 if (empty($_SESSION['name'])) {
     header("Location: index.php");
+} else if (empty($_SESSION['projectid'])) {
+    header("Location: dashboard.php");
 }
 ?>
 <div class="dashboard">
