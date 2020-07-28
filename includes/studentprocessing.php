@@ -1,7 +1,6 @@
 <?php 
 //Contains student CRUD functions
 require "connection.php";
-
 if(isset($_POST['ctproject'])){createProject();}
 function createProject()
 {
@@ -12,17 +11,18 @@ function createProject()
     $projectid = md5($projectid);
     $target_dir = "../projects/";
     $target_dir .= $projectid;
+    $target_dir .= "/";
     global $db;
-    $query = "INSERT INTO project_tb (id, matricno, name, path, comment, grade, lectid) VALUES '$projectid' , '$matricno', 
-    '$name','$target_dir','','--', '$ltid'";
+    $query = "INSERT INTO project_tb (id, matricno, name, path, comment, grade, lectid) VALUES ('$projectid' , '$matricno', 
+    '$name','$target_dir','','--', '$ltid')";
     $result = mysqli_query($db, $query);
     if(!$result)
     {
-        die("Error while creating Project details"); 
+        die("Error while creating Project details. " .mysqli_error($db)); 
     }
     else
     {
-        uploadFile($projectid);
+        uploadFile($target_dir);
     }
 }
 
