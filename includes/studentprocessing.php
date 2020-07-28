@@ -18,7 +18,8 @@ function createProject()
     $result = mysqli_query($db, $query);
     if(!$result)
     {
-        die("Error while creating Project details. " .mysqli_error($db)); 
+        // die("Error while creating Project details. " .mysqli_error($db)); 
+        die("Error while creating Project details. "); 
     }
     else
     {
