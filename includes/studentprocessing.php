@@ -35,13 +35,13 @@ function uploadFile($target_dir)
     $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 
-// Check if file already exists
+    // Check if file already exists
     if (file_exists($target_file)) {
         echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
 
-// Check file size
+    // Check file size
     if ($_FILES["projectFile"]["size"] > 500000) {
         echo "Sorry, your file is too large.";
     $uploadOk = 0;
@@ -66,9 +66,36 @@ function uploadFile($target_dir)
     } 
     else 
     {
-    echo "Sorry, there was an error uploading your file.";
+        echo "Sorry, there was an error uploading your file.";
     }
+}
+}
+function deleteFile($filename)
+{
+    //Experimental
+    $id = $_SESSION["matricno"];
+    $id = md5($id);
+    $filetestpath = "/../projects/";
+    $filetestpath .= $id ;
+    $filetestpath .= "/" ;
+    $filetestpath .= $filename;
+    $filepath = realpath($filename);
+    if(is_writable($filename))
+    {
+        unlink(dirname(__FILE__) . $filetestpath);
     }
+    else
+    {
+        echo "File is not writable";
+    }
+}
+function renameProject()
+{
+
+}
+function deleteProject()
+{
+
 }
 ?>
 
