@@ -67,4 +67,6 @@ body {
   border-radius: 0;
 }
 
-
+.card-title i {
+  font-size: 2rem !important;
+}
