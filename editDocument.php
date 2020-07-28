@@ -2,7 +2,7 @@
 include "./includes/header.php";
 if (empty($_SESSION['name'])) {
     header("Location: index.php");
-} else if (empty($_SESSION['projectid'])) {
+} else if (empty($_SESSION['projectid']) AND $_SESSION['currentUser'] == 'student') {
     header("Location: dashboard.php");
 }
 ?>

@@ -16,7 +16,7 @@
                 <p class="lead">Welcome to CU Project Management System</p>
                 <hr class="my-4">
                 <p>What do you want to do?</p>
-                <a class="btn btn-secondary btn-lg mb-1" href="#" role="button">View and Manage Assigned Students</a>
+                <a class="btn btn-secondary btn-lg mb-1" href="view.php" role="button">View and Manage Assigned Students</a>
             </div>
         </div>
         <div class="container">
@@ -38,7 +38,7 @@
                 <div class="card-body">
                     <h5 class="card-title">No. of assigned students</h5>
                     <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-dark rounded-circle text-light"><?= $_SESSION['numofstudent']; ?></li>
+                        <li class="list-group-item bg-dark rounded-circle text-light"><?= $_SESSION['numofstudents']; ?></li>
                     </ul>
                 </div>
                 </div>
