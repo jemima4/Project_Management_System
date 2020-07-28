@@ -1,7 +1,8 @@
 <?php 
-$active = "create";
 include "./includes/header.php";
-
+if (empty($_SESSION['name'])) {
+    header("Location: index.php");
+}
 ?>
 <div class="dashboard">
     <?php include "./includes/navbar.php" ?>
@@ -12,26 +13,22 @@ include "./includes/header.php";
                 <h1 class="display-4">New Project</h1>
                 <p class="lead">Provide the following details to create the project</p>
                 <hr class="my-4">
-
-<div class="p-5 bg-dark">
-
-    <form action="#" class="login-form m-auto">
-        <div class="form-group">
-            <label class="text-light" for="matricNo">Project Name</label>
-            <input type="text" class="form-control" placeholder="e.g. Study of why pigs fly" id="projectName" name="projectName">
-        </div>
-        <div class="form-group">
-            <label class="text-light" for="password">Upload Document</label>
-            <input type="file" class="form-control" placeholder="" id="projectFile" name="projectFile">
-        </div>
-        <p id="message"></p>
-        <div class="form-group">
-            <input type="submit" class="form-control btn btn-secondary" value="Create" id="create">
-        </div>
-    </form>
-
-</div>
-
+                <div class="p-5 bg-dark">
+                    <form action="#" class="create-form m-auto">
+                        <div class="form-group">
+                            <label class="text-light" for="matricNo">Project Name</label>
+                            <input type="text" class="form-control" placeholder="e.g. Study of why pigs fly" id="projectName" name="projectName">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-light" for="projectFile">Upload Document</label>
+                            <input type="file" class="form-control" id="projectFile" name="projectFile">
+                        </div>
+                        <p id="message"></p>
+                        <div class="form-group">
+                            <input type="submit" class="form-control btn btn-secondary" value="Create" id="create">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="container">

@@ -9,7 +9,7 @@
 
     <div class="dashboard-view">
 
-        <?php if (isset($_GET['u']) AND $_GET['u'] == "lecturer"): ?>
+        <?php if (isset($_SESSION['currentUser']) AND $_SESSION['currentUser'] == "lecturer"): ?>
             <div class="jumbotron border-radius-0">
             <div class="container">
                 <h1 class="display-4">Hello, <?= $_SESSION['name']; ?></h1>
@@ -38,7 +38,7 @@
                 <div class="card-body">
                     <h5 class="card-title">No. of assigned students</h5>
                     <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-dark rounded-circle text-light"><?= $_SESSION['amtofstudent']; ?></li>
+                        <li class="list-group-item bg-dark rounded-circle text-light"><?= $_SESSION['numofstudent']; ?></li>
                     </ul>
                 </div>
                 </div>
@@ -55,8 +55,9 @@
                 <p>What do you want to do?</p>
                 <?php if(!isset($_SESSION["projectid"])): ?>
                     <a class="btn btn-dark btn-lg mb-1" href="create.php" role="button">Create New Project</a>
+                <?php else: ?>
+                    <a class="btn btn-secondary btn-lg mb-1" href="#" role="button">View and Manage Project</a>
                 <?php endif; ?>
-                <a class="btn btn-secondary btn-lg mb-1" href="#" role="button">View and Manage Existing Project</a>
             </div>
         </div>
         <div class="container">

@@ -33,7 +33,7 @@ $(() => {
           function (data, status) {
             if (data.includes("loginSuccessful")) {
               // Move to dashboard.
-              window.location.href = "./dashboard.php?u=lecturer";
+              window.location.href = "./dashboard.php";
             } else {
               // Setting error message if there's one
               setMessage(data, "danger");
@@ -82,5 +82,46 @@ $(() => {
         alert(data);
       }
     });
+  });
+
+  // File upload handler
+  $(".create-form").on("submit", function (e) {
+    e.preventDefault();
+    const element = $(".create-form")[0];
+    const formData = new FormData(element);
+    formData.append("ctproject", true);
+
+    const projectName = $($(".create-form input")[0]).val();
+    const fileData = $($(".create-form input")[1]).prop("files");
+
+    if (projectName === "" || fileData === "") {
+      setMessage("Please fill in all fields", "danger");
+      clearMessage();
+    } else {
+      $.ajax({
+        url: "./includes/studentprocessing.php",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status, jqXHR) {
+          if (data.includes("ProjectSuccessful")) {
+            setMessage(
+              "Project created successfully! View page under construction",
+              "success"
+            );
+            // Move to view project.
+            // window.location.href = "./view.php";
+          } else {
+            // Setting error message if there's one
+            setMessage(data, "danger");
+            clearMessage();
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        },
+      });
+    }
   });
 });

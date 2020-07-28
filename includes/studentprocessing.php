@@ -7,8 +7,8 @@ function createProject()
 {
     $projectid = $_SESSION["matricno"];
     $matricno = $_SESSION["matricno"];
-    $name = $_REQUEST['projectName'];
     $ltid = $_SESSION["lecturerid"];
+    $name = $_REQUEST['projectName'];
     $projectid = md5($projectid);
     $target_dir = "../projects/";
     $target_dir .= $projectid;
@@ -62,7 +62,8 @@ function uploadFile($target_dir)
     else 
     {
     if (move_uploaded_file($_FILES["projectFile"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["projectFile"]["name"]). " has been uploaded.";
+        // echo "The file ". basename( $_FILES["projectFile"]["name"]). " has been uploaded.";
+        echo "ProjectSuccessful";
     } 
     else 
     {
