@@ -125,12 +125,8 @@ $(() => {
         },
         success: function (data, status, jqXHR) {
           if (data.includes("ProjectSuccessful")) {
-            setMessage(
-              "Project created successfully! View page under construction",
-              "success"
-            );
             // Move to view project.
-            // window.location.href = "./view.php";
+            window.location.href = "./view.php";
           } else {
             // Setting error message if there's one
             $(".progress-bar").html("Error");
