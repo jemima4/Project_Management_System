@@ -99,11 +99,30 @@ $(() => {
       clearMessage();
     } else {
       $.ajax({
+        xhr: function () {
+          var xhr = new window.XMLHttpRequest();
+          xhr.upload.addEventListener(
+            "progress",
+            function (evt) {
+              if (evt.lengthComputable) {
+                var percentComplete = (evt.loaded / evt.total) * 100;
+                $(".progress-bar").width(percentComplete + "%");
+                $(".progress-bar").html(percentComplete + "%");
+              }
+            },
+            false
+          );
+          return xhr;
+        },
         url: "./includes/studentprocessing.php",
         type: "POST",
         data: formData,
         processData: false,
         contentType: false,
+        beforeSend: function () {
+          $(".progress").show();
+          $(".progress-bar").width("0%");
+        },
         success: function (data, status, jqXHR) {
           if (data.includes("ProjectSuccessful")) {
             setMessage(
@@ -114,6 +133,8 @@ $(() => {
             // window.location.href = "./view.php";
           } else {
             // Setting error message if there's one
+            $(".progress-bar").html("Error");
+            $(".progress-bar").addClass("bg-danger");
             setMessage(data, "danger");
             clearMessage();
           }

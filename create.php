@@ -27,6 +27,9 @@ if (empty($_SESSION['name'])) {
                         <div class="form-group">
                             <input type="submit" class="form-control btn btn-secondary" value="Create" id="create">
                         </div>
+                        <div class="progress" style="display: none">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 0%"></div>
+                        </div>
                     </form>
                 </div>
             </div>
