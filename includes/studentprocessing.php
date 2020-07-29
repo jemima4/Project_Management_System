@@ -105,6 +105,10 @@ function deleteProject()
 {
 }
 
+function viewDocument()
+{
+
+}
 function fetchProjectDetails()
 {
     global $db;
@@ -123,6 +127,7 @@ function fetchProjectDetails()
             $ptdetails = mysqli_fetch_assoc($result);
             $_SESSION["comment"] = $ptdetails['comment'];
             $_SESSION["grade"] = $ptdetails['grade'];
+            $_SESSION["path"] = $ptdetails['path'];
         }
     }
 }

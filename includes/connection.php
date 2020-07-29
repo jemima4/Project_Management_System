@@ -2,7 +2,7 @@
     session_start();
     $dbhost = "localhost";
     $dbuser = "root";
-    $dbpass = "DBtcby2120";
+    $dbpass = "";
     $dbname = "cupms_db";
     
     $db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
