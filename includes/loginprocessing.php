@@ -48,6 +48,7 @@ function loginStudent()
                     $ptdetails = mysqli_fetch_assoc($result);
                     //If there's no project session will have null stored in it
                     $_SESSION["projectid"] = $ptdetails['id'];
+                    $_SESSION["projectname"] = $ptdetails['name'];
                     $_SESSION["lecturername"] = $ltdetails['name'];
                     $_SESSION["ltdepartmentname"] = $ltdetails['departmentname']; 
                     $_SESSION["matricno"] = $stdetails['matricno'];
@@ -106,7 +107,7 @@ function loginLecturer()
                 {
                     $count = mysqli_num_rows($result);
                     $_SESSION["id"] = $ltdetails['id'];
-                    $_SESSION["numofstudents"] = $count;
+                    $_SESSION["numofstudent"] = $count;
                     $_SESSION["name"] = $ltdetails['name'];
                     $_SESSION["departmentname"] = $ltdetails['departmentname']; 
                     $_SESSION["email"] = $ltdetails['email'];
