@@ -2,6 +2,8 @@
 include "./includes/header.php";
 if (empty($_SESSION['name'])) {
     header("Location: index.php");
+} else if (empty($_SESSION['projectid']) AND $_SESSION['currentUser'] == 'student') {
+    header("Location: dashboard.php");
 }
 ?>
 <div class="dashboard">
@@ -31,10 +33,20 @@ if (empty($_SESSION['name'])) {
                     <div class="col-md-3 text-center">
                         <a href="#" class="btn btn-dark mb-3">Save Document</a>
 
-                        <form id="comment-form" >
+                        <?php if ($_SESSION['currentUser'] === "lecturer"): ?>
+                        <form id="grade-form" class="my-2" >
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1" class="text-light">Comments</label>
-                                <textarea placeholder="Comment on project" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                <label for="gradeInput" class="text-light">Grade</label>
+                                <input placeholder="Enter grade (1 to 10)" class="form-control" id="gradeInput">
+                            </div>
+                            <a type="submit" href="#" class="btn btn-dark mb-3">Assign</a>
+                        </form>
+                        <?php endif; ?>
+
+                        <form id="comment-form" class="my-2" >
+                            <div class="form-group">
+                                <label for="commentTextarea" class="text-light">Comments</label>
+                                <textarea placeholder="Comment on project" class="form-control" id="commentTextarea" rows="3"></textarea>
                             </div>
                             <a type="submit" href="#" class="btn btn-dark mb-3">Add Comment</a>
                         </form>
@@ -43,7 +55,7 @@ if (empty($_SESSION['name'])) {
                         <div class="card-body">
                             <h5 class="card-title text-dark"><i class="fa fa-comments"></i></h5>
                         </div>
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush comments-list">
                             <li class="list-group-item">I couldn't find all the articles you listed so i search for extra ones.
                                 <p class="text-muted small">By Student</p>
                             </li>

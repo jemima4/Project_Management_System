@@ -2,12 +2,15 @@
 include "./includes/header.php";
 if (empty($_SESSION['name'])) {
     header("Location: index.php");
+} else if (empty($_SESSION['projectid']) AND $_SESSION['currentUser'] == 'student') {
+    header("Location: dashboard.php");
 }
 ?>
 <div class="dashboard">
     <?php include "./includes/navbar.php" ?>
 
-    <div class="dashboard-view">
+    <?php if ($_SESSION['currentUser'] == 'student'): ?>
+      <div class="dashboard-view">
         <div class="jumbotron border-radius-0">
             <div class="container">
                 <h1 class="display-4">Project Title</h1>
@@ -46,6 +49,60 @@ if (empty($_SESSION['name'])) {
         </div>
         
     <div>
+    <?php elseif ($_SESSION['currentUser'] == 'lecturer'): ?>
+
+      <div class="dashboard-view">
+        <div class="jumbotron border-radius-0">
+            <div class="container">
+
+                <div class="d-flex flex-row align-items-center justify-content-between">
+                    <div>
+                      <h1 class="display-4">Assigned Students</h1>
+                      <p class="lead">To: <?= $_SESSION['name']; ?></p>
+                    </div>
+                    <form class="form-inline text-center">
+                        <input type="text" class="form-control mb-2 mr-sm-2" id="search" placeholder="Search...">
+                        <button type="submit" class="btn btn-dark mb-2">
+                        <i class="fa fa-search"></i>
+                        </button>
+                  </form>
+                </div>
+
+                <hr class="my-4">
+                <div class="p-5 bg-secondary align-items-center row">
+                  
+                <!-- Student card  -->
+                    <div class="col-md-4 text-center">
+                        <div class="card m-auto text-center rounded" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark"><i class="fa fa-id-card"></i></h5>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">
+                                  123456
+                                  <p class="text-muted small">Matric Number</p>
+                              </li>
+                              <li class="list-group-item">
+                                  Olga Simpson
+                                  <p class="text-muted small">Full Name</p>
+                              </li>
+                              <li class="list-group-item">
+                                  Article review for volcanic eruptions
+                                  <p class="text-muted small">Project Topic</p>
+                              </li>
+                            </ul>
+                            <a href="editDocument.php" class="btn btn-dark">View & Manage Project</a>
+                        </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+    <div>
+
+    <?php endif; ?>
+    
         
 </div>
 
