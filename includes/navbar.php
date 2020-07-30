@@ -18,7 +18,7 @@
                 <?php elseif($_SESSION['currentUser'] === "lecturer"): ?>
                     <a class="nav-item nav-link" href="./view.php">View Students</a>
                 <?php else: ?>
-                    <a id="view-project" class="nav-item nav-link" href="./view.php">View Project</a>
+                    <a class="nav-item nav-link view-project" href="./view.php">View Project</a>
                 <?php endif; ?>
             </div>
             <div class="dropdown ml-auto">

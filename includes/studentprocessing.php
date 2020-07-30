@@ -168,14 +168,17 @@ function fetchProjectDetails()
 function addComment()
 {
     $comment = $_SESSION["comment"];
-    $name = $_REQUEST['newComment'];
+    $newComment = $_REQUEST['newComment'];
     $id = $_SESSION['projectid'];
     if($_SESSION["currentUser"] == "student")
     {
         $type = "st";
     }
     else{$type = "lt";}
-    $comment .= ";".$type.",";
+
+    // Checking if comment is empty to prevent first empty array field that occurs on exploding
+    empty($comment) ?  $comment.= $type.",".$newComment : $comment .= ";".$type.",".$newComment;
+
     global $db;
     $projectid = $_SESSION["projectid"];
     $query = "UPDATE project_tb SET comment = '$comment' WHERE id = '$projectid'";
@@ -186,6 +189,8 @@ function addComment()
     }
     else
     {
+        // updating session with new concatenated comment string
+        $_SESSION['comment'] = $comment;
         echo "addCommentSuccesful";
     }
 }

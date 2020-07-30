@@ -1,9 +1,41 @@
 <?php 
 include "./includes/header.php";
+include "./includes/connection.php";
+
+// Comments fetch
+$commentsList = array();
+function fetchComments()
+{
+    global $db;
+    $projectid = $_SESSION['projectid'];
+    $query = "SELECT * FROM project_tb WHERE id = '$projectid'";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        die("Error fetching comments");
+    }
+    else
+    {
+        $ptdetails = mysqli_fetch_assoc($result);
+        $_SESSION['comment'] = $ptdetails['comment'];
+        $holder1 = explode(";",$_SESSION['comment']);
+
+        global $commentsList;
+        foreach($holder1 as $hold)
+        {
+            $holder2 = explode(",",$hold);
+            array_push($commentsList, $holder2);
+        }
+        $commentsList = array_reverse($commentsList);
+    }
+}
+
 if (empty($_SESSION['name'])) {
     header("Location: index.php");
 } else if (empty($_SESSION['projectid']) AND $_SESSION['currentUser'] == 'student') {
     header("Location: dashboard.php");
+} else {
+    fetchComments();
 }
 ?>
 <div class="dashboard">
@@ -17,9 +49,9 @@ if (empty($_SESSION['name'])) {
                         <h1 class="display-4"><?=$_SESSION["projectname"]; ?></h1>
                         <p class="lead">By: <?=$_SESSION['name']; ?></p>
                     </div>
-                    <div class="bg-dark rounded text-light px-3 py-1 text-center font-weight-bold">
+                    <div class="bg-dark rounded text-light px-3 py-1 pt-3 text-center font-weight-bold">
                         <p>GRADE</p>
-                        <p><?= isset($_SESSION['grade']) ? $_SESSION['grade'] : "N/A"; ?></p>
+                        <p><?= empty($_SESSION['grade']) ? "N/A" : $_SESSION['grade']; ?></p>
                     </div>
                 </div>
                 <hr class="my-4">
@@ -43,12 +75,13 @@ if (empty($_SESSION['name'])) {
                         </form>
                         <?php endif; ?>
 
-                        <form id="comment-form" class="my-2" >
+                        <form class="my-2 comment-form" >
                             <div class="form-group">
-                                <label for="commentTextarea" class="text-light">Comments</label>
-                                <textarea placeholder="Comment on project" class="form-control" id="commentTextarea" rows="3"></textarea>
+                                <label for="newComment" class="text-light">Comments</label>
+                                <textarea placeholder="Comment on project" name="newComment" class="form-control" id="newComment" rows="3"></textarea>
                             </div>
-                            <a type="submit" href="#" class="btn btn-dark mb-3">Add Comment</a>
+                            <p id="message"></p>
+                            <input type="submit" class="btn btn-dark mb-3" value="Add Comment" />
                         </form>
 
                         <div class="card m-auto text-center rounded" style="">
@@ -56,13 +89,13 @@ if (empty($_SESSION['name'])) {
                             <h5 class="card-title text-dark"><i class="fa fa-comments"></i></h5>
                         </div>
                         <ul class="list-group list-group-flush comments-list">
-                            <li class="list-group-item">I couldn't find all the articles you listed so i search for extra ones.
-                                <p class="text-muted small">By Student</p>
-                            </li>
-                            <li class="list-group-item">A very good work.
-                            <p class="text-muted small">By Supervisor</p>
 
+                            <?php foreach($commentsList as $commentItem): ?>
+                                <li class="list-group-item">
+                                    <?=$commentItem[1]; ?>
+                                <p class="text-muted small"><?= $commentItem[0] == "st" ? "By Student" : "By Lecturer" ; ?> </p>
                             </li>
+                            <?php endforeach; ?>
                         </ul>
                         </div>
                     </div>
