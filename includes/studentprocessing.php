@@ -97,7 +97,19 @@ function renameProject()
 function deleteProject()
 {
     global $db;
+    fetchProjectDetails();
     $ptid = $_SESSION['projectid'];
+    $query = "DELETE FROM project_tb WHERE id ='$ptid'";
+    $result = mysqli_query($db, $query);
+    if(!$result)
+    {
+        // die("Error while creating Project details. " .mysqli_error($db)); 
+        die("Error while deleting Project details. "); 
+    }
+    else
+    {
+        deleteFile($_SESSION['path']);
+    }
     
 }
 
