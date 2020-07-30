@@ -126,7 +126,7 @@ $(() => {
         success: function (data, status, jqXHR) {
           if (data.includes("ProjectSuccessful")) {
             // Move to view project.
-            window.location.href = "./view.php";
+            setTimeout(() => fetchProjectDetails(), 500);
           } else {
             // Setting error message if there's one
             $(".progress-bar").html("Error");
@@ -140,5 +140,32 @@ $(() => {
         },
       });
     }
+  });
+
+  // Handle moving to view project
+  const fetchProjectDetails = () => {
+    $.ajax({
+      url: "./includes/studentprocessing.php",
+      type: "POST",
+      data: { fetchproject: true },
+      success: function (data, status, jqXHR) {
+        if (data.includes("FetchSuccessful")) {
+          // Move to view project.
+          window.location.href = "./view.php";
+        } else {
+          // Setting error message if there's one
+          setMessage(data, "danger");
+          clearMessage();
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      },
+    });
+  };
+
+  $("#view-project").on("click", function (event) {
+    event.preventDefault();
+    fetchProjectDetails();
   });
 });

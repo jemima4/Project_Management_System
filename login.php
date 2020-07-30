@@ -5,7 +5,7 @@
 
 <div class="login bg-secondary">
 <div class="p-5 bg-dark">
-    <h1 class="login-title mb-4 text-light"><span id="brand">CU PMS</span> <?= $type; ?></h1>
+    <h1 class="login-title mb-4 text-light"><span id="brand">PMS</span> <?= $type; ?></h1>
 
     <?php if ($type === "Student"): ?>
         <form action ="./includes/loginprocessing.php" method="post" type=<?= $type; ?> class="login-form m-auto">

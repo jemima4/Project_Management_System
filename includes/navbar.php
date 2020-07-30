@@ -4,7 +4,7 @@
  ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a id="brand" class="navbar-brand" href="#">CU PMS</a>
+        <a id="brand" class="navbar-brand" href="#">PMS</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,7 +18,7 @@
                 <?php elseif($_SESSION['currentUser'] === "lecturer"): ?>
                     <a class="nav-item nav-link" href="./view.php">View Students</a>
                 <?php else: ?>
-                    <a class="nav-item nav-link" href="./view.php">View Project</a>
+                    <a id="view-project" class="nav-item nav-link" href="./view.php">View Project</a>
                 <?php endif; ?>
             </div>
             <div class="dropdown ml-auto">

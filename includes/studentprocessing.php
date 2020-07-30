@@ -3,7 +3,10 @@
 
 require "connection.php";
 if(isset($_POST['ctproject'])){createProject();}
+if(isset($_POST['fetchproject'])){fetchProjectDetails();}
+if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
+
 function createProject()
 {
     $projectid = $_SESSION["matricno"];
@@ -24,7 +27,7 @@ function createProject()
     {
         $_SESSION['projectname'] = $name;
         $query = "INSERT INTO project_tb (id, matricno, name, path, comment, grade, lectid) VALUES ('$projectid' , '$matricno', 
-        '$name','$target_file','','--', '$ltid')";
+        '$name','$target_file','','', '$ltid')";
         $result = mysqli_query($db, $query);
         if(!$result)
         {
@@ -94,6 +97,7 @@ function deleteFile($filepath)
 function renameProject()
 {
 }
+
 function deleteProject()
 {
     global $db;
@@ -108,7 +112,12 @@ function deleteProject()
     }
     else
     {
+        unset($_SESSION["projectid"]);
+        unset($_SESSION["comment"]);
+        unset($_SESSION["grade"]);
+        unset($_SESSION["path"]);
         deleteFile($_SESSION['path']);
+        header("Location: ../dashboard.php");
     }
     
 }
@@ -131,6 +140,7 @@ function viewDocument()
         echo $docText= $docObj->convertToText();
     }
 }
+
 function fetchProjectDetails()
 {
     global $db;
@@ -150,6 +160,7 @@ function fetchProjectDetails()
             $_SESSION["comment"] = $ptdetails['comment'];
             $_SESSION["grade"] = $ptdetails['grade'];
             $_SESSION["path"] = $ptdetails['path'];
+            echo "FetchSuccessful";
         }
     }
 }
@@ -175,7 +186,7 @@ function addComment()
     }
     else
     {
-        echo "addcommentsuccesful";
+        echo "addCommentSuccesful";
     }
 }
 

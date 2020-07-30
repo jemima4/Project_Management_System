@@ -7,14 +7,14 @@ if (empty($_SESSION['name'])) {
 }
 ?>
 <div class="dashboard">
-    <?php include "./includes/navbar.php" ?>
+    <?php include "./includes/navbar.php"; ?>
 
     <?php if ($_SESSION['currentUser'] == 'student'): ?>
       <div class="dashboard-view">
         <div class="jumbotron border-radius-0">
             <div class="container">
-                <h1 class="display-4">Project Title</h1>
-                <p class="lead">By: Student name</p>
+                <h1 class="display-4"><?=$_SESSION["projectname"]; ?></h1>
+                <p class="lead">By: <?=$_SESSION['name']; ?></p>
                 <hr class="my-4">
                 <div class="p-5 bg-secondary align-items-center row">
                     <div class="col-md-4 text-center">
@@ -22,7 +22,7 @@ if (empty($_SESSION['name'])) {
                         <div class="card-body">
                             <h5 class="card-title text-dark"><i class="fa fa-download"></i></h5>
                             <p class="card-text">Uploaded project document</p>
-                            <a href="#" class="btn btn-dark">Download</a>
+                            <a href="./projects/<?=$_SESSION['path']; ?>" class="btn btn-dark">Download</a>
                         </div>
                         </div>
                     </div>
@@ -117,11 +117,11 @@ if (empty($_SESSION['name'])) {
         </button>
       </div>
       <div class="modal-body">
-        <h4 class="text-danger">Are you sure you want to delete your project document ?</h4>
+        <h4 class="text-danger">Are you sure you want to delete your project ?</h4>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-dark" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-secondary">Delete</button>
+        <a href="./includes/studentprocessing.php?delete=confirmed" type="button" class="btn btn-secondary">Delete</a>
       </div>
     </div>
   </div>

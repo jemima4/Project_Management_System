@@ -14,12 +14,12 @@ if (empty($_SESSION['name'])) {
             <div class="container">
                <div class="d-flex flex-row align-items-center justify-content-between">
                     <div>
-                        <h1 class="display-4">Project Title</h1>
-                        <p class="lead">By: Student name</p>
+                        <h1 class="display-4"><?=$_SESSION["projectname"]; ?></h1>
+                        <p class="lead">By: <?=$_SESSION['name']; ?></p>
                     </div>
                     <div class="bg-dark rounded text-light px-3 py-1 text-center font-weight-bold">
                         <p>GRADE</p>
-                        <p>N/A</p>
+                        <p><?= isset($_SESSION['grade']) ? $_SESSION['grade'] : "N/A"; ?></p>
                     </div>
                 </div>
                 <hr class="my-4">
