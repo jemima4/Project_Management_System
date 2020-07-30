@@ -11,6 +11,6 @@
     <!-- Custom css  -->
     <link rel="stylesheet" href="./css/index.css?v=<?php echo time(); ?>">
     <noscript>Please enable javascript to use this application</noscript>
-    <title>CU PMS</title>
+    <title>PMS</title>
 </head>
 <body>

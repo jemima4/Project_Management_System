@@ -137,7 +137,8 @@ function viewDocument()
         $ptdetails = mysqli_fetch_assoc($result);
         $filePath = $ptdetails['path'];
         $docObj = new DocxConversion($filePath);
-        echo $docText= $docObj->convertToText();
+        $docText= $docObj->convertToText();
+        $_SESSION['docContent'] = $docText;
     }
 }
 
@@ -160,6 +161,8 @@ function fetchProjectDetails()
             $_SESSION["comment"] = $ptdetails['comment'];
             $_SESSION["grade"] = $ptdetails['grade'];
             $_SESSION["path"] = $ptdetails['path'];
+            // Added to read document while fetching project details.
+            viewDocument();
             echo "FetchSuccessful";
         }
     }

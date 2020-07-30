@@ -59,7 +59,12 @@ if (empty($_SESSION['name'])) {
                     
                     <div class="col-md-9 text-center">
                         <div class="m-auto text-center bg-white rounded mb-2 pt-2" style="min-height: 100vh;">
-                            Text Editor here
+                            <h3 class="p-1 pb-2">Project Document</h3>
+                            <div class="form-group">
+                                <textarea placeholder="Doc contents here" name="docContent" class="form-control" id="docContent" rows="30">
+                                    <?= $_SESSION['docContent']; ?>
+                                </textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
@@ -90,12 +95,22 @@ if (empty($_SESSION['name'])) {
                         </div>
                         <ul class="list-group list-group-flush comments-list">
 
+                        <?php if(!empty($_SESSION['comment'])): ?>
+
                             <?php foreach($commentsList as $commentItem): ?>
                                 <li class="list-group-item">
                                     <?=$commentItem[1]; ?>
                                 <p class="text-muted small"><?= $commentItem[0] == "st" ? "By Student" : "By Lecturer" ; ?> </p>
                             </li>
                             <?php endforeach; ?>
+
+                        <?php else: ?>
+                            <li class="list-group-item">
+                                No comments yet.
+                            </li>
+                        <?php endif; ?>
+
+
                         </ul>
                         </div>
                     </div>
