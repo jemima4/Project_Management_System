@@ -84,20 +84,49 @@ function uploadFile($target_dir, $projectid,$name)
 
 function deleteFile($filepath)
 {
+    $dir = "../";
+    $holder1 = explode("/",$filepath,-1);
+    foreach($holder1 as $hold)
+    {
+        $dir .= $hold."/";
+    }
+    $filePath = $dir;
     //Experimental
-    if(is_writable($filepath))
+    // if(is_writable($filepath))
+    // {
+    //     unlink(dirname(__FILE__) . $filepath);
+    // }
+    // else
+    // {
+    //     echo "File is not writable";
+    // }
+    if(is_dir($filePath))
     {
-        unlink(dirname(__FILE__) . $filepath);
+        $files = glob($filePath . '*', GLOB_MARK);
+        foreach($files as $file)
+        {
+            unlink($file);
+        }
+        rmdir($filePath);
     }
-    else
+    elseif(is_file($filePath))
     {
-        echo "File is not writable";
+        unlink($filePath);
     }
+    // if(!unlink($filePath)) {  
+    //     echo ("cannot be deleted due to an error");  
+    // }  
+    // else {  
+    //     echo ("$filePath has been deleted");  
+    // }
 }
 function renameProject()
 {
 }
-
+function savingEdits()
+{
+    
+}
 function deleteProject()
 {
     global $db;

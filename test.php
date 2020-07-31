@@ -1,4 +1,112 @@
+
 <?php
+require_once 'dependencies/vendor/autoload.php';
+require_once 'dependencies/vendor/phpoffice/phpword/src/PhpWord/PhpWord.php';
+use PhpOffice\PhpWord;
+
+// Download Composer and Install phpword with composer into a folder named dependencies in the project, 
+//then try to call it cause i cant seem to call it
+editingdoc();
+function editingdoc()
+{
+    // $phpword = new PhpWord();
+    $phpWord = new \PhpOffice\PhpWord\PhpWord();
+    $main_section = $phpword->createSection();
+    $main_section->addText('Hi, welcome to Kvcodes Blog!');
+    $codes = PHPWord_IOFactory::createWriter($phpword, 'Word2007');
+    $codes->save('projects/Hello.docx');
+}
+
+// <iframe src="https://docs.google.com/gview?url=http://remote.url.tld/path/to/document.doc&embedded=true"></iframe>
+// <iframe src='https://view.officeapps.live.com/op/embed.aspx?src=http://remote.url.tld/path/to/document.doc' width='1366px' height='623px' frameborder='0'>This is an embedded <a target='_blank' href='http://office.com'>Microsoft Office</a> document, powered by <a target='_blank' href='http://office.com/webapps'>Office Online</a>.</iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //test fucntion for conversion
 // $myfile = fopen("projects/e10adc3949ba59abbe56e057f20f883e/10631349.docx", "r") or die("Unable to open file!");
 // $holder =  fread($myfile,filesize("projects/e10adc3949ba59abbe56e057f20f883e/10631349.docx"));
@@ -171,7 +279,7 @@ function pptx_to_text($input_file){
     }
 
 }
-deleteFile($filePath);
+// deleteFile($filePath);
 function deleteFile($filePath)
 {
     echo "Delete file running";
