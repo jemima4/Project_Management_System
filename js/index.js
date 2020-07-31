@@ -126,11 +126,74 @@ $(() => {
         success: function (data, status, jqXHR) {
           if (data.includes("ProjectSuccessful")) {
             // Move to view project.
-            window.location.href = "./view.php";
+            setTimeout(() => fetchProjectDetails(), 500);
           } else {
             // Setting error message if there's one
             $(".progress-bar").html("Error");
             $(".progress-bar").addClass("bg-danger");
+            setMessage(data, "danger");
+            clearMessage();
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        },
+      });
+    }
+  });
+
+  // Handle moving to view project
+  const fetchProjectDetails = () => {
+    $.ajax({
+      url: "./includes/studentprocessing.php",
+      type: "POST",
+      data: { fetchproject: true },
+      success: function (data, status, jqXHR) {
+        if (data.includes("FetchSuccessful")) {
+          // Move to view project.
+          window.location.href = "./view.php";
+        } else {
+          // Setting error message if there's one
+          setMessage(data, "danger");
+          clearMessage();
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      },
+    });
+  };
+
+  $(".view-project").on("click", function (event) {
+    event.preventDefault();
+    fetchProjectDetails();
+  });
+
+  // Handle add comment
+  $(".comment-form").on("submit", function (e) {
+    e.preventDefault();
+    const element = $(".comment-form")[0];
+    const formData = new FormData(element);
+    formData.append("addcomment", true);
+
+    const newComment = $($(".comment-form textarea")[0]).val();
+
+    if (newComment.trim() === "") {
+      setMessage("Please enter a comment!", "warning");
+      clearMessage();
+    } else {
+      $.ajax({
+        url: "./includes/studentprocessing.php",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status, jqXHR) {
+          if (data.includes("addCommentSuccesful")) {
+            // Move to view project.
+            window.location.reload();
+          } else {
+            // Setting error message if there's one
             setMessage(data, "danger");
             clearMessage();
           }

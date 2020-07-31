@@ -3,7 +3,10 @@
 
 require "connection.php";
 if(isset($_POST['ctproject'])){createProject();}
+if(isset($_POST['fetchproject'])){fetchProjectDetails();}
+if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
+
 function createProject()
 {
     $projectid = $_SESSION["matricno"];
@@ -24,7 +27,7 @@ function createProject()
     {
         $_SESSION['projectname'] = $name;
         $query = "INSERT INTO project_tb (id, matricno, name, path, comment, grade, lectid) VALUES ('$projectid' , '$matricno', 
-        '$name','$target_file','','--', '$ltid')";
+        '$name','$target_file','','', '$ltid')";
         $result = mysqli_query($db, $query);
         if(!$result)
         {
@@ -94,6 +97,7 @@ function deleteFile($filepath)
 function renameProject()
 {
 }
+
 function deleteProject()
 {
     global $db;
@@ -108,7 +112,12 @@ function deleteProject()
     }
     else
     {
+        unset($_SESSION["projectid"]);
+        unset($_SESSION["comment"]);
+        unset($_SESSION["grade"]);
+        unset($_SESSION["path"]);
         deleteFile($_SESSION['path']);
+        header("Location: ../dashboard.php");
     }
     
 }
@@ -128,9 +137,11 @@ function viewDocument()
         $ptdetails = mysqli_fetch_assoc($result);
         $filePath = $ptdetails['path'];
         $docObj = new DocxConversion($filePath);
-        echo $docText= $docObj->convertToText();
+        $docText= $docObj->convertToText();
+        $_SESSION['docContent'] = $docText;
     }
 }
+
 function fetchProjectDetails()
 {
     global $db;
@@ -150,6 +161,9 @@ function fetchProjectDetails()
             $_SESSION["comment"] = $ptdetails['comment'];
             $_SESSION["grade"] = $ptdetails['grade'];
             $_SESSION["path"] = $ptdetails['path'];
+            // Added to read document while fetching project details.
+            viewDocument();
+            echo "FetchSuccessful";
         }
     }
 }
@@ -157,11 +171,14 @@ function fetchProjectDetails()
 function addComment()
 {
     $comment = $_SESSION["comment"];
-    $newcomment = $_REQUEST['newComment'];
+    $newComment = $_REQUEST['newComment'];
     $id = $_SESSION['projectid'];
     if($_SESSION["currentUser"] == "student"){$type = "st";}
     else{$type = "lt";}
-    $comment .= ";".$type.",".$newcomment;
+
+    // Checking if comment is empty to prevent first empty array field that occurs on exploding
+    empty($comment) ?  $comment.= $type.",".$newComment : $comment .= ";".$type.",".$newComment;
+
     global $db;
     $projectid = $_SESSION["projectid"];
     $query = "UPDATE project_tb SET comment = '$comment' WHERE id = '$projectid'";
@@ -172,7 +189,9 @@ function addComment()
     }
     else
     {
-        echo "addcommentsuccesful";
+        // updating session with new concatenated comment string
+        $_SESSION['comment'] = $comment;
+        echo "addCommentSuccesful";
     }
 }
 

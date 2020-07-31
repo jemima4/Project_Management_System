@@ -1,4 +1,5 @@
 <?php 
+include "./includes/session.php";
 include "./includes/header.php";
 if (empty($_SESSION['name'])) {
     header("Location: index.php");
