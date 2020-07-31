@@ -2,10 +2,13 @@
 //Contains student CRUD functions
 
 require "connection.php";
+require "docmanipulation.php";
 if(isset($_POST['ctproject'])){createProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
 if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
+if(isset($_POST['changepassword'])){changePassword();}
+
 
 function createProject()
 {
@@ -258,93 +261,23 @@ function fetchComments()
     }
 }
 
-class DocxConversion{
-    private $filename;
-
-    public function __construct($filePath) {
-        $this->filename = $filePath;
+function changePassword()
+{
+    global $db;
+    $newPassword = $_REQUEST['newpassword'];
+    $matricno = $_SESSION['matricno'];
+    $newPassword = md5($newPassword);
+    $query = "UPDATE student_tb SET password = '$newPassword' WHERE matricno = '$matricno'";
+    $result = mysqli_query($db, $query);
+    if(!$result)
+    {
+        die("Error while updating password. "); 
     }
-
-    private function read_doc() {
-        $fileHandle = fopen($this->filename, "r");
-        $line = @fread($fileHandle, filesize($this->filename));   
-        $lines = explode(chr(0x0D),$line);
-        $outtext = "";
-        foreach($lines as $thisline)
-          {
-            $pos = strpos($thisline, chr(0x00));
-            if (($pos !== FALSE)||(strlen($thisline)==0))
-              {
-              } else {
-                $outtext .= $thisline." ";
-              }
-          }
-         $outtext = preg_replace("/[^a-zA-Z0-9\s\,\.\-\n\r\t@\/\_\(\)]/","",$outtext);
-        return $outtext;
+    else
+    {
+        echo "passwordUpdated";
     }
-
-    private function read_docx(){
-
-        $striped_content = '';
-        $content = '';
-
-        $zip = zip_open($this->filename);
-
-        if (!$zip || is_numeric($zip)) return false;
-
-        while ($zip_entry = zip_read($zip)) {
-
-            if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
-
-            if (zip_entry_name($zip_entry) != "word/document.xml") continue;
-
-            $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-
-            zip_entry_close($zip_entry);
-        }// end while
-
-        zip_close($zip);
-
-        // $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
-        // $content = str_replace('</w:r></w:p>', "\r\n", $content);
-        // $striped_content = strip_tags($content);
-
-        $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
-        $content = str_replace('</w:r></w:p>', "\r\n", $content);
-        $content = preg_replace('/<w:p w[0-9-Za-z]+:[a-zA-Z0-9]+="[a-zA-z"0-9 :="]+">/',"\n\r",$content);
-        $content = preg_replace('/<w:tr>/',"\n\r",$content);
-        $content = preg_replace('/<w:tab\/>/',"\t",$content);
-        $content = preg_replace('/<\/w:p>/',"\n\r",$content);
-        $striped_content = strip_tags($content);
-
-        return $striped_content;
-    }
-
-
-    public function convertToText() {
-
-        if(isset($this->filename) && !file_exists($this->filename)) {
-            return "File Not exists";
-        }
-
-        $fileArray = pathinfo($this->filename);
-        $file_ext  = $fileArray['extension'];
-        if($file_ext == "doc" || $file_ext == "docx" || $file_ext == "xlsx" || $file_ext == "pptx")
-        {
-            if($file_ext == "doc") {
-                return $this->read_doc();
-            } elseif($file_ext == "docx") {
-                return $this->read_docx();
-            } elseif($file_ext == "xlsx") {
-                return $this->xlsx_to_text();
-            }elseif($file_ext == "pptx") {
-                return $this->pptx_to_text();
-            }
-        } else {
-            return "Invalid File Type";
-        }
-    }
-
 }
+
 ?>
 
