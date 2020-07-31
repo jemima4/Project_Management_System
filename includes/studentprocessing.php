@@ -157,14 +157,11 @@ function fetchProjectDetails()
 function addComment()
 {
     $comment = $_SESSION["comment"];
-    $name = $_REQUEST['newComment'];
+    $newcomment = $_REQUEST['newComment'];
     $id = $_SESSION['projectid'];
-    if($_SESSION["currentUser"] == "student")
-    {
-        $type = "st";
-    }
+    if($_SESSION["currentUser"] == "student"){$type = "st";}
     else{$type = "lt";}
-    $comment .= ";".$type.",";
+    $comment .= ";".$type.",".$newcomment;
     global $db;
     $projectid = $_SESSION["projectid"];
     $query = "UPDATE project_tb SET comment = '$comment' WHERE id = '$projectid'";
