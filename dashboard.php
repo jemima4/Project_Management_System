@@ -17,7 +17,7 @@
                 <p class="lead">Welcome to CU Project Management System</p>
                 <hr class="my-4">
                 <p>What do you want to do?</p>
-                <a class="btn btn-secondary btn-lg mb-1" href="view.php" role="button">View and Manage Assigned Students</a>
+                <a type="<?= $_SESSION['currentUser']; ?>" class="btn btn-secondary btn-lg mb-1 view-project" href="#" role="button">View and Manage Assigned Students</a>
             </div>
         </div>
         <div class="container">
@@ -57,7 +57,7 @@
                 <?php if(!isset($_SESSION["projectid"])): ?>
                     <a class="btn btn-dark btn-lg mb-1" href="create.php" role="button">Create New Project</a>
                 <?php else: ?>
-                    <a class="btn btn-secondary btn-lg mb-1 view-project" href="#" role="button">View and Manage Project</a>
+                    <a type="<?= $_SESSION['currentUser']; ?>" class="btn btn-secondary btn-lg mb-1 view-project" href="#" role="button">View and Manage Project</a>
                 <?php endif; ?>
             </div>
         </div>

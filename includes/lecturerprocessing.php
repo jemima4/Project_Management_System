@@ -45,14 +45,16 @@ function viewStudents()
                 $ptdetails = mysqli_fetch_array($result1);
                 $ptname = $ptdetails['name'];
                 $ptid = $ptdetails['id'];
-                $studentdetail = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname, 
+                $studentdetailsItem = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname, 
                 'level'=>$level,'projectname'=> $ptname,'projectid'=> $ptid);
-                array_push($studentdetails, $studentdetail); 
+                array_push($studentdetails, $studentdetailsItem); 
             }
             $i=$i +1;
         } 
     }
-    echo $studentdetails;
+    echo "FetchSuccessful";
+    // echo $studentdetails;
+    $_SESSION['assignedStudents'] = $studentdetails;
 }
 
 function addComment()

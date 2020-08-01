@@ -51,7 +51,6 @@ if (empty($_SESSION['name'])) {
         
     <div>
     <?php elseif ($_SESSION['currentUser'] == 'lecturer'): ?>
-
       <div class="dashboard-view">
         <div class="jumbotron border-radius-0">
             <div class="container">
@@ -73,21 +72,23 @@ if (empty($_SESSION['name'])) {
                 <div class="p-5 bg-secondary align-items-center row">
                   
                 <!-- Student card  -->
+                <?php foreach($_SESSION['assignedStudents'] as $student): ?>
+
                     <div class="col-md-4 text-center">
                         <div class="card m-auto text-center rounded" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-dark"><i class="fa fa-id-card"></i></h5>
                             <ul class="list-group list-group-flush">
                               <li class="list-group-item">
-                                  123456
+                                  <?= $student['matricno'] ?>
                                   <p class="text-muted small">Matric Number</p>
                               </li>
                               <li class="list-group-item">
-                                  Olga Simpson
+                                  <?= $student['name'] ?>
                                   <p class="text-muted small">Full Name</p>
                               </li>
                               <li class="list-group-item">
-                                  Article review for volcanic eruptions
+                                  <?= $student['projectname'] ?>
                                   <p class="text-muted small">Project Topic</p>
                               </li>
                             </ul>
@@ -95,6 +96,8 @@ if (empty($_SESSION['name'])) {
                         </div>
                         </div>
                     </div>
+
+                <?php endforeach; ?>
 
                 </div>
             </div>

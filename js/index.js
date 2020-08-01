@@ -126,7 +126,10 @@ $(() => {
         success: function (data, status, jqXHR) {
           if (data.includes("ProjectSuccessful")) {
             // Move to view project.
-            setTimeout(() => fetchProjectDetails(), 500);
+            setTimeout(
+              () => fetchProjectDetails("./includes/studentprocessing.php"),
+              500
+            );
           } else {
             // Setting error message if there's one
             $(".progress-bar").html("Error");
@@ -143,11 +146,11 @@ $(() => {
   });
 
   // Handle moving to view project
-  const fetchProjectDetails = () => {
+  const fetchProjectDetails = (url) => {
     $.ajax({
-      url: "./includes/studentprocessing.php",
+      url: url,
       type: "POST",
-      data: { fetchproject: true },
+      data: { fetchproject: true, vwstudents: true },
       success: function (data, status, jqXHR) {
         if (data.includes("FetchSuccessful")) {
           // Move to view project.
@@ -164,9 +167,15 @@ $(() => {
     });
   };
 
+  // Handles students viewing project and lecturer viewing assigned students
   $(".view-project").on("click", function (event) {
     event.preventDefault();
-    fetchProjectDetails();
+    const currentUser = $(event.target).attr("type");
+    if (currentUser === "lecturer") {
+      fetchProjectDetails("./includes/lecturerprocessing.php");
+    } else if (currentUser === "student") {
+      fetchProjectDetails("./includes/studentprocessing.php");
+    }
   });
 
   // Handle add comment
