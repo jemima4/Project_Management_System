@@ -2,10 +2,10 @@
 require "connection.php";
 require "docmanipulation.php";
 if(isset($_POST['vwstudents'])){viewStudents();}
-if(isset($_POST['addcomment'])){addComment();}
+// if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['gradeproject'])){gradeProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
-if(isset($_POST['addcomment'])){addComment();}
+// if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['changepassword'])){changePassword();}
 if(isset($_POST['fetchEach'])){fetchEach($_POST['projectId'], $_POST['student']);}
 
@@ -169,7 +169,7 @@ function gradeProject()
     {
         // updating session with new concatenated comment string
         $_SESSION['grade'] = $newgrade;
-        echo "GradeUpdated";
+        echo "graded";
     }
 }
 

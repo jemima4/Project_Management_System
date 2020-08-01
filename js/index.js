@@ -1,7 +1,7 @@
 $(() => {
   // Error message controllers
-  const setMessage = (msg, alertType) => {
-    $("p#message").get(
+  const setMessage = (msg, alertType, id = "message") => {
+    $(`p#${id}`).get(
       0
     ).innerHTML = `<span class='text-${alertType}'>${msg}</span>`;
   };
@@ -209,6 +209,53 @@ $(() => {
         console.log(textStatus);
       },
     });
+  });
+
+  // Lecturer grade form handler
+  $("#grade-form input").on("keyup", function () {
+    $("#grade-form button").removeClass("disabled");
+  });
+
+  $("#grade-form").on("submit", function (event) {
+    event.preventDefault();
+    const element = $("#grade-form")[0];
+    const formData = new FormData(element);
+    formData.append("gradeproject", true);
+
+    const newgrade = $($("#grade-form input")[0]).val();
+
+    if (newgrade.trim() === "") {
+      setMessage("Please enter a grade!", "warning", "Gmessage");
+      clearMessage();
+    } else if (Number(newgrade) < 0 || Number(newgrade) > 100) {
+      setMessage(
+        "Please enter a valid grade (0 to 100)!",
+        "warning",
+        "Gmessage"
+      );
+      clearMessage();
+    } else {
+      $.ajax({
+        url: "./includes/lecturerprocessing.php",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status, jqXHR) {
+          if (data.includes("graded")) {
+            // reload on grade update
+            window.location.reload();
+          } else {
+            // Setting error message if there's one
+            setMessage(data, "danger", "Gmessage");
+            clearMessage();
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        },
+      });
+    }
   });
 
   // Handle add comment

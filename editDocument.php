@@ -51,7 +51,7 @@ if (empty($_SESSION['name'])) {
                     </div>
                     <div class="bg-dark rounded text-light px-3 py-1 pt-3 text-center font-weight-bold">
                         <p>GRADE</p>
-                        <p><?= empty($_SESSION['grade']) ? "N/A" : $_SESSION['grade']; ?></p>
+                        <p><?= empty($_SESSION['grade']) ? "N/A" : $_SESSION['grade']."%"; ?></p>
                     </div>
                 </div>
                 <hr class="my-4">
@@ -73,10 +73,11 @@ if (empty($_SESSION['name'])) {
                         <?php if ($_SESSION['currentUser'] === "lecturer"): ?>
                         <form id="grade-form" class="my-2" >
                             <div class="form-group">
-                                <label for="gradeInput" class="text-light">Grade</label>
-                                <input placeholder="Enter grade (1 to 10)" class="form-control" id="gradeInput">
+                                <label for="newgrade" class="text-light">Grade</label>
+                                <input value="<?= empty($_SESSION['grade']) ? "" : $_SESSION['grade']; ?>" placeholder="Enter grade (0 to 100)" name="newgrade" class="form-control" id="newgrade">
                             </div>
-                            <a type="submit" href="#" class="btn btn-dark mb-3">Assign</a>
+                            <p id="Gmessage"></p>
+                            <button type="submit" class="btn btn-dark mb-3 disabled">Assign</button>
                         </form>
                         <?php endif; ?>
 
@@ -98,10 +99,10 @@ if (empty($_SESSION['name'])) {
                         <?php if(!empty($_SESSION['comment'])): ?>
 
                             <?php foreach($commentsList as $commentItem): ?>
-                                <li class="list-group-item">
+                                <li class="list-group-item rounded-circle mb-1 border-secondary pb-3 shadow-sm <?= $commentItem[0] == "st" ? "text-left" : "text-right" ; ?>">
                                     <?=$commentItem[1]; ?>
-                                <p class="text-muted small"><?= $commentItem[0] == "st" ? "By Student" : "By Supervisor" ; ?> </p>
-                            </li>
+                                    <p class="text-muted small"><?= $commentItem[0] == "st" ? "By Student" : "By Supervisor" ; ?> </p>
+                                </li>
                             <?php endforeach; ?>
 
                         <?php else: ?>
