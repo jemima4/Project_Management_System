@@ -58,7 +58,7 @@ function viewStudents()
 function addComment()
 {
     $comment = $_SESSION["comment"];
-    $newComment = $_REQUEST['newComment'];
+    $newComment = mysqli_real_escape_string($_REQUEST['newComment']);
     $id = $_SESSION['projectid'];
     if($_SESSION["currentUser"] == "student"){$type = "st";}
     else{$type = "lt";}
@@ -145,7 +145,7 @@ function gradeProject()
 {
     global $db;
     $projectid = $_SESSION['projectid'];
-    $newgrade = $_REQUEST['newgrade'];
+    $newgrade = mysqli_real_escape_string($_REQUEST['newgrade']);
     $query = "UPDATE project_tb SET grade = '$newgrade' WHERE id = '$projectid'";
     $result = mysqli_query($db, $query);
     if(!$result)

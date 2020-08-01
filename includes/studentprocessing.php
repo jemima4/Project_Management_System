@@ -15,7 +15,7 @@ function createProject()
     $projectid = $_SESSION["matricno"];
     $matricno = $_SESSION["matricno"];
     $ltid = $_SESSION["lecturerid"];
-    $name = $_REQUEST['projectName'];
+    $name = mysqli_real_escape_string($_REQUEST['projectName']);
     $projectid = md5($projectid);
     $target_dir = "../projects/";
     $target_dir .= $projectid;
@@ -203,7 +203,7 @@ function fetchProjectDetails()
 function addComment()
 {
     $comment = $_SESSION["comment"];
-    $newComment = $_REQUEST['newComment'];
+    $newComment = mysqli_real_escape_string($_REQUEST['newComment']);
     $id = $_SESSION['projectid'];
     if($_SESSION["currentUser"] == "student"){$type = "st";}
     else{$type = "lt";}
