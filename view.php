@@ -72,6 +72,8 @@ if (empty($_SESSION['name'])) {
                 <div class="p-5 bg-secondary align-items-center row">
                   
                 <!-- Student card  -->
+                <?php if(count($_SESSION['assignedStudents']) > 0): ?>
+
                 <?php foreach($_SESSION['assignedStudents'] as $student): ?>
 
                     <div class="col-md-4 text-center">
@@ -92,12 +94,17 @@ if (empty($_SESSION['name'])) {
                                   <p class="text-muted small">Project Topic</p>
                               </li>
                             </ul>
-                            <a href="editDocument.php" class="btn btn-dark">View & Manage Project</a>
+                            <a project="<?=$student['projectid']; ?>" student="<?=$student['name']; ?>" href="#" class="btn btn-dark view-student">View & Manage Project</a>
                         </div>
                         </div>
                     </div>
 
                 <?php endforeach; ?>
+
+                <?php else:  ?>
+                    <h3 class="text-white">You have no assigned student.</h3>
+                <?php endif; ?>
+
 
                 </div>
             </div>

@@ -127,7 +127,10 @@ $(() => {
           if (data.includes("ProjectSuccessful")) {
             // Move to view project.
             setTimeout(
-              () => fetchProjectDetails("./includes/studentprocessing.php"),
+              () =>
+                fetchProjectDetails("./includes/studentprocessing.php", {
+                  fetchproject: true,
+                }),
               500
             );
           } else {
@@ -146,11 +149,11 @@ $(() => {
   });
 
   // Handle moving to view project
-  const fetchProjectDetails = (url) => {
+  const fetchProjectDetails = (url, params) => {
     $.ajax({
       url: url,
       type: "POST",
-      data: { fetchproject: true, vwstudents: true },
+      data: params,
       success: function (data, status, jqXHR) {
         if (data.includes("FetchSuccessful")) {
           // Move to view project.
@@ -172,10 +175,40 @@ $(() => {
     event.preventDefault();
     const currentUser = $(event.target).attr("type");
     if (currentUser === "lecturer") {
-      fetchProjectDetails("./includes/lecturerprocessing.php");
+      fetchProjectDetails("./includes/lecturerprocessing.php", {
+        vwstudents: true,
+      });
     } else if (currentUser === "student") {
-      fetchProjectDetails("./includes/studentprocessing.php");
+      fetchProjectDetails("./includes/studentprocessing.php", {
+        fetchproject: true,
+      });
     }
+  });
+
+  // Lecturer viewing each student
+  $(".view-student").on("click", function (event) {
+    event.preventDefault();
+    const projectId = $(event.target).attr("project");
+    const student = $(event.target).attr("student");
+
+    $.ajax({
+      url: "./includes/lecturerprocessing.php",
+      type: "POST",
+      data: { fetchEach: true, projectId, student },
+      success: function (data, status, jqXHR) {
+        if (data.includes("FetchSuccessful")) {
+          // Move to view project.
+          window.location.href = "./editDocument.php";
+        } else {
+          // Setting error message if there's one
+          setMessage(data, "danger");
+          clearMessage();
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      },
+    });
   });
 
   // Handle add comment

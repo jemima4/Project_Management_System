@@ -47,7 +47,7 @@ if (empty($_SESSION['name'])) {
                <div class="d-flex flex-row align-items-center justify-content-between">
                     <div>
                         <h1 class="display-4"><?=$_SESSION["projectname"]; ?></h1>
-                        <p class="lead">By: <?=$_SESSION['name']; ?></p>
+                        <p class="lead">By: <?= $_SESSION['currentUser'] === "student" ? $_SESSION['name'] : $_SESSION['selectedStudent']; ?></p>
                     </div>
                     <div class="bg-dark rounded text-light px-3 py-1 pt-3 text-center font-weight-bold">
                         <p>GRADE</p>
