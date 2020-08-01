@@ -90,11 +90,15 @@ if (empty($_SESSION['name'])) {
                                   <p class="text-muted small">Full Name</p>
                               </li>
                               <li class="list-group-item">
-                                  <?= $student['projectname'] ?>
+                                  <?= empty($student['projectname']) ? "-" : $student['projectname']; ?>
                                   <p class="text-muted small">Project Topic</p>
                               </li>
                             </ul>
+                            <?php if(empty($student['projectname'])):?>
+                              <a href="#" class="btn btn-secondary disabled" disabled>No project uploaded</a>
+                            <?php else: ?>
                             <a project="<?=$student['projectid']; ?>" student="<?=$student['name']; ?>" href="#" class="btn btn-dark view-student">View & Manage Project</a>
+                            <?php endif; ?>
                         </div>
                         </div>
                     </div>
