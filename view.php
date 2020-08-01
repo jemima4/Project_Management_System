@@ -5,7 +5,7 @@ if (empty($_SESSION['name'])) {
     header("Location: index.php");
 } else if (empty($_SESSION['projectid']) AND $_SESSION['currentUser'] == 'student') {
     header("Location: dashboard.php");
-} else {
+} else if ($_SESSION['currentUser'] == "lecturer") {
   $assignedStudents = array();
   if (isset($_GET['q']) && !empty($_GET['q'])) {
     $query = $_GET['q'];

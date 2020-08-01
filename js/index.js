@@ -63,6 +63,20 @@ $(() => {
       } else if (loginType === "Admin") {
         const email = uid;
         // Process info to backend
+        $.post(
+          "./includes/loginprocessing.php",
+          { adlogin: true, ademail: email, adpassword: password },
+          function (data, status) {
+            if (data.includes("loginSuccessful")) {
+              // Move to dashboard.
+              window.location.href = "./dashboard.php";
+            } else {
+              // Setting error message if there's one
+              setMessage(data, "danger");
+              clearMessage();
+            }
+          }
+        );
       }
     }
   });

@@ -101,7 +101,7 @@ if (empty($_SESSION['name'])) {
                             <?php foreach($commentsList as $commentItem): ?>
                                 <li class="list-group-item rounded-circle mb-1 border-secondary pb-3 shadow-sm <?= $commentItem[0] == "st" ? "text-left" : "text-right" ; ?>">
                                     <?=$commentItem[1]; ?>
-                                    <p class="text-muted small"><?= $commentItem[0] == "st" ? "By Student" : "By Supervisor" ; ?> </p>
+                                    <p class="text-muted small p-1 font-weight-bold"><?= $commentItem[0] == "st" ? "By Student" : "By Supervisor" ; ?> </p>
                                 </li>
                             <?php endforeach; ?>
 

@@ -86,8 +86,7 @@ function loginLecturer()
         $result = mysqli_query($db, $query);
         if(!$result)
         {
-            die("Database query failed"); 
-            echo "Details entered are incorrect"; 
+            die("Details entered are incorrect"); 
         }
         else
         {
@@ -100,8 +99,7 @@ function loginLecturer()
                 $result = mysqli_query($db, $query);
                 if(!$result)
                 {
-                    die("Database query failed"); 
-                    echo "Error fetching student details"; 
+                    die("Error fetching student details"); 
                 }
                 else
                 {
@@ -130,7 +128,7 @@ function loginAdmin()
     $query = "SELECT * FROM admin_tb ";
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
-        echo "<script> window.alert('Email is not vaild')</script>";
+        die("Invalid Email entered!");
     }
     else
     {
@@ -139,19 +137,22 @@ function loginAdmin()
         $result = mysqli_query($db, $query);
         if(!$result)
         {
-            die("Database query failed");
-            echo "<script> window.alert('Details entered are incorrect')</script>"; 
+            die("An error occurred while checking for user.");
         }
         else
         {
             $count = mysqli_num_rows($result);
             if($count == 1)
             {
-                echo "<script> window.alert('Welcome User')</script>";
+                $adminNameList = explode("@", $email);
+                $_SESSION["name"] = reset($adminNameList);
+                $_SESSION["email"] = $email;
+                $_SESSION["currentUser"] = "admin";
+                echo "loginSuccessful";
             }
             else
             {
-                echo "<script> window.alert('Details entered are incorrect')</script>"; 
+                die("Invalid credentials entered!"); 
             }
         }
     }    

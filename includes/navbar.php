@@ -17,13 +17,15 @@
                     <a class="nav-item nav-link" href="./create.php">Create Project</a>
                 <?php elseif($_SESSION['currentUser'] === "lecturer"): ?>
                     <a class="nav-item nav-link" href="./view.php">View Students</a>
+                <?php elseif($_SESSION['currentUser'] === "admin"): ?>
                 <?php else: ?>
                     <a class="nav-item nav-link view-project" href="./view.php">View Project</a>
                 <?php endif; ?>
             </div>
             <div class="dropdown ml-auto">
                 <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="assets/profile.png" width="30" height="30" loading="lazy" alt="Profile icon">
+                <?= ($_SESSION['currentUser'] == 'admin') ? "<i class='fa fa-cog'></i>" : "" ?>
+                <img src="assets/profile.png" width="30" height="30" loading="lazy" alt="Profile icon">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                     <h6 class="dropdown-header" disabled><?= $fullName ?></h6>
