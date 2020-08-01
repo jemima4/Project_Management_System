@@ -5,6 +5,22 @@ if (empty($_SESSION['name'])) {
     header("Location: index.php");
 } else if (empty($_SESSION['projectid']) AND $_SESSION['currentUser'] == 'student') {
     header("Location: dashboard.php");
+} else {
+  $assignedStudents = array();
+  if (isset($_GET['q']) && !empty($_GET['q'])) {
+    $query = $_GET['q'];
+    
+    foreach($_SESSION['assignedStudents'] as $key => $student) {
+      if (stristr($student['matricno'], $query) || stristr($student['name'], $query) || stristr($student['projectname'], $query)) {
+        // If it matches, we push to array
+        array_push($assignedStudents, $student);
+      } else {
+        // If no match, we do nothing
+      }
+    }
+  } else {
+    $assignedStudents = $_SESSION['assignedStudents'];
+  }
 }
 ?>
 <div class="dashboard">
@@ -60,8 +76,8 @@ if (empty($_SESSION['name'])) {
                       <h1 class="display-4">Assigned Students</h1>
                       <p class="lead">To: <?= $_SESSION['name']; ?></p>
                     </div>
-                    <form class="form-inline text-center">
-                        <input type="text" class="form-control mb-2 mr-sm-2" id="search" placeholder="Search...">
+                    <form class="form-inline text-center" method="GET">
+                        <input value="<?= isset($_GET['q']) ? $_GET['q'] : ""; ?>" name="q" type="text" class="form-control mb-2 mr-sm-2" id="search" placeholder="Search by name, id, project..">
                         <button type="submit" class="btn btn-dark mb-2">
                         <i class="fa fa-search"></i>
                         </button>
@@ -72,9 +88,9 @@ if (empty($_SESSION['name'])) {
                 <div class="p-5 bg-secondary align-items-center row">
                   
                 <!-- Student card  -->
-                <?php if(count($_SESSION['assignedStudents']) > 0): ?>
+                <?php if(count($assignedStudents) > 0): ?>
 
-                <?php foreach($_SESSION['assignedStudents'] as $student): ?>
+                <?php foreach($assignedStudents as $student): ?>
 
                     <div class="col-md-4 text-center">
                         <div class="card m-auto text-center rounded" style="width: 18rem;">
@@ -106,7 +122,7 @@ if (empty($_SESSION['name'])) {
                 <?php endforeach; ?>
 
                 <?php else:  ?>
-                    <h3 class="text-white">You have no assigned student.</h3>
+                    <h3 class="text-white">No assigned students found.</h3>
                 <?php endif; ?>
 
 
