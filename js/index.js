@@ -196,6 +196,17 @@ $(() => {
       fetchProjectDetails("./includes/studentprocessing.php", {
         fetchproject: true,
       });
+    } else if (currentUser === "admin") {
+      const target = $(event.target).attr("target");
+      if (target === "students") {
+        fetchProjectDetails("./includes/adminprocessing.php", {
+          viewstudents: true,
+        });
+      } else if (target === "lecturers") {
+        fetchProjectDetails("./includes/adminprocessing.php", {
+          viewlecturers: true,
+        });
+      }
     }
   });
 
@@ -295,6 +306,73 @@ $(() => {
           if (data.includes("addCommentSuccesful")) {
             // Move to view project.
             window.location.reload();
+          } else {
+            // Setting error message if there's one
+            setMessage(data, "danger");
+            clearMessage();
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(textStatus);
+        },
+      });
+    }
+  });
+
+
+  // Admin functionalities
+  // Create student
+  $(".admin-form").on("submit", function (event) {
+    event.preventDefault();
+    const element = $(".admin-form")[0];
+    const type = $(event.target).attr("type");
+
+    // Checking for empty fields
+    const inputValues = $(event.target).serializeArray();
+    let empty = false;
+    inputValues.every(({value}, index) => {
+      if(value === "") {
+        empty = true;
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    // Grabbing passwords
+    const password = $(".admin-form input[name='password']").val();
+    const rePassword = $(".admin-form input[name='rePassword']").val();
+
+    // Parsing all form data
+    const formData = new FormData(element);
+
+    if (type === "Students") {
+      formData.append("ctstudent", true);
+    } else if (type === "Lecturers") {
+      formData.append("ctlecturer", true);
+    }
+
+    if (empty) {
+      setMessage("Please fill in all fields!", "danger",);
+      clearMessage();
+    } else if (password !== rePassword) {
+      setMessage(
+        "Passwords do not match!",
+        "danger",
+      );
+      clearMessage();
+    } else {
+      $.ajax({
+        url: "./includes/adminprocessing.php",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status, jqXHR) {
+          if (data.includes("accountCreated")) {
+            // reload on grade update
+            setMessage("Account created successfully. Reloading...", "success");
+            setTimeout(()=> window.location.reload(), 2000);
           } else {
             // Setting error message if there's one
             setMessage(data, "danger");

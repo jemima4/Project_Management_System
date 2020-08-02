@@ -4,13 +4,18 @@ if(isset($_POST['ctstudent'])){createStudent();}
 if(isset($_POST['ctlecturer'])){createLecturer();}
 if(isset($_POST['etlecturer'])){editStudent();}
 if(isset($_POST['etlecturer'])){editLecturer();}
+// Viewing student and lecturers
+if(isset($_POST['viewstudents'])){viewStudents();}
+if(isset($_POST['viewlecturers'])){viewLecturers();}
+
 
  //will have admin crud processes for students and lecturers
 function createStudent()
 {
+    global $db;
     $matricno = $_REQUEST['matricno'];
     $name = $_REQUEST['name'];
-    $dptname = $_REQUEST['dptname'];
+    $dptname = $_REQUEST['departmentname'];
     $level = $_REQUEST['level'];
     $password = $_REQUEST['password'];
     $ltid = $_REQUEST['lecturerid'];
@@ -48,10 +53,12 @@ function createStudent()
         }
         else{echo "Lecturer Id doesnt exist";}
     }
+    echo "accountCreated";
 }
 
 function editStudent()
 {
+    global $db;
     $matricno = $_REQUEST['matricno'];
     $name = $_REQUEST['name'];
     $dptname = $_REQUEST['dptname'];
@@ -113,12 +120,14 @@ function viewStudents()
             $name = $stdetails['name'];
             $dptname = $stdetails['departmentname'];
             $level = $stdetails['level'];
-            $studentdetail = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname,'level'=>$level);
-            array_push($studentdetails, $studentdetail); 
+            $studentdetailsItem = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname,'level'=>$level);
+            array_push($studentdetails, $studentdetailsItem); 
             $i=$i +1;
         } 
     }
-    echo $studentdetails;
+    echo "FetchSuccessful";
+    $_SESSION['adminView'] = "Students";
+    $_SESSION['registeredUsers'] = $studentdetails;
 }
 function createLecturer()
 {
@@ -149,7 +158,9 @@ function viewLecturers()
             $i=$i +1;
         } 
     }
-    echo $lecturerdetails;
+    echo "FetchSuccessful";
+    $_SESSION['adminView'] = "Lecturers";
+    $_SESSION['registeredUsers'] = $lecturerdetails;
 }
 
 function editLecturer()

@@ -66,7 +66,7 @@
                 <div class="card-body">
                     <h5 class="card-title">No. of registered students</h5>
                     <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-dark rounded-circle text-light">Get me a value</li>
+                        <li class="list-group-item bg-secondary rounded-circle text-light">Get me a value</li>
                     </ul>
                 </div>
                 </div>
@@ -76,7 +76,7 @@
                 <div class="card-body">
                     <h5 class="card-title">No. of registered lecturers</h5>
                     <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-dark rounded-circle text-light">Get me a value</li>
+                        <li class="list-group-item bg-secondary rounded-circle text-light">Get me a value</li>
                     </ul>
                 </div>
                 </div>
