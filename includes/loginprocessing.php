@@ -125,8 +125,8 @@ function loginLecturer()
 
 function loginAdmin()
 {
-    $email = mysqli_real_escape_string($_REQUEST['ademail']); $password = mysqli_real_escape_string($_REQUEST['adpassword']);
     global $db;
+    $email = mysqli_real_escape_string($db, $_REQUEST['ademail']); $password = mysqli_real_escape_string($db, $_REQUEST['adpassword']);
     $query = "SELECT * FROM admin_tb ";
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {

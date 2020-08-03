@@ -134,7 +134,7 @@
 
       <?php if($_SESSION["adminView"] === "Students"): ?>
         
-        <form type="<?=$_SESSION["adminView"]; ?>" id="" action="#" method="post" class="admin-form m-auto">
+        <form mode="edit" type="<?=$_SESSION["adminView"]; ?>" id="" action="#" method="post" class="admin-form m-auto edit-form">
         <div class="form-group">
             <label class="text-dark" for="matricno">Matric Number</label>
             <input value="<?= $details['matricno']; ?>" type="text" class="form-control" placeholder="e.g. 12345678" id="matricno" name="matricno">
@@ -159,7 +159,7 @@
               <option value="#">We need the query here</option>
             </select>
         </div>
-        <p id="message"></p>
+        <p id="editMessage"></p>
         <div class="form-group">
             <input type="submit" class="form-control btn btn-secondary" value="Update Account" id="etstudent" name = "etstudent">
         </div>
@@ -167,32 +167,25 @@
 
       <?php elseif($_SESSION["adminView"] === "Lecturers"): ?>
 
-      <form type="<?=$_SESSION["adminView"]; ?>" id="" action="#" method="post" class="admin-form m-auto">
+      <form mode="edit" type="<?=$_SESSION["adminView"]; ?>" id="" action="#" method="post" class="admin-form m-auto edit-form">
         <div class="form-group">
-            <label class="text-dark" for="lecturerId">Lecturer Id</label>
-            <input type="text" class="form-control" placeholder="e.g. 12345678" id="lecturerId" name="lecturerId">
+            <label class="text-dark" for="id">Lecturer Id</label>
+            <input value="<?= $details['id']; ?>" type="text" class="form-control" placeholder="e.g. 12345678" id="id" name="id">
         </div>
         <div class="form-group">
-            <label class="text-dark" for="fullName">Full Name</label>
-            <input type="text" class="form-control" placeholder="e.g. John Doe" id="fullName" name="fullName">
+            <label class="text-dark" for="name">Full Name</label>
+            <input value="<?= $details['name']; ?>" type="text" class="form-control" placeholder="e.g. John Doe" id="name" name="name">
         </div>
         <div class="form-group">
             <label class="text-dark" for="email">Email Address</label>
-            <input type="text" class="form-control" placeholder="e.g. john@gmail.com" id="email" name="email">
+            <input value="<?= $details['email']; ?>" type="text" class="form-control" placeholder="e.g. john@gmail.com" id="email" name="email">
         </div>
         <div class="form-group">
-            <label class="text-dark" for="departmentName">Department Name</label>
-            <input type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentName" name="departmentName">
+            <label class="text-dark" for="departmentname">Department Name</label>
+            <input value="<?= $details['departmentname']; ?>" type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentname" name="departmentname">
         </div>
-        <div class="form-group">
-            <label class="text-dark" for="password">Temporary Password</label>
-            <input type="password" class="form-control" placeholder="* * * * * * * *" id="password" name ="password">
-        </div>
-        <div class="form-group">
-            <label class="text-dark" for="rePassword">Confirm Temporary Password</label>
-            <input type="password" class="form-control" placeholder="* * * * * * * *" id="rePassword" name ="rePassword">
-        </div>
-        <p id="message"></p>
+        
+        <p id="editMessage"></p>
         <div class="form-group">
             <input type="submit" class="form-control btn btn-secondary" value="Update Account" id="etlecturer" name = "etlecturer">
         </div>
