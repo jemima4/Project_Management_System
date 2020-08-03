@@ -58,14 +58,18 @@
         </div>
         <div class="form-group">
             <label class="text-dark" for="departmentname">Department Name</label>
-            <input type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentname" name="departmentname">
-        </div>
+            <select class="form-control" id="departmentname" name="departmentname">
+              <?php foreach($_SESSION['availableDepartments'] as $department): ?>
+                <option><?=$department['name']; ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
         <div class="form-group">
-            <label class="text-dark" for="name">Supervisor</label>
+            <label class="text-dark" for="lecturerid">Supervisor</label>
             <select class="form-control" id="lecturerid" name="lecturerid">
-              <option value="654321">Terra Baffoe</option>
-              <option value="954321">Seth Whenton</option>
-              <option value="#">We need the query here</option>
+              <?php foreach($_SESSION['availableLecturers'] as $lecturer): ?>
+                <option value="<?=$lecturer['id'] ?>"><?=$lecturer['name']; ?></option>
+              <?php endforeach; ?>
             </select>
         </div>
         <div class="form-group">
@@ -99,8 +103,12 @@
         </div>
         <div class="form-group">
             <label class="text-dark" for="departmentname">Department Name</label>
-            <input type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentname" name="departmentname">
-        </div>
+            <select class="form-control" id="departmentname" name="departmentname">
+              <?php foreach($_SESSION['availableDepartments'] as $department): ?>
+                <option><?=$department['name']; ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
         <div class="form-group">
             <label class="text-dark" for="password">Temporary Password</label>
             <input type="password" class="form-control" placeholder="* * * * * * * *" id="password" name ="password">
@@ -155,14 +163,26 @@
         </div>
         <div class="form-group">
             <label class="text-dark" for="departmentname">Department Name</label>
-            <input value="<?= $details['departmentname']; ?>" type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentname" name="departmentname">
+            <select class="form-control" id="departmentname" name="departmentname">
+              <?php foreach($_SESSION['availableDepartments'] as $department): ?>
+                <?php if($details['departmentname'] === $department['name']): ?>
+                  <option selected><?=$department['name']; ?></option>
+                <?php else: ?>
+                  <option><?=$department['name']; ?></option>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            </select>
         </div>
         <div class="form-group">
             <label class="text-dark" for="name">Supervisor</label>
-            <select value="<?= $details['matricno']; ?>" class="form-control" id="lecturerid" name="lecturerid">
-              <option value="654321">Terra Baffoe</option>
-              <option value="954321">Seth Whenton</option>
-              <option value="#">We need the query here</option>
+            <select class="form-control" id="lecturerid" name="lecturerid">
+              <?php foreach($_SESSION['availableLecturers'] as $lecturer): ?>
+                <?php if($details['lecturerid'] === $lecturer['id']): ?>
+                  <option value="<?=$lecturer['id']; ?>" selected><?=$lecturer['name']; ?></option>
+                <?php else: ?>
+                  <option value="<?=$lecturer['id']; ?>"><?=$lecturer['name']; ?></option>
+                <?php endif; ?>
+              <?php endforeach; ?>
             </select>
         </div>
         <p id="editMessage"></p>
@@ -188,8 +208,16 @@
         </div>
         <div class="form-group">
             <label class="text-dark" for="departmentname">Department Name</label>
-            <input value="<?= $details['departmentname']; ?>" type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentname" name="departmentname">
-        </div>
+            <select class="form-control" id="departmentname" name="departmentname">
+              <?php foreach($_SESSION['availableDepartments'] as $department): ?>
+                <?php if($details['departmentname'] === $department['name']): ?>
+                  <option selected><?=$department['name']; ?></option>
+                <?php else: ?>
+                  <option><?=$department['name']; ?></option>
+                <?php endif; ?>
+              <?php endforeach; ?>
+            </select>
+          </div>
         
         <p id="editMessage"></p>
         <div class="form-group">

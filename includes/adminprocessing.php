@@ -130,6 +130,8 @@ function viewStudents()
             $i=$i +1;
         } 
     }
+    viewLecturersList();
+    viewDepartments();
     echo "FetchSuccessful";
     $_SESSION['adminView'] = "Students";
     $_SESSION['registeredUsers'] = $studentdetails;
@@ -198,37 +200,13 @@ function viewLecturers()
             $i=$i +1;
         } 
     }
+    viewLecturersList();
+    viewDepartments();
     echo "FetchSuccessful";
     $_SESSION['adminView'] = "Lecturers";
     $_SESSION['registeredUsers'] = $lecturerdetails;
 }
-function viewLecturersMini()
-{
-    global $db;
-    $lecturerdetails = array();
-    $i = 0;
-    $query = "SELECT * FROM lecturer_tb";
-    $result = mysqli_query($db , $query);
-    if(!$result)
-    {
-        die("Error fetching lecturers");
-    }
-    else
-    {
-        $count = mysqli_num_rows($result);
-        while($i< $count)
-        {
-            $ltdetails = mysqli_fetch_assoc($result);
-            $id = $ltdetails['id'];
-            $name = $ltdetails['name'];
-            $lecturerdetailsItem = array('id' => $id ,'name'=>$name);
-            array_push($lecturerdetails, $lecturerdetailsItem); 
-            $i=$i +1;
-        } 
-    }
-    echo "FetchSuccessful";
-    $_SESSION['availableLecturers'] = $lecturerdetails;   
-}
+
 function editLecturer()
 {
     global $db;
@@ -266,32 +244,6 @@ function editLecturer()
     }   
 }
 
-function viewDepartments()
-{
-    global $db;
-    $departmentdetails = array();
-    $i = 0;
-    $query = "SELECT * FROM department_tb";
-    $result = mysqli_query($db , $query);
-    if(!$result)
-    {
-        die("Error fetching departments");
-    }
-    else
-    {
-        $count = mysqli_num_rows($result);
-        while($i< $count)
-        {
-            $dptdetails = mysqli_fetch_assoc($result);
-            $name = $dptdetails['name'];
-            $departmentdetailsItem = array('name'=>$name);
-            array_push($departmentdetails, $departmentdetailsItem); 
-            $i=$i +1;
-        } 
-    }
-    echo "FetchSuccessful";
-    $_SESSION['availableDepartments'] = $departmentdetails;      
-}
 
 function deleteStudent()
 {
@@ -374,5 +326,62 @@ function deleteFile($filepath)
     {
         unlink($filePath);
     }
+}
+
+// Select values functions
+function viewDepartments()
+{
+    global $db;
+    $departmentdetails = array();
+    $i = 0;
+    $query = "SELECT * FROM department_tb";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        die("Error fetching departments");
+    }
+    else
+    {
+        $count = mysqli_num_rows($result);
+        while($i< $count)
+        {
+            $dptdetails = mysqli_fetch_assoc($result);
+            $name = $dptdetails['name'];
+            $departmentdetailsItem = array('name'=>$name);
+            array_push($departmentdetails, $departmentdetailsItem); 
+            $i=$i +1;
+        } 
+    }
+    echo "FetchSuccessful";
+    $_SESSION['availableDepartments'] = $departmentdetails;      
+}
+
+
+function viewLecturersList()
+{
+    global $db;
+    $lecturerdetails = array();
+    $i = 0;
+    $query = "SELECT id, name FROM lecturer_tb";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        die("Error fetching lecturers");
+    }
+    else
+    {
+        $count = mysqli_num_rows($result);
+        while($i< $count)
+        {
+            $ltdetails = mysqli_fetch_assoc($result);
+            $id = $ltdetails['id'];
+            $name = $ltdetails['name'];
+            $lecturerdetailsItem = array('id' => $id ,'name'=>$name);
+            array_push($lecturerdetails, $lecturerdetailsItem); 
+            $i=$i +1;
+        } 
+    }
+    echo "FetchSuccessful";
+    $_SESSION['availableLecturers'] = $lecturerdetails;   
 }
 ?>
