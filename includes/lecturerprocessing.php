@@ -1,6 +1,7 @@
 <?php
 require "connection.php";
 require "docmanipulation.php";
+require "docprocessingHeader.php";
 if(isset($_POST['vwstudents'])){viewStudents();}
 if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['gradeproject'])){gradeProject();}
@@ -58,7 +59,7 @@ function viewStudents()
 function addComment()
 {
     $comment = $_SESSION["comment"];
-    $newComment = mysqli_real_escape_string($_REQUEST['newComment']);
+    $newComment = mysqli_real_escape_string($db, $_REQUEST['newComment']);
     $id = $_SESSION['projectid'];
     if($_SESSION["currentUser"] == "student"){$type = "st";}
     else{$type = "lt";}
@@ -145,7 +146,7 @@ function gradeProject()
 {
     global $db;
     $projectid = $_SESSION['projectid'];
-    $newgrade = mysqli_real_escape_string($_REQUEST['newgrade']);
+    $newgrade = mysqli_real_escape_string($db, $_REQUEST['newgrade']);
     $query = "UPDATE project_tb SET grade = '$newgrade' WHERE id = '$projectid'";
     $result = mysqli_query($db, $query);
     if(!$result)
@@ -178,6 +179,34 @@ function viewDocument()
         $docText= $docObj->convertToText();
         $_SESSION['docContent'] = $docText;
     }
+}
+function viewDocument2()
+{
+    global $db;
+    $ptid = $_SESSION['projectid'];
+    $query = "SELECT * FROM project_tb WHERE id='$ptid'";
+    $result = mysqli_query($db, $query);
+    if(!$result)
+    { 
+        die("Error fetching project path."); 
+    }
+    else
+    {
+        $ptdetails = mysqli_fetch_assoc($result);
+        $filePath = $ptdetails['path'];
+        $folderPath = "";
+        $folder = explode("/",$filePath);
+        $i = 0;
+        $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
+        $filename = explode(".",$folder[3]);
+        $filename = $filename[0];
+        // $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
+        $writers = array('HTML' => 'html');
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
+        write($phpWord, $filename, $writers , $folderPath);
+        $_SESSION['docContent'] = $folderPath.$filename."html";
+    }
+
 }
 
 function changePassword()

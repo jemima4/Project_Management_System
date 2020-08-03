@@ -12,15 +12,15 @@ if(isset($_POST['changepassword'])){changePassword();}
 
 function createProject()
 {
+    global $db;
     $projectid = $_SESSION["matricno"];
     $matricno = $_SESSION["matricno"];
     $ltid = $_SESSION["lecturerid"];
-    $name = mysqli_real_escape_string($_REQUEST['projectName']);
+    $name = mysqli_real_escape_string($db, $_REQUEST['projectName']);
     $projectid = md5($projectid);
     $target_dir = "../projects/";
     $target_dir .= $projectid;
     $target_dir .= "/";
-    global $db;
     $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
     $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     if(filecheck($target_dir) == 0) 
@@ -217,8 +217,9 @@ function fetchProjectDetails()
 
 function addComment()
 {
+    global $db;
     $comment = $_SESSION["comment"];
-    $newComment = mysqli_real_escape_string($_REQUEST['newComment']);
+    $newComment = mysqli_real_escape_string($db, $_REQUEST['newComment']);
     $id = $_SESSION['projectid'];
     if($_SESSION["currentUser"] == "student"){$type = "st";}
     else{$type = "lt";}
@@ -226,7 +227,6 @@ function addComment()
     // Checking if comment is empty to prevent first empty array field that occurs on exploding
     empty($comment) ?  $comment.= $type.",".$newComment : $comment .= ";".$type.",".$newComment;
 
-    global $db;
     $projectid = $_SESSION["projectid"];
     $query = "UPDATE project_tb SET comment = '$comment' WHERE id = '$projectid'";
     $result = mysqli_query($db, $query);
