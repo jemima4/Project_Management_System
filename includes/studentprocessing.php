@@ -212,14 +212,15 @@ function viewDocument2()
         $folderPath = "";
         $folder = explode("/",$filePath);
         $i = 0;
-        $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
+        // $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
+        $folderPath .= "./".$folder[1]."/".$folder[2] ;
         $filename = explode(".",$folder[3]);
         $filename = $filename[0];
         // $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
         $writers = array('HTML' => 'html');
         $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
         write($phpWord, $filename, $writers , $folderPath);
-        $_SESSION['docContent'] = $folderPath.$filename."html";
+        $_SESSION['docContent'] = $folderPath."/".$filename.".html";
     }
 
 }
