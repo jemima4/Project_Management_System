@@ -26,13 +26,10 @@ function viewdoc()
     $name = basename(__FILE__, '.php');
     $source = __DIR__ . "/projects/Hello.docx";
 
-    // echo date('H:i:s'), " Reading contents from `{$source}`", EOL;
     $phpWord = \PhpOffice\PhpWord\IOFactory::load($source);
-    // echo $phpWord;
-    // Save file
-
-
-    echo write($phpWord, basename(__FILE__, '.php'), $writers);
+    write($phpWord, basename(__FILE__, '.php'), $writers);
+    echo "<link href='./results/test.html' rel = 'import'/>";
+    include "./results/test.html";
 }
 
 

@@ -1,14 +1,14 @@
 <?php 
 //Contains student CRUD functions
-
+//New Viewing is called viewdocument2
 require "connection.php";
 require "docmanipulation.php";
+require "docprocessingHeader.php";
 if(isset($_POST['ctproject'])){createProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
 if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['changepassword'])){changePassword();}
-
 
 function createProject()
 {
@@ -87,24 +87,16 @@ function uploadFile($target_dir, $projectid,$name)
 
 function deleteFile($filepath)
 {
-    $dir = "../";
+    $dir = "";
     $holder1 = explode("/",$filepath,-1);
     foreach($holder1 as $hold)
     {
         $dir .= $hold."/";
     }
     $filePath = $dir;
-    //Experimental
-    // if(is_writable($filepath))
-    // {
-    //     unlink(dirname(__FILE__) . $filepath);
-    // }
-    // else
-    // {
-    //     echo "File is not writable";
-    // }
     if(is_dir($filePath))
     {
+        echo "hello";
         $files = glob($filePath . '*', GLOB_MARK);
         foreach($files as $file)
         {
@@ -116,12 +108,6 @@ function deleteFile($filepath)
     {
         unlink($filePath);
     }
-    // if(!unlink($filePath)) {  
-    //     echo ("cannot be deleted due to an error");  
-    // }  
-    // else {  
-    //     echo ("$filePath has been deleted");  
-    // }
 }
 function renameProject()
 {
@@ -144,11 +130,11 @@ function deleteProject()
     }
     else
     {
+        deleteFile($_SESSION['path']);
         unset($_SESSION["projectid"]);
         unset($_SESSION["comment"]);
         unset($_SESSION["grade"]);
         unset($_SESSION["path"]);
-        deleteFile($_SESSION['path']);
         header("Location: ../dashboard.php");
     }
     
@@ -172,6 +158,35 @@ function viewDocument()
         $docText= $docObj->convertToText();
         $_SESSION['docContent'] = $docText;
     }
+}
+
+function viewDocument2()
+{
+    global $db;
+    $ptid = $_SESSION['projectid'];
+    $query = "SELECT * FROM project_tb WHERE id='$ptid'";
+    $result = mysqli_query($db, $query);
+    if(!$result)
+    { 
+        die("Error fetching project path."); 
+    }
+    else
+    {
+        $ptdetails = mysqli_fetch_assoc($result);
+        $filePath = $ptdetails['path'];
+        $folderPath = "";
+        $folder = explode("/",$filePath);
+        $i = 0;
+        $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
+        $filename = explode(".",$folder[3]);
+        $filename = $filename[0];
+        // $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
+        $writers = array('HTML' => 'html');
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
+        write($phpWord, $filename, $writers , $folderPath);
+        $_SESSION['docContent'] = $folderPath.$filename."html";
+    }
+
 }
 
 function fetchProjectDetails()

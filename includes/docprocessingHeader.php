@@ -1,9 +1,9 @@
 <?php
-
+require_once '../dependencies/vendor/autoload.php';
 use PhpOffice\PhpWord\Settings;
 // $vendorDirPath = realpath(__DIR__ . '/vendor');
 // echo $vendorDirPath;
-$vendorDirPath = "dependencies/vendor";
+$vendorDirPath = "../dependencies/vendor";
 if (file_exists($vendorDirPath . '/autoload.php')) {
     require $vendorDirPath . '/autoload.php';
 } else {
@@ -25,7 +25,6 @@ Settings::loadConfig();
 
 $dompdfPath = $vendorDirPath . '/dompdf/dompdf';
 if (file_exists($dompdfPath)) {
-    echo "dddss";
     define('DOMPDF_ENABLE_AUTOLOAD', false);
     Settings::setPdfRenderer(Settings::PDF_RENDERER_DOMPDF, $vendorDirPath . '/dompdf/dompdf');
 }
@@ -79,7 +78,7 @@ if ($handle = opendir('.')) {
  *
  * @return string
  */
-function write($phpWord, $filename, $writers)
+function write($phpWord, $filename, $writers,$storagepath)
 {
     $result = '';
 
@@ -87,7 +86,8 @@ function write($phpWord, $filename, $writers)
     foreach ($writers as $format => $extension) {
         $result .= date('H:i:s') . " Write to {$format} format";
         if (null !== $extension) {
-            $targetFile = __DIR__ . "/results/{$filename}.{$extension}";
+            // $targetFile = __DIR__ . "/results/{$filename}.{$extension}";
+            $targetFile = $storagepath . "/{$filename}.{$extension}";
             $phpWord->save($targetFile, $format);
         } else {
             $result .= ' ... NOT DONE!';
