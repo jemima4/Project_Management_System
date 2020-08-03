@@ -8,9 +8,9 @@ if(isset($_POST['logoutUser'])){logOut();}
 //Sessions have been created in lecturer login
 function loginStudent()
 {
-    $matricno = mysqli_real_escape_string($_REQUEST['matricNo']);
-    $password = mysqli_real_escape_string($_REQUEST['stpassword']);
     global $db;
+    $matricno = mysqli_real_escape_string($db,$_REQUEST['matricNo']);
+    $password = mysqli_real_escape_string($db,$_REQUEST['stpassword']);
     $query = "SELECT * FROM student_tb ";
     $password = md5($password);
     $query .= " WHERE matricno = '$matricno' AND password = '$password'";
@@ -73,9 +73,9 @@ function loginStudent()
 
 function loginLecturer()
 {
-    $email = mysqli_real_escape_string($_REQUEST['ltemail']); 
-    $password = mysqli_real_escape_string($_REQUEST['ltpassword']);
     global $db;
+    $email = mysqli_real_escape_string($db,$_REQUEST['ltemail']); 
+    $password = mysqli_real_escape_string($db,$_REQUEST['ltpassword']);
     $query = "SELECT * FROM lecturer_tb ";
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
@@ -125,16 +125,20 @@ function loginLecturer()
 
 function loginAdmin()
 {
-    $email = mysqli_real_escape_string($_REQUEST['ademail']); $password = mysqli_real_escape_string($_REQUEST['adpassword']);
     global $db;
+    $email = mysqli_real_escape_string($db,$_REQUEST['ademail']); $password = mysqli_real_escape_string($db,$_REQUEST['adpassword']);
     $query = "SELECT * FROM admin_tb ";
+    $querylt ="SELECT * FROM lecturer_tb";
+    $queryst ="SELECT * FROM student_tb";
+    $resultlt = mysqli_query($db,$querylt);
+    $resultst = mysqli_query($db,$querylt);
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
         die("Invalid Email entered!");
     }
     else
     {
-        $password = md5($password);
+        // $password = md5($password);
         $query .= " WHERE email = '$email' AND password = '$password'";
         $result = mysqli_query($db, $query);
         if(!$result)
@@ -150,7 +154,15 @@ function loginAdmin()
                 $_SESSION["name"] = reset($adminNameList);
                 $_SESSION["email"] = $email;
                 $_SESSION["currentUser"] = "admin";
-                echo "loginSuccessful";
+                if(!$resultlt and !$resultst)
+                {
+                    die("An error occured when fetching registered users");
+                }
+                else{
+                    $_SESSION["numoflecturers"] = mysqli_num_rows($resultlt);
+                    $_SESSION["numofstudents"] = mysqli_num_rows($resultst);
+                    echo "loginSuccessful";
+                }
             }
             else
             {
