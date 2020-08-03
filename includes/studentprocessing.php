@@ -148,7 +148,7 @@ function reuploadingFile()
 function deleteProject()
 {
     global $db;
-    fetchProjectDetails();
+    // fetchProjectDetails();
     $ptid = $_SESSION['projectid'];
     $query = "DELETE FROM project_tb WHERE id ='$ptid'";
     $result = mysqli_query($db, $query);
