@@ -52,7 +52,7 @@ if (empty($_SESSION['name'])) {
                       <p class="lead">Manage registered <?=$_SESSION["adminView"]; ?></p>
                     </div>
                     <form class="form-inline text-center" method="GET">
-                        <input value="<?= isset($_GET['q']) ? $_GET['q'] : ""; ?>" name="q" type="text" class="form-control mb-2 mr-sm-2" id="search" placeholder="Search by name, id, project..">
+                        <input value="<?= isset($_GET['q']) ? $_GET['q'] : ""; ?>" name="q" type="text" class="form-control mb-2 mr-sm-2" id="search" placeholder="Search by name, id..">
                         <button type="submit" class="btn btn-dark mb-2">
                         <i class="fa fa-search"></i>
                         </button>

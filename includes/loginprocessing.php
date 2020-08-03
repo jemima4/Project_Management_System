@@ -126,7 +126,7 @@ function loginLecturer()
 function loginAdmin()
 {
     global $db;
-    $email = mysqli_real_escape_string($db,$_REQUEST['ademail']); $password = mysqli_real_escape_string($db,$_REQUEST['adpassword']);
+    $email = mysqli_real_escape_string($db, $_REQUEST['ademail']); $password = mysqli_real_escape_string($db, $_REQUEST['adpassword']);
     $query = "SELECT * FROM admin_tb ";
     $querylt ="SELECT * FROM lecturer_tb";
     $queryst ="SELECT * FROM student_tb";

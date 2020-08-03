@@ -62,10 +62,10 @@ function editStudent()
     global $db;
     $matricno = mysqli_real_escape_string($db,$_REQUEST['matricno']);
     $name = mysqli_real_escape_string($db,$_REQUEST['name']);
-    $dptname = mysqli_real_escape_string($db,$_REQUEST['dptname']);
+    $dptname = mysqli_real_escape_string($db,$_REQUEST['departmentname']);
     $level = mysqli_real_escape_string($db,$_REQUEST['level']);
     $ltid = mysqli_real_escape_string($db,$_REQUEST['lecturerid']);
-    $query = "UPDATE student_tb SET matricno = '$matricno', name = '$name', departmentname = '$dptname',
+    $query = "UPDATE student_tb SET matricno = '$matricno', name = '$name', departmentname = '$dptname', level = '$level',
     lecturerid = '$ltid' WHERE matricno = '$matricno'";
     $queryltid = "SELECT * FROM lecturer_tb WHERE id = '$ltid'";
     $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
@@ -81,7 +81,7 @@ function editStudent()
         //check if lecturer exists
         $count1 = mysqli_num_rows($result1);
         $count2 = mysqli_num_rows($result2);
-        if($count > 0)
+        if($count1 > 0)
         {
             //check if department exists
             if($count2 > 0)
@@ -92,7 +92,8 @@ function editStudent()
                     die("Error inserting to student table or Matric No exists");
                 }
                 else{
-                    echo "SuccessUpdatingStudent";
+                    viewStudents();
+                    echo "accountUpdated";
                 }
             }
             else{echo "Department doesn't exist";}
@@ -254,7 +255,8 @@ function editLecturer()
                 die("Error updating lecturer information");
             }
             else{
-                echo "SuccessUpdatingLecturer";
+                viewLecturers();
+                echo "accountUpdated";
             }
         }
         else{echo "Department doesn't exist";}

@@ -5,9 +5,13 @@ $(() => {
       0
     ).innerHTML = `<span class='text-${alertType}'>${msg}</span>`;
   };
-  const clearMessage = () =>
+  const clearMessage = (id) =>
     setTimeout(() => {
-      setMessage("");
+      if (id) {
+        setMessage("", "light", id);
+      } else {
+        setMessage("");
+      }
     }, 3000);
 
   // Login forms processing
@@ -319,19 +323,69 @@ $(() => {
     }
   });
 
-
   // Admin functionalities
-  // Create student
+  // $(".edit-form").on("submit", function(event) {
+  //   event.preventDefault();
+  //   // alert("Inna song");
+  //   setMessage("Inside bro", "danger", "editMessage");
+  // })
+
+  const processSubmission = (formData, op, msgField) => {
+    $.ajax({
+      url: "./includes/adminprocessing.php",
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (data, status, jqXHR) {
+        if (
+          data.includes("accountCreated") ||
+          data.includes("accountUpdated")
+        ) {
+          // reload on account creation
+          if (op === "edit") {
+            setMessage(
+              "Account updated successfully. Reloading...",
+              "success",
+              msgField
+            );
+            setTimeout(() => (window.location.href = "adminManage.php"), 2000);
+          } else {
+            setMessage(
+              "Account created successfully. Reloading...",
+              "success",
+              msgField
+            );
+            setTimeout(() => window.location.reload(), 2000);
+          }
+        } else {
+          // Setting error message if there's one
+          setMessage(data, "danger", msgField);
+          clearMessage();
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+      },
+    });
+  };
+
+  // Create and edit student and lecturer
+
   $(".admin-form").on("submit", function (event) {
     event.preventDefault();
     const element = $(event.target)[0];
     const type = $(event.target).attr("type");
+    const mode = $(event.target).attr("mode") || false;
+    const msgField = mode === "edit" ? "editMessage" : "message";
+    alert(msgField);
 
     // Checking for empty fields
     const inputValues = $(event.target).serializeArray();
+
     let empty = false;
-    inputValues.every(({value}, index) => {
-      if(value === "") {
+    inputValues.every(({ value }, index) => {
+      if (value === "") {
         empty = true;
         return false;
       } else {
@@ -340,49 +394,34 @@ $(() => {
     });
 
     // Grabbing passwords
-    const password = $(".admin-form input[name='password']").val();
-    const rePassword = $(".admin-form input[name='rePassword']").val();
+    const password = $(".admin-form input[name='password']").val() || true;
+    const rePassword = $(".admin-form input[name='rePassword']").val() || true;
 
     // Parsing all form data
     const formData = new FormData(element);
 
     if (type === "Students") {
-      formData.append("ctstudent", true);
+      if (mode === "edit") {
+        formData.append("etstudent", true);
+      } else {
+        formData.append("ctstudent", true);
+      }
     } else if (type === "Lecturers") {
-      formData.append("ctlecturer", true);
+      if (mode === "edit") {
+        formData.append("etlecturer", true);
+      } else {
+        formData.append("ctlecturer", true);
+      }
     }
 
     if (empty) {
-      setMessage("Please fill in all fields!", "danger",);
-      clearMessage();
+      setMessage("Please fill in all fields!", "danger", msgField);
+      clearMessage(msgField);
     } else if (password !== rePassword) {
-      setMessage(
-        "Passwords do not match!",
-        "danger",
-      );
-      clearMessage();
+      setMessage("Passwords do not match!", "danger", msgField);
+      clearMessage(msgField);
     } else {
-      $.ajax({
-        url: "./includes/adminprocessing.php",
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (data, status, jqXHR) {
-          if (data.includes("accountCreated")) {
-            // reload on grade update
-            setMessage("Account created successfully. Reloading...", "success");
-            setTimeout(()=> window.location.reload(), 2000);
-          } else {
-            // Setting error message if there's one
-            setMessage(data, "danger");
-            clearMessage();
-          }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-          console.log(textStatus);
-        },
-      });
+      processSubmission(formData, mode, msgField);
     }
   });
 });
