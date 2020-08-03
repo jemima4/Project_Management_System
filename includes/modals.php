@@ -80,6 +80,95 @@
 
       <form type="<?=$_SESSION["adminView"]; ?>" id="" action="#" method="post" class="admin-form m-auto">
         <div class="form-group">
+            <label class="text-dark" for="id">Lecturer Id</label>
+            <input type="text" class="form-control" placeholder="e.g. 12345678" id="id" name="id">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="name">Full Name</label>
+            <input type="text" class="form-control" placeholder="e.g. John Doe" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="email">Email Address</label>
+            <input type="text" class="form-control" placeholder="e.g. john@gmail.com" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="departmentname">Department Name</label>
+            <input type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentname" name="departmentname">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="password">Temporary Password</label>
+            <input type="password" class="form-control" placeholder="* * * * * * * *" id="password" name ="password">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="rePassword">Confirm Temporary Password</label>
+            <input type="password" class="form-control" placeholder="* * * * * * * *" id="rePassword" name ="rePassword">
+        </div>
+        <p id="message"></p>
+        <div class="form-group">
+            <input type="submit" class="form-control btn btn-secondary" value="Create Account" id="ctlecturer" name = "ctlecturer">
+        </div>
+        </form>
+
+        <?php endif; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit modal  -->
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit <?=$_SESSION["adminView"] === "Lecturers"? "Lecturer" : "Student"; ?> Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <?php $details = $registeredUsers[$_GET['selected']]; ?>
+
+      <?php if($_SESSION["adminView"] === "Students"): ?>
+        
+        <form type="<?=$_SESSION["adminView"]; ?>" id="" action="#" method="post" class="admin-form m-auto">
+        <div class="form-group">
+            <label class="text-dark" for="matricno">Matric Number</label>
+            <input value="<?= $details['matricno']; ?>" type="text" class="form-control" placeholder="e.g. 12345678" id="matricno" name="matricno">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="name">Full Name</label>
+            <input value="<?= $details['name']; ?>" type="text" class="form-control" placeholder="e.g. John Doe" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="level">Level</label>
+            <input value="<?= $details['level']; ?>" type="text" class="form-control" placeholder="e.g. 400" id="level" name="level">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="departmentname">Department Name</label>
+            <input value="<?= $details['departmentname']; ?>" type="text" class="form-control" placeholder="e.g. Chemistry" id="departmentname" name="departmentname">
+        </div>
+        <div class="form-group">
+            <label class="text-dark" for="name">Supervisor</label>
+            <select value="<?= $details['matricno']; ?>" class="form-control" id="lecturerid" name="lecturerid">
+              <option value="654321">Terra Baffoe</option>
+              <option value="954321">Seth Whenton</option>
+              <option value="#">We need the query here</option>
+            </select>
+        </div>
+        <p id="message"></p>
+        <div class="form-group">
+            <input type="submit" class="form-control btn btn-secondary" value="Update Account" id="etstudent" name = "etstudent">
+        </div>
+        </form>
+
+      <?php elseif($_SESSION["adminView"] === "Lecturers"): ?>
+
+      <form type="<?=$_SESSION["adminView"]; ?>" id="" action="#" method="post" class="admin-form m-auto">
+        <div class="form-group">
             <label class="text-dark" for="lecturerId">Lecturer Id</label>
             <input type="text" class="form-control" placeholder="e.g. 12345678" id="lecturerId" name="lecturerId">
         </div>
@@ -105,7 +194,7 @@
         </div>
         <p id="message"></p>
         <div class="form-group">
-            <input type="submit" class="form-control btn btn-secondary" value="Create Account" id="ctstudent" name = "ctstudent">
+            <input type="submit" class="form-control btn btn-secondary" value="Update Account" id="etlecturer" name = "etlecturer">
         </div>
         </form>
 
@@ -117,3 +206,4 @@
     </div>
   </div>
 </div>
+

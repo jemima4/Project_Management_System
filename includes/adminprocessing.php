@@ -2,7 +2,7 @@
 require "connection.php";
 if(isset($_POST['ctstudent'])){createStudent();}
 if(isset($_POST['ctlecturer'])){createLecturer();}
-if(isset($_POST['etlecturer'])){editStudent();}
+if(isset($_POST['etstudent'])){editStudent();}
 if(isset($_POST['etlecturer'])){editLecturer();}
 // Viewing student and lecturers
 if(isset($_POST['viewstudents'])){viewStudents();}
@@ -46,14 +46,14 @@ function createStudent()
                     die("Error inserting to student table".mysqli_error($db));
                 }
                 else{
-                    echo "SuccessCreatingStudent";
+                    viewStudents();
+                    echo "accountCreated";
                 }
             }
             else{echo "Department doesn't exist";}
         }
         else{echo "Lecturer Id doesnt exist";}
     }
-    echo "accountCreated";
 }
 
 function editStudent()
@@ -129,16 +129,18 @@ function viewStudents()
     $_SESSION['adminView'] = "Students";
     $_SESSION['registeredUsers'] = $studentdetails;
 }
+
 function createLecturer()
 {
-    $id = mysqli_real_escape_string($_REQUEST['id']);
-    $name = mysqli_real_escape_string($_REQUEST['name']);
-    $dptname = mysqli_real_escape_string($_REQUEST['dptname']);
+    global $db;
+    $id = $_REQUEST['id'];
+    $name = $_REQUEST['name'];
+    $departmentname = $_REQUEST['departmentname'];
     $password = md5($_REQUEST['$password']);
-    $email = mysqli_real_escape_string($_REQUEST['email']);
+    $email = $_REQUEST['email'];
     $query = "INSERT INTO lecturer_tb (id, name, email, password, departmentname) VALUES ('$id' , '$name', 
     '$email','$password','$departmentname')";
-    $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
+    $querydptname = "SELECT * FROM department_tb WHERE name = '$departmentname'";
     $result1 = mysqli_query($db, $querydptname);
     if(!$result1)
     {
@@ -157,7 +159,8 @@ function createLecturer()
                 die("Error updating lecturer information".mysqli_error($db));
             }
             else{
-                echo "SuccessUpdatingLecturer";
+                viewLecturers();
+                echo "accountCreated";
             }
         }
         else{echo "Department doesn't exist";}

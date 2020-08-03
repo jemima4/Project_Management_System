@@ -324,7 +324,7 @@ $(() => {
   // Create student
   $(".admin-form").on("submit", function (event) {
     event.preventDefault();
-    const element = $(".admin-form")[0];
+    const element = $(event.target)[0];
     const type = $(event.target).attr("type");
 
     // Checking for empty fields

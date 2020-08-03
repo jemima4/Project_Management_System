@@ -65,9 +65,9 @@ if (empty($_SESSION['name'])) {
                 <!-- Student and Lecturers card  -->
                 <?php if(count($registeredUsers) > 0): ?>
 
-                    <?php foreach($registeredUsers as $student): ?>
+                    <?php foreach($registeredUsers as $index => $student): ?>
 
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-4 text-center mb-4">
                             <div class="card m-auto text-center rounded" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title text-dark"><i class="fa fa-id-card"></i></h5>
@@ -102,8 +102,7 @@ if (empty($_SESSION['name'])) {
                                 </li>
                                 
                                 </ul>
-                    
-                                <a user="<?=$user['name']; ?>" href="#" class="btn btn-dark" data-toggle="modal" data-target="#addModal">Edit</a>
+                                <a user="<?=$user['name']; ?>" index="<?=$index ?>" href="?selected=<?=$index ?>" class="btn btn-dark" >Edit</a>
                                 <a user="<?=$user['name']; ?>" href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">Remove</a>
 
                             </div>
@@ -136,4 +135,14 @@ if (empty($_SESSION['name'])) {
 </div>
 
 
+
+
 <?php include "./includes/footer.php" ?>
+
+<?php if(isset($_GET['selected'])): ?>
+<script>
+    $(()=> {
+        $('#editModal').modal('show');
+    })
+</script>
+<?php endif; ?>
