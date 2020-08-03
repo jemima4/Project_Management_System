@@ -4,15 +4,16 @@
 require "connection.php";
 require "docmanipulation.php";
 require "docprocessingHeader.php";
-if (empty($_SESSION['currentUser'])) {
-    header("Location: ../index.php");
-} else {
+
 if(isset($_POST['ctproject'])){createProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
 if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['stchangepass'])){changePassword();}
-}
+// Reupload
+if(isset($_POST['reproject'])){reUploadFile();}
+
+
 function createProject()
 {
     global $db;
@@ -43,6 +44,7 @@ function createProject()
         }
     }
 }
+
 function filecheck($target_dir)
 {
     $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
@@ -69,12 +71,12 @@ function filecheck($target_dir)
     }
     return $uploadOk;
 }
+
 function uploadFile($target_dir, $projectid,$name)
 {   
     $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);     
     mkdir($target_dir);
     if (move_uploaded_file($_FILES["projectFile"]["tmp_name"], $target_file)) {
-        // echo "The file ". basename( $_FILES["projectFile"]["name"]). " has been uploaded.";
         $_SESSION["projectid"] = $projectid;
         $_SESSION["projectname"] = $name;
         echo "ProjectSuccessful";
@@ -109,9 +111,10 @@ function deleteFile($filepath)
         unlink($filePath);
     }
 }
-function reuploadingFile()
+function reUploadFile()
 {   
     global $db;
+    $projectname = $_POST['projectName'];
     $ptid = $_SESSION['projectid'];
     $query = "SELECT * FROM project_tb WHERE id='$ptid'";
     $result = mysqli_query($db, $query);
@@ -134,8 +137,7 @@ function reuploadingFile()
         }
         else
         {
-            $name = $_SESSION['projectname'] ;
-            $query = "UPDATE project_tb SET path = '$target_file' WHERE id = '$ptid'";
+            $query = "UPDATE project_tb SET path = '$target_file', name = '$projectname' WHERE id = '$ptid'";
             $result = mysqli_query($db, $query);
             if(!$result)
             {
@@ -143,7 +145,7 @@ function reuploadingFile()
             }
             else
             {
-                uploadFile($target_dir, $ptid ,$name);
+                uploadFile($target_dir, $ptid ,$projectname);
             }
         }
     }
@@ -243,7 +245,7 @@ function fetchProjectDetails()
             $_SESSION["grade"] = $ptdetails['grade'];
             $_SESSION["path"] = $ptdetails['path'];
             // Added to read document while fetching project details.
-            viewDocument();
+            viewDocument2();
             echo "FetchSuccessful";
         }
     }
@@ -277,39 +279,39 @@ function addComment()
 }
 
 // Not used
-function fetchComments()
-{
-    global $db;
-    $projectid = $_SESSION['projectid'];
-    $query = "SELECT * FROM project_tb WHERE id = '$projectid'";
-    $result = mysqli_query($db , $query);
-    if(!$result)
-    {
-        die("Error fetching comments");
-    }
-    else
-    {
-        $ptdetails = mysqli_fetch_assoc($result);
-        $_SESSION['comment'] = $ptdetails['comment'];
-        // Or i return an array of the comments this can be put in the main file depending on you
-        $holder1 = explode(";",$_SESSION['comment']);
-        foreach($holder1 as $hold)
-        {
-            $holder2 = explode(";",$hold);
-            if($holder2[0] == 'st')
-            {
-                //student comment
-                echo $holder2[1];
-            }
-            else
-            {
-                //lecturer comment
-                //i dont know how youd use it so i used echo for now
-                echo $holder2[1];
-            }
-        }
-    }
-}
+// function fetchComments()
+// {
+//     global $db;
+//     $projectid = $_SESSION['projectid'];
+//     $query = "SELECT * FROM project_tb WHERE id = '$projectid'";
+//     $result = mysqli_query($db , $query);
+//     if(!$result)
+//     {
+//         die("Error fetching comments");
+//     }
+//     else
+//     {
+//         $ptdetails = mysqli_fetch_assoc($result);
+//         $_SESSION['comment'] = $ptdetails['comment'];
+//         // Or i return an array of the comments this can be put in the main file depending on you
+//         $holder1 = explode(";",$_SESSION['comment']);
+//         foreach($holder1 as $hold)
+//         {
+//             $holder2 = explode(";",$hold);
+//             if($holder2[0] == 'st')
+//             {
+//                 //student comment
+//                 echo $holder2[1];
+//             }
+//             else
+//             {
+//                 //lecturer comment
+//                 //i dont know how youd use it so i used echo for now
+//                 echo $holder2[1];
+//             }
+//         }
+//     }
+// }
 
 function changePassword()
 {

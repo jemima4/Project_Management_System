@@ -131,7 +131,7 @@ function loginAdmin()
     $querylt ="SELECT * FROM lecturer_tb";
     $queryst ="SELECT * FROM student_tb";
     $resultlt = mysqli_query($db,$querylt);
-    $resultst = mysqli_query($db,$querylt);
+    $resultst = mysqli_query($db,$queryst);
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
     {
         die("Invalid Email entered!");

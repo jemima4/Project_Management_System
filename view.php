@@ -34,7 +34,7 @@ if (empty($_SESSION['name'])) {
                 <p class="lead">By: <?=$_SESSION['name']; ?></p>
                 <hr class="my-4">
                 <div class="p-5 bg-secondary align-items-center row">
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-4 text-center mb-3">
                         <div class="card m-auto text-center rounded" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-dark"><i class="fa fa-download"></i></h5>
@@ -43,7 +43,7 @@ if (empty($_SESSION['name'])) {
                         </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-4 text-center mb-3">
                         <div class="card m-auto text-center rounded" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-dark"><i class="fa fa-pencil"></i></h5>
@@ -52,7 +52,16 @@ if (empty($_SESSION['name'])) {
                         </div>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="card m-auto text-center rounded" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title text-dark"><i class="fa fa-repeat"></i></h5>
+                            <p class="card-text">Change project document</p>
+                            <a href="./create.php" class="btn btn-dark">Re-Upload</a>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center  m-auto">
                         <div class="card m-auto text-center rounded" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title text-danger"><i class="fa fa-trash"></i></h5>

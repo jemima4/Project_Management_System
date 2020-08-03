@@ -180,12 +180,19 @@ $(() => {
     e.preventDefault();
     const element = $(".create-form")[0];
     const formData = new FormData(element);
-    formData.append("ctproject", true);
+
+    const uploadType = $(event.target).attr("type");
+
+    if (uploadType === "newupload") {
+      formData.append("ctproject", true);
+    } else if (uploadType === "reupload") {
+      formData.append("reproject", true);
+    }
 
     const projectName = $($(".create-form input")[0]).val();
     const fileData = $($(".create-form input")[1]).prop("files");
 
-    if (projectName === "" || fileData === "") {
+    if (projectName === "" || $($(".create-form input")[1]).val() === "") {
       setMessage("Please fill in all fields", "danger");
       clearMessage();
     } else {
