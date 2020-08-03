@@ -304,6 +304,7 @@ function deleteStudent()
         echo "Couldn't delete student";
     }
     else{
+        deleteProject($matricno);
         echo "Success";
     }
 }
@@ -319,6 +320,57 @@ function deleteLecturer()
     }
     else{
         echo "Success";
+    }
+}
+
+function deleteProject($matricno)
+{
+    global $db;
+    // fetchProjectDetails();
+    $queryfile = "SELECT * FROM project_tb WHERE matricno ='$matricno'";
+    $query = "DELETE FROM project_tb WHERE matricno ='$matricno'";
+    $resultfile = mysqli_query($db ,$queryfile);
+    if(!$resultfile)
+    {
+        die("Error while fetching Project path. "); 
+    }
+    else
+    {
+        $ptdetails = mysqli_fetch_assoc($resultfile);
+        $path = $ptdetails['path'];
+        deleteFile($path);
+        $result = mysqli_query($db, $query);
+        if(!$result)
+        {
+            die("Error while deleting Project");
+        }
+        else{
+            //I dont know what to unset or remove
+        }
+    }
+}
+function deleteFile($filepath)
+{
+    $dir = "";
+    $holder1 = explode("/",$filepath,-1);
+    foreach($holder1 as $hold)
+    {
+        $dir .= $hold."/";
+    }
+    $filePath = $dir;
+    if(is_dir($filePath))
+    {
+        echo "hello";
+        $files = glob($filePath . '*', GLOB_MARK);
+        foreach($files as $file)
+        {
+            unlink($file);
+        }
+        rmdir($filePath);
+    }
+    elseif(is_file($filePath))
+    {
+        unlink($filePath);
     }
 }
 ?>
