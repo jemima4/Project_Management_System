@@ -218,7 +218,7 @@ function viewLecturersMini()
             $id = $ltdetails['id'];
             $name = $ltdetails['name'];
             $lecturerdetailsItem = array('id' => $id ,'name'=>$name);
-            array_push($lecturerdetails, $lecturerdetailItem); 
+            array_push($lecturerdetails, $lecturerdetailsItem); 
             $i=$i +1;
         } 
     }
@@ -262,6 +262,28 @@ function editLecturer()
 
 function viewDepartments()
 {
-    
+    global $db;
+    $departmentdetails = array();
+    $i = 0;
+    $query = "SELECT * FROM department_tb";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        die("Error fetching departments");
+    }
+    else
+    {
+        $count = mysqli_num_rows($result);
+        while($i< $count)
+        {
+            $dptdetails = mysqli_fetch_assoc($result);
+            $name = $dptdetails['name'];
+            $departmentdetailsItem = array('name'=>$name);
+            array_push($departmentdetails, $departmentdetailsItem); 
+            $i=$i +1;
+        } 
+    }
+    echo "FetchSuccessful";
+    $_SESSION['availableDepartments'] = $departmentdetails;      
 }
 ?>
