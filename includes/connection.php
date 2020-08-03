@@ -13,4 +13,8 @@
         "(" . mysqli_connect_errno() . ")"
         );
     }
+    if (!$_SESSION['currentUser'] = "student" or !$_SESSION['currentUser'] = "lecturer" or !$_SESSION['currentUser'] = "admin")
+    {
+        header("Location: ../index.php");
+    }
 ?>
