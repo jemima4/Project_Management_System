@@ -12,25 +12,22 @@ if(isset($_POST['changepassword'])){changePassword();}
 
 function createProject()
 {
+    global $db;
     $projectid = $_SESSION["matricno"];
     $matricno = $_SESSION["matricno"];
     $ltid = $_SESSION["lecturerid"];
-    $name = mysqli_real_escape_string($_REQUEST['projectName']);
+    $name = mysqli_real_escape_string($db, $_REQUEST['projectName']);
     $projectid = md5($projectid);
     $target_dir = "../projects/";
     $target_dir .= $projectid;
     $target_dir .= "/";
-    global $db;
     $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
-    $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     if(filecheck($target_dir) == 0) 
     {
     }
     else
     {
-        $_SESSION['projectname'] = $name;
-        $query = "INSERT INTO project_tb (id, matricno, name, path, comment, grade, lectid) VALUES ('$projectid' , '$matricno', 
-        '$name','$target_file','','', '$ltid')";
+        $query = "INSERT INTO project_tb (id, matricno, name, path, comment, grade, lectid) VALUES ('$projectid' , '$matricno','$name','$target_file','','', '$ltid')";
         $result = mysqli_query($db, $query);
         if(!$result)
         {
@@ -109,12 +106,44 @@ function deleteFile($filepath)
         unlink($filePath);
     }
 }
-function renameProject()
-{
-}
-function savingEdits()
-{
-    
+function reuploadingFile()
+{   
+    global $db;
+    $ptid = $_SESSION['projectid'];
+    $query = "SELECT * FROM project_tb WHERE id='$ptid'";
+    $result = mysqli_query($db, $query);
+    if(!$result)
+    { 
+        die("Error fetching project path."); 
+    }
+    else
+    {
+        $ptdetails = mysqli_fetch_assoc($result);
+        $filePath = $ptdetails['path'];
+        deleteFile($filePath);
+        $ptid = md5($ptid);
+        $target_dir = "../projects/";
+        $target_dir .= $ptid;
+        $target_dir .= "/";
+        $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
+        if(filecheck($target_dir) == 0) 
+        {
+        }
+        else
+        {
+            $name = $_SESSION['projectname'] ;
+            $query = "UPDATE project_tb SET path = '$target_file' WHERE id = '$ptid'";
+            $result = mysqli_query($db, $query);
+            if(!$result)
+            {
+                die("Error while updating Project details. "); 
+            }
+            else
+            {
+                uploadFile($target_dir, $ptid ,$name);
+            }
+        }
+    }
 }
 function deleteProject()
 {
@@ -132,6 +161,7 @@ function deleteProject()
     {
         deleteFile($_SESSION['path']);
         unset($_SESSION["projectid"]);
+        unset($_SESSION["projectname"]);
         unset($_SESSION["comment"]);
         unset($_SESSION["grade"]);
         unset($_SESSION["path"]);
@@ -205,6 +235,7 @@ function fetchProjectDetails()
         if($count == 1)
         {
             $ptdetails = mysqli_fetch_assoc($result);
+            $_SESSION["projectname"] = $ptdetails['name'];
             $_SESSION["comment"] = $ptdetails['comment'];
             $_SESSION["grade"] = $ptdetails['grade'];
             $_SESSION["path"] = $ptdetails['path'];
@@ -217,8 +248,9 @@ function fetchProjectDetails()
 
 function addComment()
 {
+    global $db;
     $comment = $_SESSION["comment"];
-    $newComment = mysqli_real_escape_string($_REQUEST['newComment']);
+    $newComment = mysqli_real_escape_string($db, $_REQUEST['newComment']);
     $id = $_SESSION['projectid'];
     if($_SESSION["currentUser"] == "student"){$type = "st";}
     else{$type = "lt";}
@@ -226,7 +258,6 @@ function addComment()
     // Checking if comment is empty to prevent first empty array field that occurs on exploding
     empty($comment) ?  $comment.= $type.",".$newComment : $comment .= ";".$type.",".$newComment;
 
-    global $db;
     $projectid = $_SESSION["projectid"];
     $query = "UPDATE project_tb SET comment = '$comment' WHERE id = '$projectid'";
     $result = mysqli_query($db, $query);

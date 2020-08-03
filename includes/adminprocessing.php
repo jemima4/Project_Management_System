@@ -120,7 +120,8 @@ function viewStudents()
             $name = $stdetails['name'];
             $dptname = $stdetails['departmentname'];
             $level = $stdetails['level'];
-            $studentdetailsItem = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname,'level'=>$level);
+            $ltid = $stdetails['lecturerid'];
+            $studentdetailsItem = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname,'level'=>$level ,'lecturerid'=> $ltid);
             array_push($studentdetails, $studentdetailsItem); 
             $i=$i +1;
         } 
@@ -197,7 +198,33 @@ function viewLecturers()
     $_SESSION['adminView'] = "Lecturers";
     $_SESSION['registeredUsers'] = $lecturerdetails;
 }
-
+function viewLecturersMini()
+{
+    global $db;
+    $lecturerdetails = array();
+    $i = 0;
+    $query = "SELECT * FROM lecturer_tb";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        die("Error fetching lecturers");
+    }
+    else
+    {
+        $count = mysqli_num_rows($result);
+        while($i< $count)
+        {
+            $ltdetails = mysqli_fetch_assoc($result);
+            $id = $ltdetails['id'];
+            $name = $ltdetails['name'];
+            $lecturerdetailsItem = array('id' => $id ,'name'=>$name);
+            array_push($lecturerdetails, $lecturerdetailsItem); 
+            $i=$i +1;
+        } 
+    }
+    echo "FetchSuccessful";
+    $_SESSION['availableLecturers'] = $lecturerdetails;   
+}
 function editLecturer()
 {
     $id = mysqli_real_escape_string($_REQUEST['id']);
@@ -231,5 +258,32 @@ function editLecturer()
         else{echo "Department doesn't exist";}
         
     }   
+}
+
+function viewDepartments()
+{
+    global $db;
+    $departmentdetails = array();
+    $i = 0;
+    $query = "SELECT * FROM department_tb";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        die("Error fetching departments");
+    }
+    else
+    {
+        $count = mysqli_num_rows($result);
+        while($i< $count)
+        {
+            $dptdetails = mysqli_fetch_assoc($result);
+            $name = $dptdetails['name'];
+            $departmentdetailsItem = array('name'=>$name);
+            array_push($departmentdetails, $departmentdetailsItem); 
+            $i=$i +1;
+        } 
+    }
+    echo "FetchSuccessful";
+    $_SESSION['availableDepartments'] = $departmentdetails;      
 }
 ?>
