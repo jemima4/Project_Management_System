@@ -29,7 +29,10 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                     <h6 class="dropdown-header" disabled><?= $fullName ?></h6>
-                    <div class="dropdown-divider"></div>        
+                    <div class="dropdown-divider"></div>  
+                    <?php if($_SESSION['currentUser'] !== "admin"): ?>
+                        <a class="dropdown-item" id="changePassword" href="login.php?type=Password">Change Password</a>
+                    <?php endif;?>
                     <a class="dropdown-item" id="logoutUser" href="#">Log out</a>
                 </div>
             </div>

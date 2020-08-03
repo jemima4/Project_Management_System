@@ -4,12 +4,15 @@
 require "connection.php";
 require "docmanipulation.php";
 require "docprocessingHeader.php";
+if (empty($_SESSION['currentUser'])) {
+    header("Location: ../index.php");
+} else {
 if(isset($_POST['ctproject'])){createProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
 if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
-if(isset($_POST['changepassword'])){changePassword();}
-
+if(isset($_POST['stchangepass'])){changePassword();}
+}
 function createProject()
 {
     global $db;
@@ -322,7 +325,7 @@ function changePassword()
     }
     else
     {
-        echo "passwordUpdated";
+        echo "changeSuccessful";
     }
 }
 

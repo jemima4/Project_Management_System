@@ -3,11 +3,9 @@ require "connection.php";
 require "docmanipulation.php";
 require "docprocessingHeader.php";
 if(isset($_POST['vwstudents'])){viewStudents();}
-// if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['gradeproject'])){gradeProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
-// if(isset($_POST['addcomment'])){addComment();}
-if(isset($_POST['changepassword'])){changePassword();}
+if(isset($_POST['ltchangepass'])){changePassword();}
 if(isset($_POST['fetchEach'])){fetchEach($_POST['projectId'], $_POST['student']);}
 
 //Note: Project id sessions have to be created when using the add and fetch comments , add grade 
@@ -66,68 +64,68 @@ function fetchEach($projectId, $student) {
     echo "FetchSuccessful";
 }
 
+// // Not needed
+// function addComment()
+// {
+//     $comment = $_SESSION["comment"];
+//     $newComment = mysqli_real_escape_string($db, $_REQUEST['newComment']);
+//     $id = $_SESSION['projectid'];
+//     if($_SESSION["currentUser"] == "student"){$type = "st";}
+//     else{$type = "lt";}
+
+//     // Checking if comment is empty to prevent first empty array field that occurs on exploding
+//     empty($comment) ?  $comment.= $type.",".$newComment : $comment .= ";".$type.",".$newComment;
+
+//     global $db;
+//     $projectid = $_SESSION["projectid"];
+//     $query = "UPDATE project_tb SET comment = '$comment' WHERE id = '$projectid'";
+//     $result = mysqli_query($db, $query);
+//     if(!$result)
+//     {
+//         die("Error while adding comment details. "); 
+//     }
+//     else
+//     {
+//         // updating session with new concatenated comment string
+//         $_SESSION['comment'] = $comment;
+//         echo "addCommentSuccesful";
+//     }
+// }
+
 // Not needed
-function addComment()
-{
-    $comment = $_SESSION["comment"];
-    $newComment = mysqli_real_escape_string($db, $_REQUEST['newComment']);
-    $id = $_SESSION['projectid'];
-    if($_SESSION["currentUser"] == "student"){$type = "st";}
-    else{$type = "lt";}
-
-    // Checking if comment is empty to prevent first empty array field that occurs on exploding
-    empty($comment) ?  $comment.= $type.",".$newComment : $comment .= ";".$type.",".$newComment;
-
-    global $db;
-    $projectid = $_SESSION["projectid"];
-    $query = "UPDATE project_tb SET comment = '$comment' WHERE id = '$projectid'";
-    $result = mysqli_query($db, $query);
-    if(!$result)
-    {
-        die("Error while adding comment details. "); 
-    }
-    else
-    {
-        // updating session with new concatenated comment string
-        $_SESSION['comment'] = $comment;
-        echo "addCommentSuccesful";
-    }
-}
-
-// Not needed
-function fetchComments()
-{
-    global $db;
-    $projectid = $_SESSION['projectid'];
-    $query = "SELECT * FROM project_tb WHERE id = '$projectid'";
-    $result = mysqli_query($db , $query);
-    if(!$result)
-    {
-        die("Error fetching comments");
-    }
-    else
-    {
-        $ptdetails = mysqli_fetch_assoc($result);
-        $_SESSION['comment'] = $ptdetails['comment'];
-        // Or i return an array of the comments this can be put in the main file depending on you
-        $holder1 = explode(";",$_SESSION['comment']);
-        foreach($holder1 as $hold)
-        {
-            $holder2 = explode(";",$hold);
-            if($holder2[0] == 'st')
-            {
-                //student comment
-                echo $holder2[1];
-            }
-            else
-            {
-                //lecturer comment
-                //i dont know how youd use it so i used echo for now
-                echo $holder2[1];
-            }
-        }
-    }
-}
+// function fetchComments()
+// {
+//     global $db;
+//     $projectid = $_SESSION['projectid'];
+//     $query = "SELECT * FROM project_tb WHERE id = '$projectid'";
+//     $result = mysqli_query($db , $query);
+//     if(!$result)
+//     {
+//         die("Error fetching comments");
+//     }
+//     else
+//     {
+//         $ptdetails = mysqli_fetch_assoc($result);
+//         $_SESSION['comment'] = $ptdetails['comment'];
+//         // Or i return an array of the comments this can be put in the main file depending on you
+//         $holder1 = explode(";",$_SESSION['comment']);
+//         foreach($holder1 as $hold)
+//         {
+//             $holder2 = explode(";",$hold);
+//             if($holder2[0] == 'st')
+//             {
+//                 //student comment
+//                 echo $holder2[1];
+//             }
+//             else
+//             {
+//                 //lecturer comment
+//                 //i dont know how youd use it so i used echo for now
+//                 echo $holder2[1];
+//             }
+//         }
+//     }
+// }
 
 function fetchProjectDetails()
 {
@@ -236,7 +234,7 @@ function changePassword()
     }
     else
     {
-        echo "passwordUpdated";
+        echo "changeSuccessful";
     }
 }
 ?>

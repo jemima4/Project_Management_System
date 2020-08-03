@@ -81,7 +81,80 @@ $(() => {
             }
           }
         );
+
+        // Change passwords here.
+      } else if (loginType === "changestudent") {
+        const pass = uid;
+        const rePass = password;
+        if (pass !== rePass) {
+          setMessage("Passwords do not match!", "danger");
+          clearMessage();
+        } else {
+          $.post(
+            "./includes/studentprocessing.php",
+            { stchangepass: true, newpassword: pass },
+            function (data, status) {
+              if (data.includes("changeSuccessful")) {
+                setMessage(
+                  "Password changed successfully. Reloading...",
+                  "success"
+                );
+                setTimeout(
+                  () => (window.location.href = "./dashboard.php"),
+                  2000
+                );
+              } else {
+                // Setting error message if there's one
+                setMessage(data, "danger");
+                clearMessage();
+              }
+            }
+          );
+        }
+      } else if (loginType === "changelecturer") {
+        const pass = uid;
+        const rePass = password;
+        if (pass !== rePass) {
+          setMessage("Passwords do not match!", "danger");
+          clearMessage();
+        } else {
+          $.post(
+            "./includes/loginprocessing.php",
+            { ltchangepass: true, newpassword: pass },
+            function (data, status) {
+              if (data.includes("changeSuccessful")) {
+                setMessage(
+                  "Password changed successfully. Reloading...",
+                  "success"
+                );
+                setTimeout(
+                  () => (window.location.href = "./dashboard.php"),
+                  2000
+                );
+              } else {
+                // Setting error message if there's one
+                setMessage(data, "danger");
+                clearMessage();
+              }
+            }
+          );
+        }
       }
+    }
+  });
+
+  // Login password eye
+  $(".form-group .fa").on("click", function () {
+    const element = $(".pwd-group input");
+    const type = $(".pwd-group input").attr("type");
+    if (type === "password") {
+      element.attr("type", "text");
+      $(".form-group .fa").removeClass("fa-eye-slash");
+      $(".form-group .fa").addClass("fa-eye");
+    } else if (type === "text") {
+      element.attr("type", "password");
+      $(".form-group .fa").removeClass("fa-eye");
+      $(".form-group .fa").addClass("fa-eye-slash");
     }
   });
 

@@ -11,9 +11,10 @@
             <label class="text-light" for="email">Email address</label>
             <input type="email" class="form-control" placeholder="e.g. john@gmail.com" id="email">
         </div>
-        <div class="form-group">
+        <div class="form-group pwd-group">
             <label class="text-light" for="password">Password</label>
             <input type="password" class="form-control" placeholder="* * * * * * * *" id="password">
+            <i class="fa fa-eye-slash"></i>
         </div>
         <p id="message"></p>
         <div class="form-group">
