@@ -8,7 +8,8 @@ if(isset($_POST['logoutUser'])){logOut();}
 //Sessions have been created in lecturer login
 function loginStudent()
 {
-    $matricno = $_REQUEST['matricNo']; $password = $_REQUEST['stpassword'];
+    $matricno = mysqli_real_escape_string($_REQUEST['matricNo']);
+    $password = mysqli_real_escape_string($_REQUEST['stpassword']);
     global $db;
     $query = "SELECT * FROM student_tb ";
     $password = md5($password);
@@ -72,7 +73,8 @@ function loginStudent()
 
 function loginLecturer()
 {
-    $email = $_REQUEST['ltemail']; $password = $_REQUEST['ltpassword'];
+    $email = mysqli_real_escape_string($_REQUEST['ltemail']); 
+    $password = mysqli_real_escape_string($_REQUEST['ltpassword']);
     global $db;
     $query = "SELECT * FROM lecturer_tb ";
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))
@@ -123,7 +125,7 @@ function loginLecturer()
 
 function loginAdmin()
 {
-    $email = $_REQUEST['ademail']; $password = $_REQUEST['adpassword'];
+    $email = mysqli_real_escape_string($_REQUEST['ademail']); $password = mysqli_real_escape_string($_REQUEST['adpassword']);
     global $db;
     $query = "SELECT * FROM admin_tb ";
     if(!filter_var($email, FILTER_VALIDATE_EMAIL))

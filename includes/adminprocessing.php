@@ -19,13 +19,13 @@ function createStudent()
     $level = $_REQUEST['level'];
     $password = $_REQUEST['password'];
     $ltid = $_REQUEST['lecturerid'];
-    $query = "INSERT INTO student_tb (matricno, name, departmentname, level, password, lectuerid) VALUES ('$matricno' , '$name', 
+    $query = "INSERT INTO student_tb (matricno, name, departmentname, level, password, lecturerid) VALUES ('$matricno' , '$name', 
     '$dptname','$level','$password', '$ltid')";
     $queryltid = "SELECT * FROM lecturer_tb WHERE id = '$ltid'";
     $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
     $result1 = mysqli_query($db, $queryltid);
     $result2 = mysqli_query($db, $querydptname);
-    if(!$result)
+    if(!$result1)
     {
         // die("Error while creating Project details. " .mysqli_error($db)); 
         die("Error confirming lecturer id"); 
@@ -43,7 +43,7 @@ function createStudent()
                 $result = mysqli_query($db, $query);
                 if(!$result)
                 {
-                    die("Error inserting to student table");
+                    die("Error inserting to student table".mysqli_error($db));
                 }
                 else{
                     echo "SuccessCreatingStudent";
@@ -131,6 +131,38 @@ function viewStudents()
 }
 function createLecturer()
 {
+    $id = mysqli_real_escape_string($_REQUEST['id']);
+    $name = mysqli_real_escape_string($_REQUEST['name']);
+    $dptname = mysqli_real_escape_string($_REQUEST['dptname']);
+    $password = md5($_REQUEST['$password']);
+    $email = mysqli_real_escape_string($_REQUEST['email']);
+    $query = "INSERT INTO lecturer_tb (id, name, email, password, departmentname) VALUES ('$id' , '$name', 
+    '$email','$password','$departmentname')";
+    $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
+    $result1 = mysqli_query($db, $querydptname);
+    if(!$result1)
+    {
+        // die("Error while-------. " .mysqli_error($db)); 
+        die("Error confirming department"); 
+    }
+    else
+    {
+        //check if department exists
+        $count1 = mysqli_num_rows($result1);
+        if($count1 > 0)
+        {
+            $result = mysqli_query($db, $query);
+            if(!$result)
+            {
+                die("Error updating lecturer information".mysqli_error($db));
+            }
+            else{
+                echo "SuccessUpdatingLecturer";
+            }
+        }
+        else{echo "Department doesn't exist";}
+        
+    }
 }
 function viewLecturers()
 {
@@ -165,10 +197,10 @@ function viewLecturers()
 
 function editLecturer()
 {
-    $id = $_REQUEST['id'];
-    $name = $_REQUEST['name'];
-    $dptname = $_REQUEST['dptname'];
-    $email = $_REQUEST['email'];
+    $id = mysqli_real_escape_string($_REQUEST['id']);
+    $name = mysqli_real_escape_string($_REQUEST['name']);
+    $dptname = mysqli_real_escape_string($_REQUEST['dptname']);
+    $email = mysqli_real_escape_string($_REQUEST['email']);
     $query = "UPDATE lecturer_tb SET id = '$id', name = '$name', departmentname = '$dptname',
     email = '$email' WHERE id = '$id'";
     $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
