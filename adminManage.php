@@ -86,8 +86,6 @@ if (empty($_SESSION['name'])) {
                                     <p class="text-muted small">Full Name</p>
                                 </li>
                                 <li class="list-group-item">
-                                    
-
                                     <?php if($_SESSION['adminView'] === "Students"): ?>
                                         <?= $student['level'] ?>
                                         <p class="text-muted small">Level</p>
@@ -100,6 +98,17 @@ if (empty($_SESSION['name'])) {
                                     <?= $student['departmentname'] ?>
                                     <p class="text-muted small">Department</p>
                                 </li>
+
+                                <?php if($_SESSION['adminView'] === "Students"): ?>
+                                <li class="list-group-item">
+                                    <?php foreach($_SESSION['availableLecturers'] as $lecturer): ?>
+                                        <?php if ($lecturer['id'] === $student['lecturerid']): ?>
+                                            <?= $lecturer['name'] ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                    <p class="text-muted small">Supervisor</p>
+                                </li>
+                                <?php endif; ?>
                                 
                                 </ul>
                                 <a user="<?=$user['name']; ?>" index="<?=$index ?>" href="?selected=<?=$index ?>" class="btn btn-dark" >Edit</a>
