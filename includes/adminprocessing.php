@@ -4,23 +4,24 @@ if(isset($_POST['ctstudent'])){createStudent();}
 if(isset($_POST['ctlecturer'])){createLecturer();}
 if(isset($_POST['etlecturer'])){editStudent();}
 if(isset($_POST['etlecturer'])){editLecturer();}
-
+createStudent();
  //will have admin crud processes for students and lecturers
 function createStudent()
 {
+    global $db;
     $matricno = $_REQUEST['matricno'];
     $name = $_REQUEST['name'];
     $dptname = $_REQUEST['dptname'];
     $level = $_REQUEST['level'];
     $password = $_REQUEST['password'];
     $ltid = $_REQUEST['lecturerid'];
-    $query = "INSERT INTO student_tb (matricno, name, departmentname, level, password, lectuerid) VALUES ('$matricno' , '$name', 
+    $query = "INSERT INTO student_tb (matricno, name, departmentname, level, password, lecturerid) VALUES ('$matricno' , '$name', 
     '$dptname','$level','$password', '$ltid')";
     $queryltid = "SELECT * FROM lecturer_tb WHERE id = '$ltid'";
     $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
     $result1 = mysqli_query($db, $queryltid);
     $result2 = mysqli_query($db, $querydptname);
-    if(!$result)
+    if(!$result1)
     {
         // die("Error while creating Project details. " .mysqli_error($db)); 
         die("Error confirming lecturer id"); 
@@ -38,7 +39,7 @@ function createStudent()
                 $result = mysqli_query($db, $query);
                 if(!$result)
                 {
-                    die("Error inserting to student table");
+                    die("Error inserting to student table".mysqli_error($db));
                 }
                 else{
                     echo "SuccessCreatingStudent";
