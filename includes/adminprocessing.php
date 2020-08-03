@@ -1,5 +1,8 @@
 <?php 
 require "connection.php";
+if (empty($_SESSION['currentUser'])) {
+    header("Location: ../index.php");
+} else {
 if(isset($_POST['ctstudent'])){createStudent();}
 if(isset($_POST['ctlecturer'])){createLecturer();}
 if(isset($_POST['etstudent'])){editStudent();}
@@ -10,7 +13,7 @@ if(isset($_POST['viewlecturers'])){viewLecturers();}
 // Deleting students and lecturers
 if(isset($_GET['delstudent'])){deleteStudent();}
 if(isset($_GET['dellecturer'])){deleteLecturer();}
-
+}
  //will have admin crud processes for students and lecturers
 function createStudent()
 {

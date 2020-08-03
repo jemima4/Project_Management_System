@@ -23,9 +23,9 @@
         <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <div class="card m-auto" style="width: 18rem;">
+                <div class="card m-auto shadow" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Your Details</h5>
+                    <h5 class="card-title text-center font-weight-bold">Your Details</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><?= $_SESSION['name']; ?></li>
                         <li class="list-group-item"><?= $_SESSION['email']; ?></li>
@@ -35,11 +35,11 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card bg-white mx-auto" style="width: 18rem;">
+                <div class="card bg-white mx-auto shadow" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">No. of assigned students</h5>
-                    <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-dark rounded-circle text-light"><?= $_SESSION['numofstudents']; ?></li>
+                    <h5 class="card-title text-center mb-3 font-weight-bold">No. of assigned students</h5>
+                    <ul class="list-group list-group-flush text-center w-50 h-50 m-auto">
+                        <li class="list-group-item bg-secondary rounded-circle text-light p-3 display-4 font-weight-bold"><?= $_SESSION["numofstudents"]?></li>
                     </ul>
                 </div>
                 </div>
@@ -101,9 +101,9 @@
         <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <div class="card m-auto" style="width: 18rem;">
+                <div class="card m-auto shadow" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Your Details</h5>
+                    <h5 class="card-title text-center font-weight-bold">Your Details</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><?= $_SESSION['name']; ?></li>
                         <li class="list-group-item">Level <?= $_SESSION['level']; ?></li>
@@ -113,9 +113,9 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card bg-white mx-auto" style="width: 18rem;">
+                <div class="card bg-white mx-auto shadow" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Your Supervisor</h5>
+                    <h5 class="card-title text-center font-weight-bold">Your Supervisor</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><?= $_SESSION["lecturername"]; ?></li>
                         <li class="list-group-item">Department of <?= $_SESSION["ltdepartmentname"]; ?></li>

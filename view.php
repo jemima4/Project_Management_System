@@ -125,6 +125,7 @@ if (empty($_SESSION['name'])) {
         </div>
         
     <div>
+      
     <?php elseif ($_SESSION['currentUser'] == 'lecturer'): ?>
       <div class="dashboard-view">
         <div class="jumbotron border-radius-0">
