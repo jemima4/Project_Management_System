@@ -103,7 +103,7 @@ if (empty($_SESSION['name'])) {
                                 
                                 </ul>
                                 <a user="<?=$user['name']; ?>" index="<?=$index ?>" href="?selected=<?=$index ?>" class="btn btn-dark" >Edit</a>
-                                <a user="<?=$user['name']; ?>" href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">Remove</a>
+                                <a user="<?=$user['name']; ?>" href="?dSelected=<?=$index ?>" class="btn btn-danger">Remove</a>
 
                             </div>
                             </div>
@@ -143,6 +143,12 @@ if (empty($_SESSION['name'])) {
 <script>
     $(()=> {
         $('#editModal').modal('show');
+    })
+</script>
+<?php elseif(isset($_GET['dSelected'])): ?>
+<script>
+    $(()=> {
+        $('#confirmModal').modal('show');
     })
 </script>
 <?php endif; ?>

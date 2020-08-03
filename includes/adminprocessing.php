@@ -7,7 +7,9 @@ if(isset($_POST['etlecturer'])){editLecturer();}
 // Viewing student and lecturers
 if(isset($_POST['viewstudents'])){viewStudents();}
 if(isset($_POST['viewlecturers'])){viewLecturers();}
-
+// Deleting students and lecturers
+if(isset($_GET['delstudent'])){deleteStudent();}
+if(isset($_GET['dellecturer'])){deleteLecturer();}
 
  //will have admin crud processes for students and lecturers
 function createStudent()

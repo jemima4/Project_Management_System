@@ -14,7 +14,13 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-dark" data-dismiss="modal">No</button>
         <?php if($_SESSION['currentUser'] === "admin"): ?>
-            <a href="#" type="button" class="btn btn-secondary">Remove</a> 
+            <?php $details = $registeredUsers[$_GET['dSelected']]; ?>
+
+            <?php if($_SESSION['adminView'] === "Students"): ?>
+              <a href="./includes/adminprocessing.php?delstudent=1&matricno=<?=$details['matricno']?>" type="button" class="btn btn-secondary">Remove</a> 
+            <?php elseif($_SESSION['adminView'] === "Lecturers"): ?>
+              <a href="./includes/adminprocessing.php?dellecturer=1&id=<?=$details['id']?>" type="button" class="btn btn-secondary">Remove</a> 
+            <?php endif; ?>
         <?php else: ?>
             <a href="./includes/studentprocessing.php?delete=confirmed" type="button" class="btn btn-secondary">Delete</a>
         <?php endif; ?>
