@@ -232,7 +232,7 @@ function editLecturer()
     global $db;
     $id = mysqli_real_escape_string($db, $_REQUEST['id']);
     $name = mysqli_real_escape_string($db,$_REQUEST['name']);
-    $dptname = mysqli_real_escape_string($db,$_REQUEST['dptname']);
+    $dptname = mysqli_real_escape_string($db,$_REQUEST['departmentname']);
     $email = mysqli_real_escape_string($db,$_REQUEST['email']);
     $query = "UPDATE lecturer_tb SET id = '$id', name = '$name', departmentname = '$dptname',
     email = '$email' WHERE id = '$id'";

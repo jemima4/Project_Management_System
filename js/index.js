@@ -324,11 +324,6 @@ $(() => {
   });
 
   // Admin functionalities
-  // $(".edit-form").on("submit", function(event) {
-  //   event.preventDefault();
-  //   // alert("Inna song");
-  //   setMessage("Inside bro", "danger", "editMessage");
-  // })
 
   const processSubmission = (formData, op, msgField) => {
     $.ajax({
@@ -378,11 +373,9 @@ $(() => {
     const type = $(event.target).attr("type");
     const mode = $(event.target).attr("mode") || false;
     const msgField = mode === "edit" ? "editMessage" : "message";
-    alert(msgField);
 
     // Checking for empty fields
     const inputValues = $(event.target).serializeArray();
-
     let empty = false;
     inputValues.every(({ value }, index) => {
       if (value === "") {
