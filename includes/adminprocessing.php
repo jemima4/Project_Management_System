@@ -305,21 +305,23 @@ function deleteStudent()
     }
     else{
         deleteProject($matricno);
-        echo "Success";
+        viewStudents();
+        header("Location: ../adminManage.php");
     }
 }
 function deleteLecturer()
 {
     global $db;
     $id = $_REQUEST["id"];
-    $query = "DELETE FROM lecturer_tb WHERE matricno ='$id'";
+    $query = "DELETE FROM lecturer_tb WHERE id ='$id'";
     $result = mysqli_query($db , $query);
     if(!$result)
     {
         echo "Couldn't delete lecturer";
     }
     else{
-        echo "Success";
+        viewLecturers();
+        header("Location: ../adminManage.php");
     }
 }
 
