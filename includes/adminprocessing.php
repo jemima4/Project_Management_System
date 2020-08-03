@@ -13,12 +13,13 @@ if(isset($_POST['viewlecturers'])){viewLecturers();}
 function createStudent()
 {
     global $db;
-    $matricno = $_REQUEST['matricno'];
-    $name = $_REQUEST['name'];
-    $dptname = $_REQUEST['departmentname'];
-    $level = $_REQUEST['level'];
-    $password = $_REQUEST['password'];
-    $ltid = $_REQUEST['lecturerid'];
+    $matricno = mysqli_real_escape_string($db,$_REQUEST['matricno']);
+    $name = mysqli_real_escape_string($db,$_REQUEST['name']);
+    $dptname = mysqli_real_escape_string($db,$_REQUEST['departmentname']);
+    $level = mysqli_real_escape_string($db,$_REQUEST['level']);
+    $password = mysqli_real_escape_string($db,$_REQUEST['password']);
+    $ltid = mysqli_real_escape_string($db,$_REQUEST['lecturerid']);
+    $password = md5($password);
     $query = "INSERT INTO student_tb (matricno, name, departmentname, level, password, lecturerid) VALUES ('$matricno' , '$name', 
     '$dptname','$level','$password', '$ltid')";
     $queryltid = "SELECT * FROM lecturer_tb WHERE id = '$ltid'";
@@ -59,11 +60,11 @@ function createStudent()
 function editStudent()
 {
     global $db;
-    $matricno = $_REQUEST['matricno'];
-    $name = $_REQUEST['name'];
-    $dptname = $_REQUEST['departmentname'];
-    $level = $_REQUEST['level'];
-    $ltid = $_REQUEST['lecturerid'];
+    $matricno = mysqli_real_escape_string($db,$_REQUEST['matricno']);
+    $name = mysqli_real_escape_string($db,$_REQUEST['name']);
+    $dptname = mysqli_real_escape_string($db,$_REQUEST['departmentname']);
+    $level = mysqli_real_escape_string($db,$_REQUEST['level']);
+    $ltid = mysqli_real_escape_string($db,$_REQUEST['lecturerid']);
     $query = "UPDATE student_tb SET matricno = '$matricno', name = '$name', departmentname = '$dptname', level = '$level',
     lecturerid = '$ltid' WHERE matricno = '$matricno'";
     $queryltid = "SELECT * FROM lecturer_tb WHERE id = '$ltid'";
@@ -135,9 +136,9 @@ function viewStudents()
 function createLecturer()
 {
     global $db;
-    $id = $_REQUEST['id'];
-    $name = $_REQUEST['name'];
-    $departmentname = $_REQUEST['departmentname'];
+    $id = mysqli_real_escape_string($db,$_REQUEST['id']);
+    $name = mysqli_real_escape_string($db,$_REQUEST['name']);
+    $departmentname = mysqli_real_escape_string($db,$_REQUEST['departmentname']);
     $password = md5($_REQUEST['$password']);
     $email = $_REQUEST['email'];
     $query = "INSERT INTO lecturer_tb (id, name, email, password, departmentname) VALUES ('$id' , '$name', 
@@ -228,10 +229,11 @@ function viewLecturersMini()
 }
 function editLecturer()
 {
-    $id = mysqli_real_escape_string($_REQUEST['id']);
-    $name = mysqli_real_escape_string($_REQUEST['name']);
-    $dptname = mysqli_real_escape_string($_REQUEST['dptname']);
-    $email = mysqli_real_escape_string($_REQUEST['email']);
+    global $db;
+    $id = mysqli_real_escape_string($db, $_REQUEST['id']);
+    $name = mysqli_real_escape_string($db,$_REQUEST['name']);
+    $dptname = mysqli_real_escape_string($db,$_REQUEST['dptname']);
+    $email = mysqli_real_escape_string($db,$_REQUEST['email']);
     $query = "UPDATE lecturer_tb SET id = '$id', name = '$name', departmentname = '$dptname',
     email = '$email' WHERE id = '$id'";
     $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
@@ -287,5 +289,34 @@ function viewDepartments()
     }
     echo "FetchSuccessful";
     $_SESSION['availableDepartments'] = $departmentdetails;      
+}
+
+function deleteStudent()
+{
+    global $db;
+    $matricno = $_REQUEST["matricno"];
+    $query = "DELETE FROM student_tb WHERE matricno ='$matricno'";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        echo "Couldn't delete student";
+    }
+    else{
+        echo "Success";
+    }
+}
+function deleteLecturer()
+{
+    global $db;
+    $id = $_REQUEST["id"];
+    $query = "DELETE FROM lecturer_tb WHERE matricno ='$id'";
+    $result = mysqli_query($db , $query);
+    if(!$result)
+    {
+        echo "Couldn't delete lecturer";
+    }
+    else{
+        echo "Success";
+    }
 }
 ?>
