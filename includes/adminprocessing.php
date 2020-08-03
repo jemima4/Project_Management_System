@@ -2,16 +2,20 @@
 require "connection.php";
 if(isset($_POST['ctstudent'])){createStudent();}
 if(isset($_POST['ctlecturer'])){createLecturer();}
-if(isset($_POST['etlecturer'])){editStudent();}
+if(isset($_POST['etstudent'])){editStudent();}
 if(isset($_POST['etlecturer'])){editLecturer();}
-createStudent();
+// Viewing student and lecturers
+if(isset($_POST['viewstudents'])){viewStudents();}
+if(isset($_POST['viewlecturers'])){viewLecturers();}
+
+
  //will have admin crud processes for students and lecturers
 function createStudent()
 {
     global $db;
     $matricno = $_REQUEST['matricno'];
     $name = $_REQUEST['name'];
-    $dptname = $_REQUEST['dptname'];
+    $dptname = $_REQUEST['departmentname'];
     $level = $_REQUEST['level'];
     $password = $_REQUEST['password'];
     $ltid = $_REQUEST['lecturerid'];
@@ -42,7 +46,8 @@ function createStudent()
                     die("Error inserting to student table".mysqli_error($db));
                 }
                 else{
-                    echo "SuccessCreatingStudent";
+                    viewStudents();
+                    echo "accountCreated";
                 }
             }
             else{echo "Department doesn't exist";}
@@ -53,6 +58,7 @@ function createStudent()
 
 function editStudent()
 {
+    global $db;
     $matricno = $_REQUEST['matricno'];
     $name = $_REQUEST['name'];
     $dptname = $_REQUEST['dptname'];
@@ -114,23 +120,27 @@ function viewStudents()
             $name = $stdetails['name'];
             $dptname = $stdetails['departmentname'];
             $level = $stdetails['level'];
-            $studentdetail = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname,'level'=>$level);
-            array_push($studentdetails, $studentdetail); 
+            $studentdetailsItem = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname,'level'=>$level);
+            array_push($studentdetails, $studentdetailsItem); 
             $i=$i +1;
         } 
     }
-    echo $studentdetails;
+    echo "FetchSuccessful";
+    $_SESSION['adminView'] = "Students";
+    $_SESSION['registeredUsers'] = $studentdetails;
 }
+
 function createLecturer()
 {
-    $id = mysqli_real_escape_string($_REQUEST['id']);
-    $name = mysqli_real_escape_string($_REQUEST['name']);
-    $dptname = mysqli_real_escape_string($_REQUEST['dptname']);
+    global $db;
+    $id = $_REQUEST['id'];
+    $name = $_REQUEST['name'];
+    $departmentname = $_REQUEST['departmentname'];
     $password = md5($_REQUEST['$password']);
-    $email = mysqli_real_escape_string($_REQUEST['email']);
+    $email = $_REQUEST['email'];
     $query = "INSERT INTO lecturer_tb (id, name, email, password, departmentname) VALUES ('$id' , '$name', 
     '$email','$password','$departmentname')";
-    $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
+    $querydptname = "SELECT * FROM department_tb WHERE name = '$departmentname'";
     $result1 = mysqli_query($db, $querydptname);
     if(!$result1)
     {
@@ -149,7 +159,8 @@ function createLecturer()
                 die("Error updating lecturer information".mysqli_error($db));
             }
             else{
-                echo "SuccessUpdatingLecturer";
+                viewLecturers();
+                echo "accountCreated";
             }
         }
         else{echo "Department doesn't exist";}
@@ -182,7 +193,9 @@ function viewLecturers()
             $i=$i +1;
         } 
     }
-    echo $lecturerdetails;
+    echo "FetchSuccessful";
+    $_SESSION['adminView'] = "Lecturers";
+    $_SESSION['registeredUsers'] = $lecturerdetails;
 }
 
 function editLecturer()

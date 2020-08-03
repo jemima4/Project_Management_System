@@ -242,6 +242,7 @@ function addComment()
     }
 }
 
+// Not used
 function fetchComments()
 {
     global $db;

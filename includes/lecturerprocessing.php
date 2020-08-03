@@ -3,11 +3,12 @@ require "connection.php";
 require "docmanipulation.php";
 require "docprocessingHeader.php";
 if(isset($_POST['vwstudents'])){viewStudents();}
-if(isset($_POST['addcomment'])){addComment();}
+// if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['gradeproject'])){gradeProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
-if(isset($_POST['addcomment'])){addComment();}
+// if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['changepassword'])){changePassword();}
+if(isset($_POST['fetchEach'])){fetchEach($_POST['projectId'], $_POST['student']);}
 
 //Note: Project id sessions have to be created when using the add and fetch comments , add grade 
 //view document and fetch project details
@@ -46,16 +47,26 @@ function viewStudents()
                 $ptdetails = mysqli_fetch_array($result1);
                 $ptname = $ptdetails['name'];
                 $ptid = $ptdetails['id'];
-                $studentdetail = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname, 
+                $studentdetailsItem = array('matricno' => $matricno ,'name'=>$name,'departmentname'=> $dptname, 
                 'level'=>$level,'projectname'=> $ptname,'projectid'=> $ptid);
-                array_push($studentdetails, $studentdetail); 
+                array_push($studentdetails, $studentdetailsItem); 
             }
             $i=$i +1;
         } 
     }
-    echo $studentdetails;
+    echo "FetchSuccessful";
+    $_SESSION['assignedStudents'] = $studentdetails;
 }
 
+// Added function for fetching each student details
+function fetchEach($projectId, $student) {
+    $_SESSION['projectid'] = $projectId;
+    $_SESSION['selectedStudent'] = $student;
+    fetchProjectDetails();
+    echo "FetchSuccessful";
+}
+
+// Not needed
 function addComment()
 {
     $comment = $_SESSION["comment"];
@@ -83,6 +94,7 @@ function addComment()
     }
 }
 
+// Not needed
 function fetchComments()
 {
     global $db;
@@ -136,6 +148,7 @@ function fetchProjectDetails()
             $_SESSION["comment"] = $ptdetails['comment'];
             $_SESSION["grade"] = $ptdetails['grade'];
             $_SESSION["path"] = $ptdetails['path'];
+            $_SESSION["projectname"] = $ptdetails['name'];
             // Added to read document while fetching project details.
             viewDocument();
             echo "FetchSuccessful";
@@ -157,7 +170,7 @@ function gradeProject()
     {
         // updating session with new concatenated comment string
         $_SESSION['grade'] = $newgrade;
-        echo "GradeUpdated";
+        echo "graded";
     }
 }
 
