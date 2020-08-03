@@ -62,21 +62,21 @@
         <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <div class="card bg-white mx-auto" style="width: 18rem;">
+                <div class="card bg-white mx-auto shadow" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">No. of registered students</h5>
-                    <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-secondary rounded-circle text-light"><?= $_SESSION["numoflecturers"]?></li>
+                    <h5 class="card-title text-center mb-3 font-weight-bold">No. of Registered Students</h5>
+                    <ul class="list-group list-group-flush text-center w-50 h-50 m-auto">
+                        <li class="list-group-item bg-secondary rounded-circle text-light p-3 display-4 font-weight-bold"><?= $_SESSION["numoflecturers"]?></li>
                     </ul>
                 </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card bg-white mx-auto" style="width: 18rem;">
+                <div class="card bg-white mx-auto shadow" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">No. of registered lecturers</h5>
-                    <ul class="list-group list-group-flush text-center">
-                        <li class="list-group-item bg-secondary rounded-circle text-light"><?= $_SESSION["numofstudents"]?></li>
+                    <h5 class="card-title text-center mb-3 font-weight-bold">No. of Registered Lecturers</h5>
+                    <ul class="list-group list-group-flush text-center w-50 h-50 m-auto">
+                        <li class="list-group-item bg-secondary rounded-circle text-light p-3 display-4 font-weight-bold"><?= $_SESSION["numofstudents"]?></li>
                     </ul>
                 </div>
                 </div>
