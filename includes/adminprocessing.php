@@ -222,8 +222,7 @@ function editLecturer()
     $querydptname = "SELECT * FROM department_tb WHERE name = '$dptname'";
     $result1 = mysqli_query($db, $querydptname);
     if(!$result1)
-    {
-        // die("Error while-------. " .mysqli_error($db)); 
+    { 
         die("Error confirming department"); 
     }
     else

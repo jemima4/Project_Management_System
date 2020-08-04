@@ -1,17 +1,12 @@
 <?php 
-//Contains student CRUD functions
-//New Viewing is called viewdocument2
 require "connection.php";
 require "docmanipulation.php";
-// require "docprocessingHeader.php";
 
 if(isset($_POST['ctproject'])){createProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
 if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['stchangepass'])){changePassword();}
-// Reupload
-// if(isset($_POST['reproject'])){reUploadFile();}
 if (isset($_POST['reupproject'])){reUploadProject();};
 
 
@@ -92,7 +87,6 @@ function deleteFile($filepath)
 {
     gc_collect_cycles();
     clearstatcache();
-    // unset($_FILES["projectFile"]);
     $dir = "";
     $holder1 = explode("/",$filepath,-1);
     foreach($holder1 as $hold)
@@ -114,44 +108,7 @@ function deleteFile($filepath)
         unlink($filePath);
     }
 }
-// function reUploadFile()
-// {   
-//     global $db;
-//     $projectname = $_REQUEST['projectName'];
-//     $ptid = $_SESSION['projectid'];
-//     $query = "SELECT * FROM project_tb WHERE id='$ptid'";
-//     $result = mysqli_query($db, $query);
-//     if(!$result)
-//     { 
-//         die("Error fetching project path."); 
-//     }
-//     else
-//     {
-//         $ptdetails = mysqli_fetch_assoc($result);
-//         $filePath = $ptdetails['path'];
-//         deleteFile($filePath);
-//         $target_dir = "../projects/";
-//         $target_dir .= $ptid;
-//         $target_dir .= "/";
-//         $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
-//         if(filecheck($target_dir) == 0) 
-//         {
-//         }
-//         else
-//         {
-//             $query = "UPDATE project_tb SET path = '$target_file', name = '$projectname' WHERE id = '$ptid'";
-//             $result = mysqli_query($db, $query);
-//             if(!$result)
-//             {
-//                 die("Error while updating Project details. "); 
-//             }
-//             else
-//             {
-//                 uploadFile($target_dir, $ptid ,$projectname);
-//             }
-//         }
-//     }
-// }
+
 function deleteProject()
 {
     global $db;
@@ -160,8 +117,7 @@ function deleteProject()
     $query = "DELETE FROM project_tb WHERE id ='$ptid'";
     $result = mysqli_query($db, $query);
     if(!$result)
-    {
-        // die("Error while creating Project details. " .mysqli_error($db)); 
+    { 
         die("Error while deleting Project details. "); 
     }
     else
@@ -199,37 +155,6 @@ function viewDocument()
     }
 }
 
-// function viewDocument2()
-// {
-//     global $db;
-//     $ptid = $_SESSION['projectid'];
-//     $query = "SELECT * FROM project_tb WHERE id='$ptid'";
-//     $result = mysqli_query($db, $query);
-//     if(!$result)
-//     { 
-//         die("Error fetching project path."); 
-//     }
-//     else
-//     {
-//         $ptdetails = mysqli_fetch_assoc($result);
-//         $filePath = $ptdetails['path'];
-//         $folderPath = "";
-//         $folder = explode("/",$filePath);
-//         $i = 0;
-//         $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
-//         $filename = explode(".",$folder[3]);
-//         $filename = $filename[0];
-//         // $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
-//         $writers = array('HTML' => 'html');
-//         $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
-//         write($phpWord, $filename, $writers , $folderPath);
-//         $holder = explode("/", $folderPath);
-//         $newPath = "";
-//         $newPath .= "./".$holder[1]."/".$holder[2]; 
-//         $_SESSION['docContent'] = $newPath."/".$filename.".html";
-//     }
-
-// }
 function fetchProjectDetails()
 {
     global $db;
@@ -284,41 +209,6 @@ function addComment()
     }
 }
 
-// Not used
-// function fetchComments()
-// {
-//     global $db;
-//     $projectid = $_SESSION['projectid'];
-//     $query = "SELECT * FROM project_tb WHERE id = '$projectid'";
-//     $result = mysqli_query($db , $query);
-//     if(!$result)
-//     {
-//         die("Error fetching comments");
-//     }
-//     else
-//     {
-//         $ptdetails = mysqli_fetch_assoc($result);
-//         $_SESSION['comment'] = $ptdetails['comment'];
-//         // Or i return an array of the comments this can be put in the main file depending on you
-//         $holder1 = explode(";",$_SESSION['comment']);
-//         foreach($holder1 as $hold)
-//         {
-//             $holder2 = explode(";",$hold);
-//             if($holder2[0] == 'st')
-//             {
-//                 //student comment
-//                 echo $holder2[1];
-//             }
-//             else
-//             {
-//                 //lecturer comment
-//                 //i dont know how youd use it so i used echo for now
-//                 echo $holder2[1];
-//             }
-//         }
-//     }
-// }
-
 function changePassword()
 {
     global $db;
@@ -337,8 +227,6 @@ function changePassword()
     }
 }
 
-
-// New re upload
 function reUploadProject() {
     deleteProject();
     createProject();

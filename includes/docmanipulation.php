@@ -50,12 +50,19 @@ class DocxConversion{
         // $content = str_replace('</w:r></w:p>', "\r\n", $content);
         // $striped_content = strip_tags($content);
 
+        // $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
+        // $content = str_replace('</w:r></w:p>', "\r\n", $content);
+        // $content = preg_replace('/<w:p w[0-9-Za-z]+:[a-zA-Z0-9]+="[a-zA-z"0-9 :="]+">/',"\n\r",$content);
+        // $content = preg_replace('/<w:tr>/',"\n\r",$content);
+        // $content = preg_replace('/<w:tab\/>/',"\t",$content);
+        // $content = preg_replace('/<\/w:p>/',"\n\r",$content);
+
         $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
         $content = str_replace('</w:r></w:p>', "\r\n", $content);
-        $content = preg_replace('/<w:p w[0-9-Za-z]+:[a-zA-Z0-9]+="[a-zA-z"0-9 :="]+">/',"\n\r",$content);
-        $content = preg_replace('/<w:tr>/',"\n\r",$content);
-        $content = preg_replace('/<w:tab\/>/',"\t",$content);
-        $content = preg_replace('/<\/w:p>/',"\n\r",$content);
+        $content = preg_replace('</w:p w[0-9-Za-z]+:[a-zA-Z0-9]+="[a-zA-z"0-9 :="]+">',"\n\r",$content);
+        $content = preg_replace('</w:tr>',"\n\r",$content);
+        $content = preg_replace('</w:tab\/>',"\t",$content);
+        $content = preg_replace('</\/w:p>',"\n\r",$content);
         $striped_content = strip_tags($content);
 
         return $striped_content;

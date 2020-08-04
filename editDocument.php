@@ -2,7 +2,6 @@
 include "./includes/header.php";
 include "./includes/connection.php";
 
-// Comments fetch
 $commentsList = array();
 function fetchComments()
 {
