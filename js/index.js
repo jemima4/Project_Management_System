@@ -253,7 +253,6 @@ $(() => {
       type: "POST",
       data: params,
       success: function (data, status, jqXHR) {
-        alert(data);
         if (data.includes("FetchSuccessful")) {
           // Move to view project.
           window.location.href = "./view.php";
