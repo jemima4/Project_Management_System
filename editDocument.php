@@ -61,15 +61,13 @@ if (empty($_SESSION['name'])) {
                         <div class="m-auto text-center bg-white rounded mb-2 pt-2" style="min-height: 100vh;">
                             <h3 class="p-1 pb-2">Project Document</h3>
                             <div class="form-group">
-                                <textarea placeholder="Doc contents here" name="docContent" class="form-control" id="docContent" rows="30">
+                                <textarea disabled placeholder="Doc contents here" name="docContent" class="form-control bg-white" id="docContent" rows="30">
                                     <?= $_SESSION['docContent']; ?>
-                                    <?php //include $_SESSION['docContent'];?>
                                 </textarea>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 text-center">
-                        <a href="#" class="btn btn-dark mb-3">Save Document</a>
 
                         <?php if ($_SESSION['currentUser'] === "lecturer"): ?>
                         <form id="grade-form" class="my-2" >
