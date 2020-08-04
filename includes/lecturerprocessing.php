@@ -1,7 +1,8 @@
 <?php
 require "connection.php";
 require "docmanipulation.php";
-require "docprocessingHeader.php";
+// require "docprocessingHeader.php";
+
 if(isset($_POST['vwstudents'])){viewStudents();}
 if(isset($_POST['gradeproject'])){gradeProject();}
 if(isset($_POST['fetchproject'])){fetchProjectDetails();}
@@ -148,7 +149,7 @@ function fetchProjectDetails()
             $_SESSION["path"] = $ptdetails['path'];
             $_SESSION["projectname"] = $ptdetails['name'];
             // Added to read document while fetching project details.
-            viewDocument2();
+            viewDocument();
             echo "FetchSuccessful";
         }
     }
@@ -191,37 +192,37 @@ function viewDocument()
         $_SESSION['docContent'] = $docText;
     }
 }
-function viewDocument2()
-{
-    global $db;
-    $ptid = $_SESSION['projectid'];
-    $query = "SELECT * FROM project_tb WHERE id='$ptid'";
-    $result = mysqli_query($db, $query);
-    if(!$result)
-    { 
-        die("Error fetching project path."); 
-    }
-    else
-    {
-        $ptdetails = mysqli_fetch_assoc($result);
-        $filePath = $ptdetails['path'];
-        $folderPath = "";
-        $folder = explode("/",$filePath);
-        $i = 0;
-        $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
-        $filename = explode(".",$folder[3]);
-        $filename = $filename[0];
-        // $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
-        $writers = array('HTML' => 'html');
-        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
-        write($phpWord, $filename, $writers , $folderPath);
-        $holder = explode("/", $folderPath);
-        $newPath = "";
-        $newPath .= "./".$holder[1]."/".$holder[2]; 
-        $_SESSION['docContent'] = $newPath."/".$filename.".html";
-    }
+// function viewDocument2()
+// {
+//     global $db;
+//     $ptid = $_SESSION['projectid'];
+//     $query = "SELECT * FROM project_tb WHERE id='$ptid'";
+//     $result = mysqli_query($db, $query);
+//     if(!$result)
+//     { 
+//         die("Error fetching project path."); 
+//     }
+//     else
+//     {
+//         $ptdetails = mysqli_fetch_assoc($result);
+//         $filePath = $ptdetails['path'];
+//         $folderPath = "";
+//         $folder = explode("/",$filePath);
+//         $i = 0;
+//         $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
+//         $filename = explode(".",$folder[3]);
+//         $filename = $filename[0];
+//         // $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
+//         $writers = array('HTML' => 'html');
+//         $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
+//         write($phpWord, $filename, $writers , $folderPath);
+//         $holder = explode("/", $folderPath);
+//         $newPath = "";
+//         $newPath .= "./".$holder[1]."/".$holder[2]; 
+//         $_SESSION['docContent'] = $newPath."/".$filename.".html";
+//     }
 
-}
+// }
 
 function changePassword()
 {
