@@ -119,7 +119,7 @@ $(() => {
           clearMessage();
         } else {
           $.post(
-            "./includes/loginprocessing.php",
+            "./includes/lecturerprocessing.php",
             { ltchangepass: true, newpassword: pass },
             function (data, status) {
               if (data.includes("changeSuccessful")) {
@@ -190,7 +190,7 @@ $(() => {
     }
 
     const projectName = $($(".create-form input")[0]).val();
-    const fileData = $($(".create-form input")[1]).prop("files");
+    const fileData = $($(".create-form input")[1]).val();
 
     if (projectName === "" || $($(".create-form input")[1]).val() === "") {
       setMessage("Please fill in all fields", "danger");
@@ -253,6 +253,7 @@ $(() => {
       type: "POST",
       data: params,
       success: function (data, status, jqXHR) {
+        alert(data);
         if (data.includes("FetchSuccessful")) {
           // Move to view project.
           window.location.href = "./view.php";
