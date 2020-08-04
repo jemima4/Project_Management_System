@@ -31,7 +31,6 @@ function createProject()
         $result = mysqli_query($db, $query);
         if(!$result)
         {
-            // die("Error while creating Project details. " .mysqli_error($db)); 
             die("Error while creating Project details. ".mysqli_error($db)); 
         }
         else
@@ -46,13 +45,7 @@ function filecheck($target_dir)
     $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
     $uploadOk = 1;
     $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-    // Check if file already exists
-    // if (file_exists($target_file)) {
-    //     echo "Sorry, file already exists.";
-    //     $uploadOk = 0;
-    // }
-
+    
     // Check file size
     if ($_FILES["projectFile"]["size"] > 500000) {
         echo "Sorry, your file is too large.";

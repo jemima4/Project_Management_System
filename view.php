@@ -46,8 +46,8 @@ if (empty($_SESSION['name'])) {
                     <div class="col-md-4 text-center mb-3">
                         <div class="card m-auto text-center rounded" style="width: 18rem;">
                         <div class="card-body">
-                            <h5 class="card-title text-dark"><i class="fa fa-pencil"></i></h5>
-                            <p class="card-text">View and edit document</p>
+                            <h5 class="card-title text-dark"><i class="fa fa-file"></i></h5>
+                            <p class="card-text">View document and comments</p>
                             <a href="editDocument.php" class="btn btn-dark">View</a>
                         </div>
                         </div>
