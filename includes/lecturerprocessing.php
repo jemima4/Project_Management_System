@@ -37,7 +37,7 @@ function viewStudents()
             $result1 = mysqli_query($db , $query1);
             if(!$result1)
             {
-                die("Erro fetching studdents project details");
+                die("Error fetching students project details");
             }
             else
             {

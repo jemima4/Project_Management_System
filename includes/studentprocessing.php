@@ -246,7 +246,7 @@ function fetchProjectDetails()
             $_SESSION["grade"] = $ptdetails['grade'];
             $_SESSION["path"] = $ptdetails['path'];
             // Added to read document while fetching project details.
-            viewDocument2();
+            viewDocument();
             echo "FetchSuccessful";
         }
     }
