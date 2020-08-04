@@ -186,7 +186,8 @@ $(() => {
     if (uploadType === "newupload") {
       formData.append("ctproject", true);
     } else if (uploadType === "reupload") {
-      formData.append("reproject", true);
+      // formData.append("reproject", true);
+      formData.append("reupproject", true);
     }
 
     const projectName = $($(".create-form input")[0]).val();
