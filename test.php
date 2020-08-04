@@ -7,7 +7,26 @@ require 'docprocessingHeader.php';
 // Download Composer and Install phpword with composer into a folder named dependencies in the project, 
 //then try to call it cause i cant seem to call it
 // editingdoc();
-viewdoc();
+viewDocument2();
+function viewDocument2()
+{
+        $filePath = "./projects/e10adc3949ba59abbe56e057f20f883e/10631349.docx";
+        $folderPath = "";
+        $folder = explode("/",$filePath);
+        $i = 0;
+        // $folderPath .= $folder[0]."/".$folder[1]."/".$folder[2] ;
+        $folderPath .= "./".$folder[1]."/".$folder[2] ;
+        $filename = explode(".",$folder[3]);
+        $filename = $filename[0];
+        // $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
+        $writers = array('HTML' => 'html');
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filePath);
+        write($phpWord, $filename, $writers , $folderPath);
+        echo "running";
+        echo $folderPath."/".$filename.".html";
+        
+}
+// include "./projects/e10adc3949ba59abbe56e057f20f883e/10631349.html";
 function editingdoc()
 {
     // $phpword = new PhpWord();
@@ -296,51 +315,51 @@ function pptx_to_text($input_file){
 
 }
 // deleteFile($filePath);
-function deleteFile($filePath)
-{
-    echo "Delete file running";
-    //Experimental
-    // unlink(dirname(__FILE__) . $filepath);
-    // if(is_writable($filepath))
-    // {
-    //     unlink(dirname(__FILE__) . $filepath);
-    // }
-    // else
-    // {
-    //     echo "File is not writable"; 
-    // }
-    ///////////////////////
-    gc_collect_cycles();
-    if(!mkdir($filePath))
-    {
-        echo "testing" ;      
-    }
-    if(is_dir($filePath))
-    {
-        echo "</br>";
-        echo "1as";
-        $files = glob($filePath . '*', GLOB_MARK);
-        foreach($files as $file)
-        {
-            unlink($file);
-            // delete_files($file);
-        }
-        rmdir($filePath);
-    }
-    elseif(is_file($filePath))
-    {
-        echo "2bd";
-        unlink($filePath);
-    }
-    ///////////
-    // $file_pointer = fopen($filePath, 'w+');
-    // if (!unlink($filePath)) {  
-    //     echo ("cannot be deleted due to an error");  
-    // }  
-    // else {  
-    //     echo ("$filePath has been deleted");  
-    // }  
-}
+// function deleteFile($filePath)
+// {
+//     echo "Delete file running";
+//     //Experimental
+//     // unlink(dirname(__FILE__) . $filepath);
+//     // if(is_writable($filepath))
+//     // {
+//     //     unlink(dirname(__FILE__) . $filepath);
+//     // }
+//     // else
+//     // {
+//     //     echo "File is not writable"; 
+//     // }
+//     ///////////////////////
+//     gc_collect_cycles();
+//     if(!mkdir($filePath))
+//     {
+//         echo "testing" ;      
+//     }
+//     if(is_dir($filePath))
+//     {
+//         echo "</br>";
+//         echo "1as";
+//         $files = glob($filePath . '*', GLOB_MARK);
+//         foreach($files as $file)
+//         {
+//             unlink($file);
+//             // delete_files($file);
+//         }
+//         rmdir($filePath);
+//     }
+//     elseif(is_file($filePath))
+//     {
+//         echo "2bd";
+//         unlink($filePath);
+//     }
+//     ///////////
+//     // $file_pointer = fopen($filePath, 'w+');
+//     // if (!unlink($filePath)) {  
+//     //     echo ("cannot be deleted due to an error");  
+//     // }  
+//     // else {  
+//     //     echo ("$filePath has been deleted");  
+//     // }  
+// }
 
 ?>
 
