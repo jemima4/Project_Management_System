@@ -63,6 +63,7 @@ if (empty($_SESSION['name'])) {
                             <div class="form-group">
                                 <textarea placeholder="Doc contents here" name="docContent" class="form-control" id="docContent" rows="30">
                                     <?= $_SESSION['docContent']; ?>
+                                    <?php //include $_SESSION['docContent'];?>
                                 </textarea>
                             </div>
                         </div>
