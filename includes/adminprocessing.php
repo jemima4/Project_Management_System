@@ -33,7 +33,6 @@ function createStudent()
     $result2 = mysqli_query($db, $querydptname);
     if(!$result1)
     {
-        // die("Error while creating Project details. " .mysqli_error($db)); 
         die("Error confirming lecturer id"); 
     }
     else
@@ -78,7 +77,6 @@ function editStudent()
     $result2 = mysqli_query($db, $querydptname);
     if(!$result1)
     {
-        // die("Error while-------. " .mysqli_error($db)); 
         die("Error confirming lecturer id"); 
     }
     else
@@ -154,7 +152,6 @@ function createLecturer()
     $result1 = mysqli_query($db, $querydptname);
     if(!$result1)
     {
-        // die("Error while-------. " .mysqli_error($db)); 
         die("Error confirming department"); 
     }
     else
@@ -282,7 +279,6 @@ function deleteLecturer()
 function deleteProject($matricno)
 {
     global $db;
-    // fetchProjectDetails();
     $queryfile = "SELECT * FROM project_tb WHERE matricno ='$matricno'";
     $query = "DELETE FROM project_tb WHERE matricno ='$matricno'";
     $resultfile = mysqli_query($db ,$queryfile);
@@ -301,7 +297,7 @@ function deleteProject($matricno)
             die("Error while deleting Project");
         }
         else{
-            //I dont know what to unset or remove
+            //Project deleted
         }
     }
 }
