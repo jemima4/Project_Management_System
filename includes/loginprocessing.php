@@ -138,7 +138,7 @@ function loginAdmin()
     }
     else
     {
-        $password = md5($password);
+        // $password = md5($password);
         $query .= " WHERE email = '$email' AND password = '$password'";
         $result = mysqli_query($db, $query);
         if(!$result)

@@ -89,6 +89,9 @@ function uploadFile($target_dir, $projectid,$name)
 
 function deleteFile($filepath)
 {
+    gc_collect_cycles();
+    clearstatcache();
+    unset($_FILES["projectFile"]);
     $dir = "";
     $holder1 = explode("/",$filepath,-1);
     foreach($holder1 as $hold)
