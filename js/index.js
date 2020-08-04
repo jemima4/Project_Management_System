@@ -450,7 +450,7 @@ $(() => {
     event.preventDefault();
     const element = $(event.target)[0];
     const type = $(event.target).attr("type");
-    const mode = $(event.target).attr("mode") || false;
+    const mode = $(event.target).attr("mode") != "" ? $(event.target).attr("mode") : false;
     const msgField = mode === "edit" ? "editMessage" : "message";
 
     // Checking for empty fields
@@ -466,8 +466,8 @@ $(() => {
     });
 
     // Grabbing passwords
-    const password = $(".admin-form input[name='password']").val() || true;
-    const rePassword = $(".admin-form input[name='rePassword']").val() || true;
+    const password = $(".admin-form input[name='password']").val() != "" ? $(".admin-form input[name='password']").val() : true;
+    const rePassword = $(".admin-form input[name='rePassword']").val() != "" ? $(".admin-form input[name='rePassword']").val() : true;
 
     // Parsing all form data
     const formData = new FormData(element);
