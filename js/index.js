@@ -186,11 +186,10 @@ $(() => {
     if (uploadType === "newupload") {
       formData.append("ctproject", true);
     } else if (uploadType === "reupload") {
-      formData.append("reproject", true);
+      formData.append("reupproject", true);
     }
 
     const projectName = $($(".create-form input")[0]).val();
-    const fileData = $($(".create-form input")[1]).val();
 
     if (projectName === "" || $($(".create-form input")[1]).val() === "") {
       setMessage("Please fill in all fields", "danger");

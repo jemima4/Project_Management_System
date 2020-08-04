@@ -11,7 +11,8 @@ if(isset($_GET['delete'])){deleteProject();}
 if(isset($_POST['addcomment'])){addComment();}
 if(isset($_POST['stchangepass'])){changePassword();}
 // Reupload
-if(isset($_POST['reproject'])){reUploadFile();}
+// if(isset($_POST['reproject'])){reUploadFile();}
+if (isset($_POST['reupproject'])){reUploadProject();};
 
 
 function createProject()
@@ -113,44 +114,44 @@ function deleteFile($filepath)
         unlink($filePath);
     }
 }
-function reUploadFile()
-{   
-    global $db;
-    $projectname = $_REQUEST['projectName'];
-    $ptid = $_SESSION['projectid'];
-    $query = "SELECT * FROM project_tb WHERE id='$ptid'";
-    $result = mysqli_query($db, $query);
-    if(!$result)
-    { 
-        die("Error fetching project path."); 
-    }
-    else
-    {
-        $ptdetails = mysqli_fetch_assoc($result);
-        $filePath = $ptdetails['path'];
-        deleteFile($filePath);
-        $target_dir = "../projects/";
-        $target_dir .= $ptid;
-        $target_dir .= "/";
-        $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
-        if(filecheck($target_dir) == 0) 
-        {
-        }
-        else
-        {
-            $query = "UPDATE project_tb SET path = '$target_file', name = '$projectname' WHERE id = '$ptid'";
-            $result = mysqli_query($db, $query);
-            if(!$result)
-            {
-                die("Error while updating Project details. "); 
-            }
-            else
-            {
-                uploadFile($target_dir, $ptid ,$projectname);
-            }
-        }
-    }
-}
+// function reUploadFile()
+// {   
+//     global $db;
+//     $projectname = $_REQUEST['projectName'];
+//     $ptid = $_SESSION['projectid'];
+//     $query = "SELECT * FROM project_tb WHERE id='$ptid'";
+//     $result = mysqli_query($db, $query);
+//     if(!$result)
+//     { 
+//         die("Error fetching project path."); 
+//     }
+//     else
+//     {
+//         $ptdetails = mysqli_fetch_assoc($result);
+//         $filePath = $ptdetails['path'];
+//         deleteFile($filePath);
+//         $target_dir = "../projects/";
+//         $target_dir .= $ptid;
+//         $target_dir .= "/";
+//         $target_file = $target_dir . basename($_FILES["projectFile"]["name"]);
+//         if(filecheck($target_dir) == 0) 
+//         {
+//         }
+//         else
+//         {
+//             $query = "UPDATE project_tb SET path = '$target_file', name = '$projectname' WHERE id = '$ptid'";
+//             $result = mysqli_query($db, $query);
+//             if(!$result)
+//             {
+//                 die("Error while updating Project details. "); 
+//             }
+//             else
+//             {
+//                 uploadFile($target_dir, $ptid ,$projectname);
+//             }
+//         }
+//     }
+// }
 function deleteProject()
 {
     global $db;
@@ -171,7 +172,9 @@ function deleteProject()
         unset($_SESSION["comment"]);
         unset($_SESSION["grade"]);
         unset($_SESSION["path"]);
+        if (!isset($_POST['reupproject'])) {
         header("Location: ../dashboard.php");
+        }
     }
     
 }
@@ -334,5 +337,11 @@ function changePassword()
     }
 }
 
+
+// New re upload
+function reUploadProject() {
+    deleteProject();
+    createProject();
+}
 ?>
 

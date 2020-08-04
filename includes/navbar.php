@@ -15,11 +15,6 @@
                 <a class="nav-item nav-link active" href="dashboard.php">Home <span class="sr-only">(current)</span></a>
                 <?php if(!isset($_SESSION["projectid"]) AND ($_SESSION['currentUser']) === "student"): ?>
                     <a class="nav-item nav-link" href="./create.php">Create Project</a>
-                <?php elseif($_SESSION['currentUser'] === "lecturer"): ?>
-                    <a class="nav-item nav-link" href="./view.php">View Students</a>
-                <?php elseif($_SESSION['currentUser'] === "admin"): ?>
-                <?php else: ?>
-                    <a class="nav-item nav-link view-project" href="./view.php">View Project</a>
                 <?php endif; ?>
             </div>
             <div class="dropdown ml-auto">
