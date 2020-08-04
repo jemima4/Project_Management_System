@@ -114,7 +114,7 @@ function deleteFile($filepath)
 function reUploadFile()
 {   
     global $db;
-    $projectname = $_POST['projectName'];
+    $projectname = $_REQUEST['projectName'];
     $ptid = $_SESSION['projectid'];
     $query = "SELECT * FROM project_tb WHERE id='$ptid'";
     $result = mysqli_query($db, $query);
@@ -127,7 +127,6 @@ function reUploadFile()
         $ptdetails = mysqli_fetch_assoc($result);
         $filePath = $ptdetails['path'];
         deleteFile($filePath);
-        $ptid = md5($ptid);
         $target_dir = "../projects/";
         $target_dir .= $ptid;
         $target_dir .= "/";
