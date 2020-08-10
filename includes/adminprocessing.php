@@ -144,8 +144,9 @@ function createLecturer()
     $id = mysqli_real_escape_string($db,$_REQUEST['id']);
     $name = mysqli_real_escape_string($db,$_REQUEST['name']);
     $departmentname = mysqli_real_escape_string($db,$_REQUEST['departmentname']);
-    $password = md5($_REQUEST['$password']);
-    $email = $_REQUEST['email'];
+    $password = mysqli_real_escape_string($db,$_REQUEST['password']);
+    $password = md5($password);    
+    $email = mysqli_real_escape_string($db,$_REQUEST['email']);
     $query = "INSERT INTO lecturer_tb (id, name, email, password, departmentname) VALUES ('$id' , '$name', 
     '$email','$password','$departmentname')";
     $querydptname = "SELECT * FROM department_tb WHERE name = '$departmentname'";
